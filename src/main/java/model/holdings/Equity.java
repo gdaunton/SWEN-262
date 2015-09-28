@@ -1,4 +1,4 @@
-package model;
+package model.holdings;
 
 public abstract class Equity{
 
@@ -90,7 +90,4 @@ public abstract class Equity{
         return totalValue;
     }
 
-    abstract void add{}
-
-    abstract void remove{}
 }

@@ -1,6 +1,5 @@
-package model;
+package model.holdings;
 
-import java.lang.Exception;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,7 +21,7 @@ public abstract class Account{
      * @param balance The initial balance in the account
      * @param type The type of the account
      */
-    public Account(String bankName, double balance, model.Account.Type type) {
+    public Account(String bankName, double balance, Type type) {
         this.bankName = bankName;
         this.balance = balance;
         this.type = type;
@@ -30,6 +29,7 @@ public abstract class Account{
     }
 
     /**
+     * Get the name of the Bank
      * @return The name of the bank
      */
     public String getBankName() {
@@ -53,9 +53,9 @@ public abstract class Account{
      */
     public double withdraw(double ammount) throws NegativeValueException, OverDrawException{
         if(ammount < 0)
-            throw NegativeValueException("Please give a positive value");
+            throw new NegativeValueException("Please give a positive value");
         if(balance - ammount < 0)
-            throw OverDrawException("You cannot overdraw your account");
+            throw new OverDrawException("You cannot overdraw your account");
         return this.balance -= ammount;
     }
 
@@ -67,26 +67,26 @@ public abstract class Account{
      */
     public double deposit(double ammount) throws NegativeValueException{
         if(ammount < 0)
-            throw NegativeValueException("Please give a positive value");
+            throw new NegativeValueException("Please give a positive value");
         return this.balance += ammount;
     }
 
     /**
      * Transfers the given ammount to the new account
      * @param ammount The ammount to transfer
-     * @param accout The account to transfer the ammount to
+     * @param account The account to transfer the ammount to
      * @return The remaining account balance
      * @throws NullAccountException
      * @throws NegativeValueException
      * @throws OverDrawException
      */
-    public double transfer(double ammount, Account accout) throws NullAccountException, NegativeValueException, OverDrawException{
+    public double transfer(double ammount, Account account) throws NullAccountException, NegativeValueException, OverDrawException{
         if(account == null)
-            throw NullAccountException("Please give a valid account");
+            throw new NullAccountException("Please give a valid account");
         if(ammount < 0)
-            throw NegativeValueException("Please give a positive value");
+            throw new NegativeValueException("Please give a positive value");
         if(balance - ammount < 0)
-            throw OverDrawException("You cannot overdraw your account");
+            throw new OverDrawException("You cannot overdraw your account");
         this.withdraw(ammount);
         account.deposit(ammount);
         return this.getBalance();
@@ -108,9 +108,21 @@ public abstract class Account{
         return opened;
     }
 
-    public class OverDrawException extends Exception{}
+    public class OverDrawException extends Exception{
+        public OverDrawException(String message){
+            super(message);
+        }
+    }
 
-    public class NegativeValueException extends Exception{}
+    public class NegativeValueException extends Exception{
+        public NegativeValueException(String message){
+            super(message);
+        }
+    }
 
-    public class NullAccountException extends Exception{}
+    public class NullAccountException extends Exception{
+        public NullAccountException(String message){
+            super(message);
+        }
+    }
 }
