@@ -7,6 +7,14 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
 
+/**
+ * Squidward: You mean you've never heard the story of the... hash-slinging slasher?
+ * SpongeBob: The slash-bringing hasher?
+ * Squidward: The hash-slinging slasher.
+ * SpongeBob: The sash wringing... the trash thinging... mash flinging... the flash springing, bringing the the crash thinging the...
+ * Squidward: Yes. The hash-slinging slasher.
+ */
+
 public class HashSlingingSlasher{
     private static final int iterations = 20*1000;
     private static final int saltLen = 32;

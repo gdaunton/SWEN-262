@@ -9,13 +9,16 @@ public class Portfolio{
     private ArrayList<User> users;
     private ArrayList<Account> accounts;
     private ArrayList<Equity> equites;
+    private String name;
+
 
     /**
      * Creates a new Portfolio Object
      * @param user The user to attach to this portfolio
      */
-    public Portfolio(User user) {
+    public Portfolio(User user, String name) {
         this.users.add(user);
+        this.name = name;
     }
 
     /**

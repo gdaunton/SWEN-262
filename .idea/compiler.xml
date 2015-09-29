@@ -27,8 +27,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="fpts" target="1.5" />
-      <module name="SWEN-262" target="1.5" />
+      <module name="fpts" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
