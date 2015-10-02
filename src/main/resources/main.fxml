@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+    <MenuBar prefHeight="25.0" prefWidth="600.0">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" text="Save"/>
+            <MenuItem mnemonicParsing="false" text="Import"/>
+            <MenuItem mnemonicParsing="false" text="Close"/>
+            <SeparatorMenuItem mnemonicParsing="false"/>
+            <Menu mnemonicParsing="false" text="Simulate...">
+                <MenuItem mnemonicParsing="false" text="Bull"/>
+                <MenuItem mnemonicParsing="false" text="Bear"/>
+                <MenuItem mnemonicParsing="false" text="No-Grow"/>
+            </Menu>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+            <MenuItem mnemonicParsing="false" text="Delete"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <MenuItem mnemonicParsing="false" text="About"/>
+        </Menu>
+    </MenuBar>
+    <SplitPane dividerPositions="0.29797979797979796" layoutY="25.0" prefHeight="375.0" prefWidth="600.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+            <Accordion prefHeight="373.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0"
+                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <panes>
+                    <TitledPane animated="false" text="Accounts">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <ListView id="account_list" prefHeight="200.0" prefWidth="200.0"
+                                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        </AnchorPane>
+                    </TitledPane>
+                    <TitledPane animated="false" text="Equities">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <ListView id="equity_list" prefHeight="200.0" prefWidth="200.0"
+                                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        </AnchorPane>
+                    </TitledPane>
+                </panes>
+            </Accordion>
+        </AnchorPane>
+        <AnchorPane id="content" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0"/>
+    </SplitPane>
+</Pane>
