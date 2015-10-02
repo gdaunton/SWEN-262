@@ -1,6 +1,8 @@
 package model.holdings;
 
-public abstract class Equity{
+import java.util.ArrayList;
+
+public class Equity{
 
     public enum Type{
         STOCK,
@@ -16,6 +18,7 @@ public abstract class Equity{
     private int marketIndex;
     private String industrySector;
     private Type type;
+    private ArrayList<String> marketSectors;
 
     /**
      * Creates a new Equity Object
@@ -24,14 +27,16 @@ public abstract class Equity{
      * @param name The name of the Equity
      * @param shares The ammount of shares in the Equity
      * @param price_per_share The price of each share of the Equity
+     * @param marketSectors The different markets that the Equity can be in
      */
-    public Equity(Type type, String tickerSymbol, String name, int shares, double price_per_share) {
+    public Equity(Type type, String tickerSymbol, String name, int shares, double price_per_share, ArrayList<String> marketSectors) {
         this.tickerSymbol = tickerSymbol;
         this.name = name;
         this.shares = shares;
         this.price_per_share = price_per_share;
         this.totalValue = this.shares * this.price_per_share;
         this.type = type;
+        this.marketSectors = marketSectors;
     }
 
     /**
@@ -90,4 +95,11 @@ public abstract class Equity{
         return totalValue;
     }
 
+    /**
+     * Get the array of Market Sectors that this Equity is in
+     * @return The array of Market Sectors that this Equity is in
+     */
+    public ArrayList<String> getMarketSectors() {
+        return marketSectors;
+    }
 }
