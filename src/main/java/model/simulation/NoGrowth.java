@@ -7,4 +7,5 @@ public class NoGrowth extends Simulation{
     public void simulate() {
 
     }
+
 }

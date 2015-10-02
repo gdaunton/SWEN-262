@@ -14,12 +14,10 @@ public class System extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent login = FXMLLoader.load(getClass().getResource("login.fxml"));
-        Parent create = FXMLLoader.load(getClass().getResource("create_portfolio.fxml"));
         primaryStage.setTitle("FPTS");
-        primaryStage.setScene(new Scene(create));
+        primaryStage.setScene(new Scene(login));
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
