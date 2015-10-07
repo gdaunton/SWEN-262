@@ -1,7 +1,7 @@
-package model;
+package main.model;
 
-import model.holdings.Account;
-import model.holdings.Equity;
+import main.model.holdings.Account;
+import main.model.holdings.Equity;
 
 import java.util.ArrayList;
 

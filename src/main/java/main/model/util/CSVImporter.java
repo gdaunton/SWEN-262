@@ -1,7 +1,7 @@
-package model.util;
+package main.model.util;
 
 
-import model.holdings.Equity;
+import main.model.holdings.Equity;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.UserCreateController">
+    <ButtonBar layoutX="177.0" layoutY="290.0" prefHeight="40.0" prefWidth="230.0">
+      <buttons>
+          <Button fx:id="cancelPortfolio" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Cancel" />
+          <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Create" />
+      </buttons>
+    </ButtonBar>
+    <PasswordField fx:id="password" layoutX="200.0" layoutY="212.0" prefHeight="25.0" prefWidth="200.0" promptText="Password" />
+    <PasswordField fx:id="password_repeat" layoutX="200.0" layoutY="240.0" prefHeight="25.0" prefWidth="200.0" promptText="Repeat Password" />
+    <TextField fx:id="username" layoutX="200.0" layoutY="175.0" prefHeight="25.0" prefWidth="200.0" promptText="Username" />
+    <Text layoutX="158.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create User">
+        <font>
+          <Font name="Segoe UI Light" size="36.0" />
+        </font>
+    </Text>
+   <Text fx:id="errorText" fill="#cd0000" layoutX="377.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" />
+</Pane>

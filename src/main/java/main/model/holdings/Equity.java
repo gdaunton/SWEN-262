@@ -1,4 +1,4 @@
-package model.holdings;
+package main.model.holdings;
 
 import java.util.ArrayList;
 
