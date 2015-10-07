@@ -2,7 +2,7 @@ package model.holdings;
 
 import java.util.ArrayList;
 
-public class Equity{
+public class Equity extends Holding {
 
     public enum Type{
         STOCK,

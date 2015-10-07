@@ -3,7 +3,7 @@ package model.holdings;
 import java.util.Calendar;
 import java.util.Date;
 
-public abstract class Account{
+public abstract class Account extends Holding {
 
     public enum Type{
         BANK,
