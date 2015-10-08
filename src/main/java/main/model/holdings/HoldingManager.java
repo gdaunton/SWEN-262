@@ -20,14 +20,14 @@ public class HoldingManager {
 
     public static ArrayList<Equity> search(String input) throws UnimportedEquities{
         if(equity_list == null)
-            throw new UnimportedEquities("Please make sure that the Equities are imported before calling this funciton.");
+            throw new UnimportedEquities("Please make sure that the Equities are imported before calling this function.");
         //TODO do the search function
         return null;
     }
 
     public static ArrayList<Equity> filter(Filter filter) throws UnimportedEquities {
         if(equity_list == null)
-            throw new UnimportedEquities("Please make sure that the Equities are imported before calling this funciton.");
+            throw new UnimportedEquities("Please make sure that the Equities are imported before calling this function.");
         //TODO do filtering
         return null;
     }
