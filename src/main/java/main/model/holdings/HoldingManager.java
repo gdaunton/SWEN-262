@@ -28,13 +28,14 @@ public class HoldingManager {
     public static ArrayList<Equity> filter(Filter filter) throws UnimportedEquities {
         if(equity_list == null)
             throw new UnimportedEquities("Please make sure that the Equities are imported before calling this function.");
-        //TODO do filtering
-        return null;
+        ArrayList<Equity> out = new ArrayList<Equity>();
+        for(Equity e : equity_list) {
+            //TODO do filtering
+        }
+        return out;
     }
 
-    public static class UnimportedEquities extends Exception{
-        public UnimportedEquities(String message){
-            super(message);
-        }
+    public static class UnimportedEquities extends Exception {
+        public UnimportedEquities(String message){ super(message); }
     }
 }
