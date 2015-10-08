@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-      prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginController">
-    <ButtonBar layoutX="177.0" layoutY="251.0" prefHeight="40.0" prefWidth="230.0">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.LoginController">
+    <ButtonBar layoutX="177.0" layoutY="260.0" prefHeight="40.0" prefWidth="230.0">
       <buttons>
-          <Button fx:id="createPortfolio" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0"
-                  prefWidth="101.0" text="Create Portfolio"/>
-          <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Login"/>
+          <Button fx:id="createUser" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Register" />
+          <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Login" />
       </buttons>
     </ButtonBar>
-    <PasswordField fx:id="password" layoutX="200.0" layoutY="212.0" prefHeight="25.0" prefWidth="200.0" promptText="Password"/>
-    <TextField fx:id="username" layoutX="200.0" layoutY="175.0" prefHeight="25.0" prefWidth="200.0" promptText="Username"/>
+    <PasswordField fx:id="password" layoutX="200.0" layoutY="212.0" prefHeight="25.0" prefWidth="200.0" promptText="Password" />
+    <TextField fx:id="username" layoutX="200.0" layoutY="175.0" prefHeight="25.0" prefWidth="200.0" promptText="Username" />
     <Text layoutX="158.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
         <font>
-          <Font name="Segoe UI Light" size="36.0"/>
+          <Font name="Segoe UI Light" size="36.0" />
         </font>
     </Text>
+   <Text fx:id="errorText" fill="#cd0000" layoutX="377.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" />
+    <Button fx:id="createPortfolio" alignment="CENTER" contentDisplay="CENTER" layoutX="250.0" layoutY="322.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Create Portfolio" />
 </Pane>

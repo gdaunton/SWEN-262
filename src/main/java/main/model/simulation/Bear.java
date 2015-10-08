@@ -1,4 +1,4 @@
-package model.simulation;
+package main.model.simulation;
 
 public class Bear extends Simulation{
 

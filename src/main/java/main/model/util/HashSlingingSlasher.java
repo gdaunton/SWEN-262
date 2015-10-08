@@ -1,4 +1,4 @@
-package model.util;
+package main.model.util;
 
 import org.apache.commons.codec.binary.Base64;
 
