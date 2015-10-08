@@ -1,4 +1,4 @@
-package model.holdings;
+package main.model.holdings;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,6 @@ public class Equity extends Holding {
     private double price_per_share;
     private double totalValue;
     private int marketIndex;
-    private String industrySector;
     private Type type;
     private ArrayList<String> marketSectors;
 
@@ -101,5 +100,9 @@ public class Equity extends Holding {
      */
     public ArrayList<String> getMarketSectors() {
         return marketSectors;
+    }
+
+    public String toString(){
+       return "";
     }
 }
