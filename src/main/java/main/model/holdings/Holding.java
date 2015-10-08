@@ -1,5 +1,7 @@
-package main.model.holdings;
+package model.holdings
+
+import java.util.ArrayList;
 
 public abstract class Holding {
-    public abstract String toString();
+    abstract String toString();
 }
