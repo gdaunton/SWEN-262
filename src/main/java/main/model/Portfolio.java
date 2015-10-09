@@ -2,13 +2,13 @@ package main.model;
 
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
+import main.model.holdings.Holding;
 
 import java.util.ArrayList;
 
 public class Portfolio{
     private ArrayList<User> users;
-    private ArrayList<Account> accounts;
-    private ArrayList<Equity> equites;
+    private ArrayList<Holding> holdings;
     private String name;
 
 
@@ -30,19 +30,11 @@ public class Portfolio{
     }
 
     /**
-     * Get all of the accounts attached to this portfolio
+     * Get all of the holdings attached to this portfolio
      * @return All of the accounts attached to this portfolio
      */
-    public ArrayList<Account> getAccounts() {
-        return accounts;
-    }
-
-    /**
-     * Get all of the equities attached to this portfolio
-     * @return All of the equities attached to this portfolio
-     */
-    public ArrayList<Equity> getEquites() {
-        return equites;
+    public ArrayList<Holding> getHoldings() {
+        return holdings;
     }
 
     /**
@@ -54,18 +46,18 @@ public class Portfolio{
     }
 
     /**
-     * Add a account to this portfolio
-     * @param account The account to add
+     * Add a holding to this portfolio
+     * @param holding The account to add
      */
-    public void addAccount(Account account){
-        this.accounts.add(account);
+    public void addHolding(Holding holding){
+        this.holdings.add(holding);
     }
 
     /**
-     * Add a equity to this portfolio
-     * @param equity The equity to add
+     * Remove a holding from this portfolio
+     * @param holding The account to add
      */
-    public void addEquity(Equity equity){
-        this.equites.add(equity);
+    public void removeHolding(Holding holding){
+        this.holdings.remove(holding);
     }
 }

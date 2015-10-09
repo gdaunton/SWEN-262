@@ -41,12 +41,17 @@ public class FPTS extends Application{
         launch(args);
     }
 
+    private void initPortfolio(User user){
+
+        gotoMain();
+    }
+
     public boolean handleLogin(String userId, String password) throws UserManager.InvalidPasswordException, Exception{
         loggedUser = um.checkUser(userId, password);
         if (loggedUser == null)
             return false;
         else {
-            gotoMain();
+            initPortfolio(loggedUser);
             return true;
         }
     }
@@ -56,7 +61,7 @@ public class FPTS extends Application{
         if (loggedUser == null)
             return false;
         else {
-            gotoMain();
+            initPortfolio(loggedUser);
             return true;
         }
     }
