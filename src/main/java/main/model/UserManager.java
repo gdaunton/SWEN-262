@@ -11,8 +11,9 @@ public class UserManager{
     /**
      * Start up the User Manager
      */
-    public UserManager() throws IOException{
-        userFile = new File("users.dat");
+    public UserManager(String dataRoot) throws IOException{
+        userFile = new File(dataRoot + "users.dat");
+
         if(!userFile.exists())
             userFile.createNewFile();
         try {
