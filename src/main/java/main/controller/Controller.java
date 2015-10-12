@@ -20,11 +20,13 @@ public class Controller {
     private User user;
     private OnLogout logoutListener;
     private ArrayList<Portfolio> portfolios;
+    public Portfolio currentPortfolio;
 
     public Controller(ArrayList<Portfolio> portfolios, User user, MainController mainController) {
         this.portfolios = portfolios;
         this.user = user;
         this.view = mainController;
+        view.setApp(this);
     }
 
     public ArrayList<Portfolio> getUserPortfolios(User user){

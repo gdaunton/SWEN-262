@@ -99,6 +99,10 @@ public class FPTS extends Application{
         return true;
     }
 
+    /**
+     * Initialize an instance of controller with the given user.
+     * @param user The user to initialize the controller with.
+     */
     private void initPortfolio(User user){
         Controller c = new Controller(portfolios, user, gotoMain());
         c.setOnLogout(new Controller.OnLogout() {
@@ -109,10 +113,22 @@ public class FPTS extends Application{
         });
     }
 
+    /**
+     * Add a new portfolio object to the system.
+     * @param portfolio The portfolio to add.
+     */
     public void createPortfolio(Portfolio portfolio){
         this.portfolios.add(portfolio);
     }
 
+    /**
+     * Handle user login.
+     * @param userId The user's username
+     * @param password The user's password
+     * @return if the login was successful
+     * @throws UserManager.InvalidPasswordException
+     * @throws Exception
+     */
     public boolean handleLogin(String userId, String password) throws UserManager.InvalidPasswordException, Exception{
         loggedUser = um.checkUser(userId, password);
         if (loggedUser == null)
@@ -123,6 +139,14 @@ public class FPTS extends Application{
         }
     }
 
+    /**
+     * Create a new user
+     * @param userId The user's username
+     * @param password The user's password
+     * @return if the user was successfully created
+     * @throws UserManager.UsernameOccupiedException
+     * @throws Exception
+     */
     public boolean createUser(String userId, String password) throws UserManager.UsernameOccupiedException, Exception{
         loggedUser = um.createUser(userId, password);
         if (loggedUser == null)
@@ -133,6 +157,9 @@ public class FPTS extends Application{
         }
     }
 
+    /**
+     * Goto the login screen
+     */
     public void gotoLogin() {
         try {
             LoginController l = (LoginController)replaceSceneContent("login.fxml");
@@ -142,6 +169,9 @@ public class FPTS extends Application{
         }
     }
 
+    /**
+     * Goto the create user screen
+     */
     public void gotoCreateUser() {
         try {
             UserCreateController l = (UserCreateController)replaceSceneContent("create_user.fxml");
@@ -151,6 +181,9 @@ public class FPTS extends Application{
         }
     }
 
+    /**
+     * Goto the create portfolio screen
+     */
     public void gotoCreatePortfolio () {
         try {
             PortfolioCreateController m = (PortfolioCreateController)replaceSceneContent("create_portfolio.fxml");
@@ -160,10 +193,13 @@ public class FPTS extends Application{
         }
     }
 
+    /**
+     * Goto the main screen
+     * @return the main view controller that will interface with the controller
+     */
     private MainController gotoMain() {
         try {
             MainController m = (MainController)replaceSceneContent("main.fxml");
-            m.setApp(this);
             return m;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -171,6 +207,12 @@ public class FPTS extends Application{
         return null;
     }
 
+    /**
+     * Will take a given .fxml file and inflate it into the view
+     * @param fxml the file to inflate
+     * @return the view controller
+     * @throws Exception
+     */
     private Initializable replaceSceneContent(String fxml) throws Exception {
         fxml = "/" + fxml;
         FXMLLoader loader = new FXMLLoader();
@@ -192,6 +234,10 @@ public class FPTS extends Application{
     public class PortfolioManager {
         private File portfolioFile;
 
+        /**
+         * Create a new PortfolioManager object
+         * @param portfolioFile the file to grab the data from
+         */
         public PortfolioManager(File portfolioFile){
             this.portfolioFile = portfolioFile;
             try {
@@ -202,6 +248,10 @@ public class FPTS extends Application{
             }
         }
 
+        /**
+         * Get all of the portfolio objects in the file
+         * @return All of the portfolio objects
+         */
         public ArrayList<Portfolio> getPortfolios(){
             ArrayList<Portfolio> out = new ArrayList<Portfolio>();
             try {
@@ -220,6 +270,10 @@ public class FPTS extends Application{
             return out;
         }
 
+        /**
+         * Save all of the given portfolios to file
+         * @param portfolios the stuff to save
+         */
         public void savePortfolios(ArrayList<Portfolio> portfolios){
             if(portfolios != null){
                 try{
