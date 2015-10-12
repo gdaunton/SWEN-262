@@ -10,19 +10,19 @@ public abstract class Account extends Holding {
         MONEY_MARKET
     };
 
-    private String bankName;
+    private String name;
     private double balance;
     private Date opened;
     private Type type;
 
     /**
      * Creates a new Account object
-     * @param bankName The name of the bank
+     * @param name The name of the bank
      * @param balance The initial balance in the account
      * @param type The type of the account
      */
-    public Account(String bankName, double balance, Type type) {
-        this.bankName = bankName;
+    public Account(String name, double balance, Type type) {
+        this.name = name;
         this.balance = balance;
         this.type = type;
         opened = Calendar.getInstance().getTime();
@@ -32,8 +32,8 @@ public abstract class Account extends Holding {
      * Get the name of the Bank
      * @return The name of the bank
      */
-    public String getBankName() {
-        return bankName;
+    public String getName() {
+        return name;
     }
 
     /**
