@@ -7,7 +7,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import main.FPTS;
+import main.model.Portfolio;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,6 +25,8 @@ public class PortfolioCreateController implements Initializable{
     private Button cancelButton;
     @FXML
     private Button createButton;
+    @FXML
+    private Text errorText;
 
     private FPTS app;
 
@@ -41,7 +45,13 @@ public class PortfolioCreateController implements Initializable{
         assert createButton != null : "fx:id=\"createButton\" was not injected: check your FXML file.";
         createButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                //TODO Send a create command to create a new portfolio
+                if(!name.getText().equals("")) {
+                    app.createPortfolio(new Portfolio(null, name.getText()));
+                    app.gotoLogin();
+                } else{
+                    errorText.setText("Please input a name for the portfolio");
+                    errorText.setVisible(true);
+                }
             }
         });
 

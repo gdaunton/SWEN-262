@@ -1,10 +1,10 @@
 package main.model.holdings;
 
-import main.model.util.CSVImporter;
+        import main.model.util.CSVImporter;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+        import java.io.File;
+        import java.io.IOException;
+        import java.util.ArrayList;
 
 public class HoldingManager {
     public static ArrayList<Equity> equity_list = null;

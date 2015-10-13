@@ -12,6 +12,10 @@ public class User implements Serializable {
         this.passwordHash = hash;
     }
 
+    /**
+     * Get this users ID
+     * @return
+     */
     public int getId(){
         return this.id;
     }

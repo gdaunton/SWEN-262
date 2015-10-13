@@ -105,4 +105,13 @@ public class Equity extends Holding {
     public String toString(){
        return "";
     }
+    
+    public int compareTo(Object o) {
+        return 0;
+    }
+    
+    public String[] as_table_row() {
+        String[] out = new String[1];
+        return out;
+    }
 }
