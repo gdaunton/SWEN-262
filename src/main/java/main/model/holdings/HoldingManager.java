@@ -1,40 +1,56 @@
 package main.model.holdings;
 
-        import main.model.util.CSVImporter;
+import main.model.util.CSVImporter;
 
-        import java.io.File;
-        import java.io.IOException;
-        import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HoldingManager {
-    public static ArrayList<Equity> equity_list = null;
-
-    public static enum Filter{
-        TICKER,
-        //TODO add more filters
-    }
+    public static HashMap<Profile, ArrayList<Holding>> holding_list = null;
 
     public static void import_equities (File f) throws IOException {
-        equity_list = CSVImporter.ImportAllEquity(f);
+        holding_list = CSVImporter.ImportAllEquity(f);
     }
+	
+	public static void link_holdings(Profile p) {
+		holding_list.put(p, p.getHoldings());
+	}
 
-    public static ArrayList<Equity> search(String input) throws UnimportedEquities{
-        if(equity_list == null)
-            throw new UnimportedEquities("Please make sure that the Equities are imported before calling this funciton.");
-        //TODO do the search function
-        return null;
-    }
-
-    public static ArrayList<Equity> filter(Filter filter) throws UnimportedEquities {
-        if(equity_list == null)
-            throw new UnimportedEquities("Please make sure that the Equities are imported before calling this funciton.");
-        //TODO do filtering
-        return null;
-    }
-
-    public static class UnimportedEquities extends Exception{
-        public UnimportedEquities(String message){
-            super(message);
+    public static ArrayList<Holding> search(String input, String field_name) throws UnimportedEquitiesException {
+        if(holding_list == null) {
+            throw new UnimportedEquitiesException("Please make sure that the Equities are imported before calling this function.");
+		}
+        ArrayList<Holding> out = new ArrayList<Holding>();
+        for(Holding h : holding_list) {
+			if(h.getField(field_name).contains(input)) { out.add(h); }
         }
+        return out;
+    }
+
+    public static ArrayList<Holding> filter(String filter) throws UnimportedEquitiesException {
+        if(holding_list == null) {
+            throw new UnimportedEquitiesException("Please make sure that the Equities are imported before calling this function.");
+		}
+		
+		boolean no_accounts = false;
+		boolean no_equities = false;
+		
+		if(filter.contains('-na')) { no_accounts = true; }
+		if(filter.contains('-ne')) { no_equities = true; }
+		
+        ArrayList<Holding> out = new ArrayList<Holding>();
+        for(Holding h : holding_list) {
+            if(no_accounts && h instanceof Account) { continue; }
+			if(no_equities && h instanceof Equity)  { continue; }
+			
+			out.add(h);
+        }
+        return out;
+    }
+
+    public static class UnimportedEquitiesException extends Exception {
+        public UnimportedEquitiesException(String message){ super(message); }
     }
 }
