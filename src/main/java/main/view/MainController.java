@@ -53,11 +53,10 @@ public class MainController implements Initializable {
         equities = new ArrayList<Equity>();
         if(account_list != null && equity_list != null)
             initLists();
-        //gotoAccount(null);
+        gotoAccount(null);
     }
 
     private void initLists() {
-        System.out.println(account_list == null);
         account_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 equity_list.getSelectionModel().clearSelection();
@@ -70,7 +69,6 @@ public class MainController implements Initializable {
                 gotoEquity(equities.get(equity_list.getSelectionModel().getSelectedIndex()));
             }
         });
-        System.out.println("init");
     }
 
     public void sendCommand(HoldingCommand.Action type, Holding holding) {

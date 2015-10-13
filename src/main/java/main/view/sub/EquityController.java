@@ -57,14 +57,10 @@ public class EquityController implements Initializable{
     public void setEquity(MainController controller, Equity equity){
         this.controller = controller;
         this.equity = equity;
+        initValues();
     }
 
     public void initialize(URL location, ResourceBundle resources) {
-        name.setText(equity.getName());
-        ticker.setText(equity.getTickerSymbol());
-        ppshare.setText(Double.toString(equity.getPrice_per_share()));
-        shares.setText(Integer.toString(equity.getShares()));
-        total.setText(Double.toString(equity.getTotalValue()));
         shares.textProperty().addListener(new ChangeListener<String>() {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (newValue.matches("\\d+")) {
@@ -81,21 +77,6 @@ public class EquityController implements Initializable{
                 } else {
                     shares.setText(oldValue);
                 }
-            }
-        });
-        sectors.setItems(FXCollections.observableArrayList(equity.getMarketSectors()));
-
-        accounts = new ListView<Account>(FXCollections.observableArrayList(controller.getAccounts()));
-        accounts.setCellFactory(new Callback<ListView<Account>, ListCell<Account>>() {
-            public ListCell<Account> call(ListView<Account> list) {
-            return new AccountCell(EquityController.this);
-            }
-        });
-        accounts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Account>() {
-            public void changed(ObservableValue observable, Account oldValue, Account newValue) {
-                double transaction = Double.parseDouble(transaction_total.getText()) * (-1);
-                if(newValue.getBalance() > transaction)
-                    accounts.getSelectionModel().clearSelection();
             }
         });
 
@@ -133,6 +114,30 @@ public class EquityController implements Initializable{
                     else
                         controller.sendCommand(HoldingCommand.Action.MODIFY, getSelectedAccount(), HoldingCommand.Modification.DEPOSIT, transaction);
                 }
+            }
+        });
+    }
+
+    private void initValues() {
+        name.setText(equity.getName());
+        ticker.setText(equity.getTickerSymbol());
+        ppshare.setText(Double.toString(equity.getPrice_per_share()));
+        shares.setText(Integer.toString(equity.getShares()));
+        total.setText(Double.toString(equity.getTotalValue()));
+
+        sectors.setItems(FXCollections.observableArrayList(equity.getMarketSectors()));
+
+        accounts = new ListView<Account>(FXCollections.observableArrayList(controller.getAccounts()));
+        accounts.setCellFactory(new Callback<ListView<Account>, ListCell<Account>>() {
+            public ListCell<Account> call(ListView<Account> list) {
+                return new AccountCell(EquityController.this);
+            }
+        });
+        accounts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Account>() {
+            public void changed(ObservableValue observable, Account oldValue, Account newValue) {
+                double transaction = Double.parseDouble(transaction_total.getText()) * (-1);
+                if(newValue.getBalance() > transaction)
+                    accounts.getSelectionModel().clearSelection();
             }
         });
     }

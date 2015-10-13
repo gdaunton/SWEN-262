@@ -23,7 +23,6 @@ public class Controller {
         this.user = user;
         this.view = mainController;
         for(Portfolio p : portfolios){
-            System.out.println(p.getUsers().toString());
             if(p.getUsers().contains(user))
                 currentPortfolio = p;
         }
