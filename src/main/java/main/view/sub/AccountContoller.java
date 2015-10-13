@@ -30,9 +30,15 @@ public class AccountContoller implements Initializable{
 
     public void setAccount(Account account){
         this.account = account;
+        initValues();
     }
 
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    private void initValues() {
+        name.setText(account.getName());
+        balance.setText(Double.toString(account.getBalance()));
     }
 }
