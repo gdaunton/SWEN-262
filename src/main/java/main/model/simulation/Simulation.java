@@ -10,5 +10,5 @@ public abstract class Simulation {
 		YEAR
 	}
 
-    public abstract void simulate(int nSteps, STEP_SIZE step_size, Portfolio p);
+    public abstract double simulate(int nSteps, STEP_SIZE step_size, double start_val);
 }
