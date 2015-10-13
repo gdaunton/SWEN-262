@@ -44,7 +44,7 @@ public class HoldingManager {
 //				if(((Account)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
 			}
 			else {
-				ArrayList<Field> fields = new ArrayList<Field>(h.);
+				ArrayList<Field> fields = new ArrayList<Field>(h.getClass().getFields());
 				for(Field f : fields) { if(! f.getName().contains(field_name)) { fields.remove(f); } }
 				for(Field f : fields) {
 					if(f.get(h).toString().contains(input)) { out.add(h); }
