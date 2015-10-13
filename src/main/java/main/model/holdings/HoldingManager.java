@@ -19,19 +19,22 @@ public class HoldingManager {
 		holding_list.put(p, p.getHoldings());
 	}
 
-    public static ArrayList<Holding> search(String input, String field_name) throws UnimportedEquitiesException {
+    public static ArrayList<Holding> search(String input, String field_name, Portfolio p) throws UnimportedEquitiesException {
         if(equities_list == null) {
             throw new UnimportedEquitiesException("Please make sure that the Equities are imported before calling this function.");
 		}
         ArrayList<Holding> out = new ArrayList<Holding>();
-        for(Holding h : holding_list) {
+        for(Holding h : holding_list.get(p)) {
 			if(h instanceof Equity) {
+				ArrayList<Field> fields = new ArrayList<Field>((Equity)h).getFields());
 				if(((Equity)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
 			}
 			else if(h instanceof Account) {
+				ArrayList<Field> fields = new ArrayList<Field>((Account)h.getFields());
 				if(((Account)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
 			}
 			else {
+				ArrayList<Field> fields = new ArrayList<Field>(h.getFields());
 				if(h.getField(field_name).get(h).toString().contains(input)) { out.add(h); }
 			}
         }
