@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.sub.EquityController">
+   <children>
+      <TextField fx:id="name" layoutX="132.0" layoutY="40.0" />
+      <Label layoutX="93.0" layoutY="44.0" text="Name" />
+      <Label layoutX="85.0" layoutY="78.0" text="Balance   $" />
+      <TextField fx:id="balance" disable="true" editable="false" layoutX="132.0" layoutY="73.0" prefHeight="27.0" prefWidth="149.0" />
+      <TextField fx:id="date" disable="true" editable="false" layoutX="132.0" layoutY="115.0" />
+      <Label layoutX="55.0" layoutY="119.0" text="Date Opened" />
+      <Button fx:id="apply" defaultButton="true" disable="true" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" text="Apply" />
+      <Button fx:id="cancel" cancelButton="true" disable="true" layoutX="474.0" layoutY="361.0" mnemonicParsing="false" text="Cancel" />
+      <AnchorPane fx:id="transaction" layoutX="40.0" layoutY="146.0" prefHeight="240.0" prefWidth="277.0">
+         <children>
+            <Pane disable="true" layoutY="38.0" prefHeight="202.0" prefWidth="277.0">
+               <children>
+                  <Label layoutX="23.0" layoutY="18.0" text="Ammount   $" />
+                  <TextField fx:id="transaction_total" layoutX="83.0" layoutY="14.0" prefHeight="25.0" prefWidth="159.0" />
+                  <ChoiceBox fx:id="destination" layoutX="83.0" layoutY="48.0" prefHeight="25.0" prefWidth="159.0" />
+                  <Label layoutX="54.0" layoutY="52.0" text="Into" />
+                  <TextField fx:id="post" disable="true" editable="false" layoutX="83.0" layoutY="84.0" prefHeight="25.0" prefWidth="159.0" />
+                  <Label layoutX="8.0" layoutY="88.0" text="Post Balance   $" />
+               </children>
+            </Pane>
+            <RadioButton layoutX="103.0" layoutY="14.0" mnemonicParsing="false" text="Withdraw">
+               <toggleGroup>
+                  <ToggleGroup fx:id="action" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton layoutX="21.0" layoutY="14.0" mnemonicParsing="false" text="Deposit" toggleGroup="$action" />
+            <RadioButton layoutX="195.0" layoutY="14.0" mnemonicParsing="false" text="Transfer" toggleGroup="$action" />
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

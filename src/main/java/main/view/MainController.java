@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import main.FPTS;
-import main.controller.Command;
 import main.controller.Controller;
 import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
@@ -29,13 +28,14 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
 
     private Controller app;
+    private ArrayList<Holding> holdings;
 
     @FXML
     private Pane content;
     @FXML
-    private ListView account_list;
+    private ListView<String> account_list;
     @FXML
-    private ListView equity_list;
+    private ListView<String> equity_list;
 
     private Scene currentScene;
     private ArrayList<Account> accounts;
@@ -43,13 +43,21 @@ public class MainController implements Initializable {
 
     public void setApp(Controller app){
         this.app = app;
+        updateLists(holdings);
+        if(account_list != null && equity_list != null)
+            initLists();
     }
 
     public void initialize(URL location, ResourceBundle resources) {
         accounts = new ArrayList<Account>();
         equities = new ArrayList<Equity>();
-        updateLists(app.currentPortfolio.getHoldings());
+        if(account_list != null && equity_list != null)
+            initLists();
+        //gotoAccount(null);
+    }
 
+    private void initLists() {
+        System.out.println(account_list == null);
         account_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 equity_list.getSelectionModel().clearSelection();
@@ -62,6 +70,7 @@ public class MainController implements Initializable {
                 gotoEquity(equities.get(equity_list.getSelectionModel().getSelectedIndex()));
             }
         });
+        System.out.println("init");
     }
 
     public void sendCommand(HoldingCommand.Action type, Holding holding) {
@@ -97,22 +106,24 @@ public class MainController implements Initializable {
         equities.removeAll(equities);
         ObservableList<String> accountItems = FXCollections.observableArrayList();
         ObservableList<String> equityItems = FXCollections.observableArrayList();
-        for(Holding h : holdings) {
-            try {
-                Account a = (Account)h;
-                accountItems.add(a.getName());
-                accounts.add(a);
-            } catch (ClassCastException e){
+        if(holdings != null) {
+            for (Holding h : holdings) {
                 try {
-                    Equity eq = (Equity)h;
-                    equityItems.add(eq.getName());
-                    equities.add(eq);
-                } catch (ClassCastException e1) {
-                    System.err.println("Error sorting out accounts and equities from holdings");
+                    Account a = (Account) h;
+                    accountItems.add(a.getName());
+                    accounts.add(a);
+                } catch (ClassCastException e) {
+                    try {
+                        Equity eq = (Equity) h;
+                        equityItems.add(eq.getName());
+                        equities.add(eq);
+                    } catch (ClassCastException e1) {
+                        System.err.println("Error sorting out accounts and equities from holdings");
+                    }
+                } finally {
+                    account_list.setItems(accountItems);
+                    equity_list.setItems(equityItems);
                 }
-            } finally {
-                account_list.setItems(accountItems);
-                equity_list.setItems(equityItems);
             }
         }
     }

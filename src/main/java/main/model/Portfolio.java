@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Portfolio implements Serializable{
     private ArrayList<User> users;
-    private ArrayList<Holding> holdings;
+    private static ArrayList<Holding> holdings;
     private String name;
 
 
@@ -18,9 +18,10 @@ public class Portfolio implements Serializable{
      * Creates a new Portfolio Object
      * @param user The user to attach to this portfolio
      */
-    public Portfolio(ArrayList<User> user, String name) {
+    public Portfolio(ArrayList<User> users, String name) {
         this.users = users;
         this.name = name;
+        this.holdings = new ArrayList<Holding>();
     }
 
     /**
@@ -35,7 +36,7 @@ public class Portfolio implements Serializable{
      * Get all of the holdings attached to this portfolio
      * @return All of the accounts attached to this portfolio
      */
-    public ArrayList<Holding> getHoldings() {
+    public static ArrayList<Holding> getHoldings() {
         return holdings;
     }
 
