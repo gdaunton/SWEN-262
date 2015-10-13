@@ -173,7 +173,8 @@ public class EquityController implements Initializable{
             transaction_value = value;
         }
 
-        @Override protected void updateItem(Account item, boolean empty) {
+        @Override
+        protected void updateItem(Account item, boolean empty) {
             super.updateItem(item, empty);
             setText(item == null ? "" : item.getName() + "    " + NumberFormat.getCurrencyInstance().format(item.getBalance()));
 

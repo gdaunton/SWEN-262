@@ -17,7 +17,7 @@ import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
-import main.view.sub.AccountContoller;
+import main.view.sub.AccountController;
 import main.view.sub.EquityController;
 
 import java.io.InputStream;
@@ -137,8 +137,8 @@ public class MainController implements Initializable {
 
     public void gotoAccount(Account account) {
         try{
-            AccountContoller a = (AccountContoller)changeScene("account.fxml");
-            a.setAccount(account);
+            AccountController a = (AccountController)changeScene("account.fxml");
+            a.setAccount(this, account);
         } catch(Exception e) {
             System.err.println("Error inflating account view");
         }
