@@ -1,14 +1,10 @@
 package main.controller;
 
 
-import javafx.event.Event;
-import javafx.event.EventTarget;
-import javafx.event.EventType;
 import main.model.Portfolio;
 import main.model.User;
 import main.view.MainController;
 
-import javax.sound.sampled.Port;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -26,6 +22,11 @@ public class Controller {
         this.portfolios = portfolios;
         this.user = user;
         this.view = mainController;
+        for(Portfolio p : portfolios){
+            System.out.println(p.getUsers().toString());
+            if(p.getUsers().contains(user))
+                currentPortfolio = p;
+        }
         view.setApp(this);
     }
 

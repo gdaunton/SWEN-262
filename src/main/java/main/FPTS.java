@@ -129,13 +129,18 @@ public class FPTS extends Application{
      * @throws UserManager.InvalidPasswordException
      * @throws Exception
      */
-    public boolean handleLogin(String userId, String password) throws UserManager.InvalidPasswordException, Exception{
+    public boolean handleLogin(String userId, String password) throws UnassociatedUserException, UserManager.InvalidPasswordException{
         loggedUser = um.checkUser(userId, password);
         if (loggedUser == null)
             return false;
         else {
-            initPortfolio(loggedUser);
-            return true;
+            for(Portfolio p : portfolios) {
+                if (p.getUsers().contains(loggedUser)) {
+                    initPortfolio(loggedUser);
+                    return true;
+                }
+            }
+            throw new UnassociatedUserException("This user isn't associated with a portfolio");
         }
     }
 
@@ -152,7 +157,7 @@ public class FPTS extends Application{
         if (loggedUser == null)
             return false;
         else {
-            initPortfolio(loggedUser);
+            gotoLogin();
             return true;
         }
     }
@@ -288,6 +293,12 @@ public class FPTS extends Application{
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    public class UnassociatedUserException extends Exception {
+        public UnassociatedUserException(String message) {
+            super(message);
         }
     }
 }
