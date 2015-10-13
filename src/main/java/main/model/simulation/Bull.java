@@ -5,12 +5,13 @@ public class Bull extends Simulation{
     @Override
     public double simulate(int nSteps, STEP_SIZE step_size, double start_val) {
 		switch(step_size) {
-			DAY:
+			case DAY:
 					return start_val * (1.0 + change) * (1 / 365);
-			MONTH:
+			case MONTH:
 					return start_val * (1.0 + change) * (1 / 12);
-			YEAR:
+			case YEAR:
 					return start_val * (1.0 + change);
 		}
+		return 0;
     }
 }
