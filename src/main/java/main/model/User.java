@@ -12,7 +12,21 @@ public class User implements Serializable {
         this.passwordHash = hash;
     }
 
+    /**
+     * Get this users ID
+     * @return
+     */
     public int getId(){
         return this.id;
+    }
+
+    @Override
+    public String toString() {
+        return username;
+    }
+
+    @Override
+    public boolean equals(Object user) {
+        return ((User)user).username.equals(this.username) && ((User)user).passwordHash.equals(this.passwordHash);
     }
 }

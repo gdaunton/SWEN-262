@@ -4,11 +4,13 @@ import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
 
+import javax.sound.sampled.Port;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Portfolio{
+public class Portfolio implements Serializable{
     private ArrayList<User> users;
-    private ArrayList<Holding> holdings;
+    private static ArrayList<Holding> holdings;
     private String name;
 
 
@@ -16,9 +18,10 @@ public class Portfolio{
      * Creates a new Portfolio Object
      * @param user The user to attach to this portfolio
      */
-    public Portfolio(User user, String name) {
-        this.users.add(user);
+    public Portfolio(ArrayList<User> users, String name) {
+        this.users = users;
         this.name = name;
+        this.holdings = new ArrayList<Holding>();
     }
 
     /**
@@ -31,9 +34,9 @@ public class Portfolio{
 
     /**
      * Get all of the holdings attached to this portfolio
-     * @return All of the holdings attached to this portfolio
+     * @return All of the accounts attached to this portfolio
      */
-    public ArrayList<Holding> getHoldings() {
+    public static ArrayList<Holding> getHoldings() {
         return holdings;
     }
 
@@ -47,9 +50,35 @@ public class Portfolio{
 
     /**
      * Add a holding to this portfolio
-     * @param holding The holding to add
+     * @param holding The account to add
      */
     public void addHolding(Holding holding){
-        this.accounts.add(holding);
+        this.holdings.add(holding);
     }
+
+    /**
+     * Remove a holding from this portfolio
+     * @param holding The account to add
+     */
+    public void removeHolding(Holding holding){
+        this.holdings.remove(holding);
+    }
+
+    @Override
+    public boolean equals(Object p){
+        Portfolio port = (Portfolio)p;
+        if(!port.name.equals(this.name))
+            return false;
+        else{
+            for(int i = 0; i < this.holdings.size(); i++){
+                if(!port.holdings.get(i).equals(this.holdings.get(i)))
+                    return false;
+            }
+        }
+        return true;
+    }
+	
+	public double eval() {
+		
+	}
 }

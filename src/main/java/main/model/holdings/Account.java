@@ -10,19 +10,19 @@ public abstract class Account extends Holding {
         MONEY_MARKET
     };
 
-    private String bankName;
+    private String name;
     private double balance;
     private Date opened;
     private Type type;
 
     /**
      * Creates a new Account object
-     * @param bankName The name of the bank
+     * @param name The name of the bank
      * @param balance The initial balance in the account
      * @param type The type of the account
      */
-    public Account(String bankName, double balance, Type type) {
-        this.bankName = bankName;
+    public Account(String name, double balance, Type type) {
+        this.name = name;
         this.balance = balance;
         this.type = type;
         opened = Calendar.getInstance().getTime();
@@ -32,8 +32,8 @@ public abstract class Account extends Holding {
      * Get the name of the Bank
      * @return The name of the bank
      */
-    public String getBankName() {
-        return bankName;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -48,14 +48,12 @@ public abstract class Account extends Holding {
      * Withdraws the given ammount from the account and returns the remaining balance
      * @param ammount The ammount to withdraw
      * @return The remaining account balance
-     * @throws NegativeValueException
-     * @throws OverDrawException
      */
-    public double withdraw(double ammount) throws NegativeValueException, OverDrawException{
+    public double withdraw(double ammount) {
         if(ammount < 0)
-            throw new NegativeValueException("Please give a positive value");
+            return this.balance;
         if(balance - ammount < 0)
-            throw new OverDrawException("You cannot overdraw your account");
+            return this.balance;
         return this.balance -= ammount;
     }
 
@@ -63,11 +61,10 @@ public abstract class Account extends Holding {
      * Deposits the given ammount from the account and returns the new balance
      * @param ammount The ammount to deposit
      * @return The new account balance
-     * @throws NegativeValueException
      */
-    public double deposit(double ammount) throws NegativeValueException{
+    public double deposit(double ammount) {
         if(ammount < 0)
-            throw new NegativeValueException("Please give a positive value");
+            return this.balance;
         return this.balance += ammount;
     }
 
@@ -76,17 +73,14 @@ public abstract class Account extends Holding {
      * @param ammount The ammount to transfer
      * @param account The account to transfer the ammount to
      * @return The remaining account balance
-     * @throws NullAccountException
-     * @throws NegativeValueException
-     * @throws OverDrawException
      */
-    public double transfer(double ammount, Account account) throws NullAccountException, NegativeValueException, OverDrawException{
+    public double transfer(double ammount, Account account) {
         if(account == null)
-            throw new NullAccountException("Please give a valid account");
+            return this.getBalance();
         if(ammount < 0)
-            throw new NegativeValueException("Please give a positive value");
+            return this.getBalance();
         if(balance - ammount < 0)
-            throw new OverDrawException("You cannot overdraw your account");
+            return this.getBalance();
         this.withdraw(ammount);
         account.deposit(ammount);
         return this.getBalance();

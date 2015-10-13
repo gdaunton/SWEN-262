@@ -3,16 +3,18 @@ package main.model;
 import main.model.util.HashSlingingSlasher;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class UserManager{
-    private File userFile;
+    private static File userFile;
     private int currentId;
 
     /**
      * Start up the User Manager
      */
-    public UserManager() throws IOException{
-        userFile = new File("users.dat");
+    public UserManager(String dataRoot) throws IOException{
+        userFile = new File(dataRoot + "users.dat");
+
         if(!userFile.exists())
             userFile.createNewFile();
         try {
@@ -74,7 +76,7 @@ public class UserManager{
      * @throws InvalidPasswordException
      * @throws Exception
      */
-    public User checkUser(String username, String password) throws InvalidPasswordException, Exception{
+    public User checkUser(String username, String password) throws InvalidPasswordException{
         User current;
         try {
             InputStream buffer = new BufferedInputStream(new FileInputStream(userFile));
@@ -88,10 +90,32 @@ public class UserManager{
             }
             buffer.close();
             s.close();
-        } catch (EOFException e) {
+        } catch (Exception e) {
             return null;
         }
         return null;
+    }
+
+    /**
+     * Returns a list of all of the registered users.
+     * @return A list of all of the registered users.
+     * @throws Exception
+     */
+    public static ArrayList<User> getAllUsers() {
+        ArrayList<User> temp = new ArrayList<User>();
+        User current;
+        try {
+            InputStream buffer = new BufferedInputStream(new FileInputStream(userFile));
+            ObjectInputStream s = new ObjectInputStream(buffer);
+            while (buffer.available() > 0 && (current = (User) s.readObject()) != null) {
+                temp.add(current);
+            }
+            buffer.close();
+            s.close();
+        } catch (Exception e) {
+            return temp;
+        }
+        return temp;
     }
 
     /**
