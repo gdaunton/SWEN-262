@@ -28,7 +28,7 @@ public class HoldingManager {
         ArrayList<Holding> out = new ArrayList<Holding>();
         for(Holding h : holding_list.get(p)) {
 			if(h instanceof Equity) {
-				ArrayList<Field> fields = new ArrayList<Field>((Equity)h).getFields());
+				ArrayList<Field> fields = new ArrayList<Field>((Equity)h).getClass().getFields());
 				for(Field f : fields) { if(! f.getName().contains(field_name)) { fields.remove(f); } }
 				for(Field f : fields) {
 					if(f.get(h).toString().contains(input)) { out.add(h); }
@@ -36,7 +36,7 @@ public class HoldingManager {
 //				if(((Equity)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
 			}
 			else if(h instanceof Account) {
-				ArrayList<Field> fields = new ArrayList<Field>((Account)h.getFields());
+				ArrayList<Field> fields = new ArrayList<Field>(((Account)h).getClass().getFields());
 				for(Field f : fields) { if(! f.getName().contains(field_name)) { fields.remove(f); } }
 				for(Field f : fields) {
 					if(f.get(h).toString().contains(input)) { out.add(h); }
@@ -55,7 +55,7 @@ public class HoldingManager {
         return out;
     }
 
-    public static ArrayList<Holding> filter(String filter) throws UnimportedEquitiesException {
+    public static ArrayList<Holding> filter(String filter, Portfolio p) throws UnimportedEquitiesException {
         if(equities_list == null) {
             throw new UnimportedEquitiesException("Please make sure that the Equities are imported before calling this function.");
 		}
@@ -67,7 +67,7 @@ public class HoldingManager {
 		if(filter.contains("-ne")) { no_equities = true; }
 		
         ArrayList<Holding> out = new ArrayList<Holding>();
-        for(Holding h : holding_list) {
+        for(Holding h : holding_list.get(p)) {
             if(no_accounts && h instanceof Account) { continue; }
 			if(no_equities && h instanceof Equity)  { continue; }
 			
