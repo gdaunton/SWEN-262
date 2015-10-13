@@ -27,15 +27,27 @@ public class HoldingManager {
         for(Holding h : holding_list.get(p)) {
 			if(h instanceof Equity) {
 				ArrayList<Field> fields = new ArrayList<Field>((Equity)h).getFields());
-				if(((Equity)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
+				for(Field f : fields) { if(! f.getName().contains(field_name)) { fields.remove(f); } }
+				for(Field f : fields) {
+					if(f.get(h).toString().contains(input)) { out.add(h); }
+				}
+//				if(((Equity)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
 			}
 			else if(h instanceof Account) {
 				ArrayList<Field> fields = new ArrayList<Field>((Account)h.getFields());
-				if(((Account)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
+				for(Field f : fields) { if(! f.getName().contains(field_name)) { fields.remove(f); } }
+				for(Field f : fields) {
+					if(f.get(h).toString().contains(input)) { out.add(h); }
+				}
+//				if(((Account)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
 			}
 			else {
 				ArrayList<Field> fields = new ArrayList<Field>(h.getFields());
-				if(h.getField(field_name).get(h).toString().contains(input)) { out.add(h); }
+				for(Field f : fields) { if(! f.getName().contains(field_name)) { fields.remove(f); } }
+				for(Field f : fields) {
+					if(f.get(h).toString().contains(input)) { out.add(h); }
+				}
+//				if(h.getField(field_name).get(h).toString().contains(input)) { out.add(h); }
 			}
         }
         return out;
