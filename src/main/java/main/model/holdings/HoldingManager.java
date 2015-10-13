@@ -25,7 +25,15 @@ public class HoldingManager {
 		}
         ArrayList<Holding> out = new ArrayList<Holding>();
         for(Holding h : holding_list) {
-			if(h.getField(field_name).contains(input)) { out.add(h); }
+			if(h instanceof Equity) {
+				if(((Equity)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
+			}
+			else if(h instanceof Account) {
+				if(((Account)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
+			}
+			else {
+				if(h.getField(field_name).get(h).toString().contains(input)) { out.add(h); }
+			}
         }
         return out;
     }
