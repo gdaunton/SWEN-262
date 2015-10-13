@@ -77,4 +77,8 @@ public class Portfolio implements Serializable{
         }
         return true;
     }
+	
+	public double eval() {
+		
+	}
 }

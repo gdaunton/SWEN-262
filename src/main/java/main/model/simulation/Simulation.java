@@ -2,6 +2,8 @@ package main.model.simulation;
 
 public abstract class Simulation {
 	
+	double change = 0;
+	
 	enum STEP_SIZE {
 		DAY,
 		MONTH,
