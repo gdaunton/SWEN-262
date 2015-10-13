@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HoldingManager {
-    public static HashMap<Profile, ArrayList<Holding>> holding_list = null;
+    public static HashMap<Profile, ArrayList<Holding>> holding_list = new HashMap<Profile, ArrayList<Holding>>;
+	public static ArrayList<Equity> equities_list = null;
 
     public static void import_equities (File f) throws IOException {
-        holding_list = CSVImporter.ImportAllEquity(f);
+        equities_list = CSVImporter.ImportAllEquity(f);
     }
 	
 	public static void link_holdings(Profile p) {
@@ -19,7 +20,7 @@ public class HoldingManager {
 	}
 
     public static ArrayList<Holding> search(String input, String field_name) throws UnimportedEquitiesException {
-        if(holding_list == null) {
+        if(equities_list == null) {
             throw new UnimportedEquitiesException("Please make sure that the Equities are imported before calling this function.");
 		}
         ArrayList<Holding> out = new ArrayList<Holding>();
@@ -30,7 +31,7 @@ public class HoldingManager {
     }
 
     public static ArrayList<Holding> filter(String filter) throws UnimportedEquitiesException {
-        if(holding_list == null) {
+        if(equities_list == null) {
             throw new UnimportedEquitiesException("Please make sure that the Equities are imported before calling this function.");
 		}
 		
