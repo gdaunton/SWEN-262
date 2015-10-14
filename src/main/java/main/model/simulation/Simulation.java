@@ -1,5 +1,9 @@
 package main.model.simulation;
 
+import main.model.Portfolio;
+import main.model.holdings.Equity;
+import main.model.holdings.Holding;
+
 public abstract class Simulation {
 	
 	double change = 0;
@@ -13,7 +17,7 @@ public abstract class Simulation {
     public abstract double simulate(int nSteps, STEP_SIZE step_size, double start_val);
 	
 	public Portfolio simulate(int nSteps, STEP_SIZE step_size, Portfolio p) {
-		Portfolio out = new Portfolio(p.getUsers(), p.name)
+		Portfolio out = new Portfolio(p.getUsers(), p.name);
 		for(Holding h : p.getHoldings()) { out.addHolding(h); }
 		
 		double ne = p.eval_equities();
@@ -21,7 +25,7 @@ public abstract class Simulation {
 		double ac = p.eval_accounts();
 		
 		for(Holding h : out.getHoldings()) {
-			if(h instanceof Equity) { ((Equity)h).setPrice_per_share(simulate(nSteps, step_size, ((Equity)h).getPrice_per_Share())); }
+			if(h instanceof Equity) { ((Equity)h).setPrice_per_share(simulate(nSteps, step_size, ((Equity)h).getPrice_per_share())); }
 		}
 		
 		return out;

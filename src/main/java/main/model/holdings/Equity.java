@@ -23,7 +23,7 @@ public class Equity extends Holding implements Serializable{
     private int shares;
     private double price_per_share;
     private double totalValue;
-    private Type type;
+    public Type type;
     private ArrayList<String> marketSectors;
 
     /**

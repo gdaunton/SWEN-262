@@ -5,12 +5,12 @@ import main.model.holdings.Equity;
 import main.model.holdings.Holding;
 
 import javax.sound.sampled.Port;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Portfolio implements Serializable{
     private ArrayList<User> users;
-    private static ArrayList<Holding> holdings;
+    private ArrayList<Holding> holdings;
     public String name;
 
 
@@ -98,8 +98,8 @@ public class Portfolio implements Serializable{
 		return eval_accounts() + eval_equities();
 	}
 	
-	public void import_holdings(File f) { import_holdings(f, false); }
-	public void import_holdings(File f, boolean clear_old) {
+	public void import_holdings(File f) throws IOException { import_holdings(f, false); }
+	public void import_holdings(File f, boolean clear_old) throws IOException {
 		if(clear_old) { holdings.clear(); }
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		String str = null;
@@ -115,20 +115,48 @@ public class Portfolio implements Serializable{
 				ArrayList<String> sectors = new ArrayList<String>();
 				for(int i = 5; i < fs.length; ++i) { sectors.add(fs[i]); }
 				
-				holdings.add(new Equity(Equity.typeFromString(type), ticker, name, Integer.parseInt(shares), Double.parseDouble(currPr), sectors));
+				holdings.add(new Equity(Equity.typeFromString(eqType), ticker, eqName, Integer.parseInt(shares), Double.parseDouble(currPr), sectors));
 			}
 			else {				//account
 				String acName = fs[0];
 				String acType = fs[1];
-				String Balnce = fs[2];
+				String balnce = fs[2];
 				String dateSt = fs[3];
 				
-				holdings.add(new Account(acName, Double.parseDouble(Balnce), Account.typeFromString(acType)));
+				Account a = new Account(acName, Double.parseDouble(balnce), Account.typeFromString(acType));
+				a.opened = Account.parseDate(dateSt);
+				holdings.add(a);
 			}
 		}
 	}
 	
-	public void export_holdings(File f) {
-		
+	public void export_holdings(File f) throws IOException {
+		FileWriter fw = new FileWriter(f);
+		boolean first = true;
+		for(Holding h : holdings) {
+			if(!first) { fw.write("\n"); }
+			first = false;
+			
+			String line = "";
+			if(h instanceof Equity) {
+				Equity e = (Equity)h;
+				line = line.concat(e.getTickerSymbol());
+				line = line.concat("," + e.getShares());
+				line = line.concat("," + e.getPrice_per_share());
+				line = line.concat("," + e.getName());
+				line = line.concat("," + e.type);
+				
+				for(String s : e.getMarketSectors()) { line = line.concat("," + s); }
+			}
+			else {
+				Account a = (Account)h;
+				line = line.concat(a.getName());
+				line = line.concat("," + a.getType());
+				line = line.concat("," + a.getBalance());
+				
+				line = line.concat("," + a.getOpenedString());
+			}
+			fw.write(line);
+		}
 	}
 }
