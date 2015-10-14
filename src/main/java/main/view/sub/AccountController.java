@@ -86,7 +86,29 @@ public class AccountController implements Initializable{
         });
         action.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                showTransaction();
+                if(action.getSelectedToggle() != null) {
+                    transaction.setDisable(false);
+                    transaction_total.textProperty().addListener(new ChangeListener<String>() {
+                        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                            if (newValue.matches("\\d+")) {
+                                try {
+                                    int value = Integer.parseInt(newValue);
+                                    if (value < 0)
+                                        transaction_total.setText(oldValue);
+                                    else {
+                                        showTransaction(value);
+                                    }
+                                } catch (Exception e){
+                                    transaction_total.setText(oldValue);
+                                }
+                            } else {
+                                transaction_total.setText(oldValue);
+                            }
+                        }
+                    });
+                }else {
+                    transaction.setDisable(true);
+                }
             }
         });
     }
@@ -99,22 +121,16 @@ public class AccountController implements Initializable{
         destination.setItems(FXCollections.observableArrayList(controller.getAccounts()));
     }
 
-    private void showTransaction() {
+    private void showTransaction(double value) {
         apply.setDisable(false);
         cancel.setDisable(false);
-        transaction.setDisable(false);
         final double transaction_value;
         if(action.getSelectedToggle().equals(withdraw))
-            transaction_value = (-1) * Double.parseDouble(transaction_total.getText());
+            transaction_value = (-1) * value;
         else if(action.getSelectedToggle().equals(deposit))
-            transaction_value = Double.parseDouble(transaction_total.getText());
+            transaction_value = value;
         else
-            transaction_value = Double.parseDouble(transaction_total.getText());
-        transaction_total.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                post.setText(Double.toString(account.getBalance() + transaction_value));
-            }
-        });
-        transaction_total.setText(Double.toString(transaction_value));
+            transaction_value = value;
+        post.setText(Double.toString(account.getBalance() + transaction_value));
     }
 }
