@@ -46,7 +46,7 @@ public class EquityController implements Initializable{
     private MainController controller;
     private ArrayList<OnTransactionListener> transactionListeners;
 
-    public void setEquity(MainController controller){
+    public void setController(MainController controller) {
         this.controller = controller;
         initValues();
     }

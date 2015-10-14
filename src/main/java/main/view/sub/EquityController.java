@@ -108,7 +108,7 @@ public class EquityController implements Initializable{
                 cancel.setDisable(true);
                 controller.sendCommand(HoldingCommand.Action.MODIFY, equity, HoldingCommand.Modification.SHARES, Double.parseDouble(shares.getText()));
                 if(!outside.isSelected()) {
-                    double transaction = equity.getTotalValue() - (equity.getPrice_per_share() * Integer.parseInt(shares.getText()));
+                    double transaction = equity.getValue() - (equity.getPrice_per_share() * Integer.parseInt(shares.getText()));
                     if (transaction < 0)
                         controller.sendCommand(HoldingCommand.Action.MODIFY, getSelectedAccount(), HoldingCommand.Modification.WITHDRAW, Math.abs(transaction));
                     else
@@ -123,7 +123,7 @@ public class EquityController implements Initializable{
         ticker.setText(equity.getTickerSymbol());
         ppshare.setText(Double.toString(equity.getPrice_per_share()));
         shares.setText(Integer.toString(equity.getShares()));
-        total.setText(Double.toString(equity.getTotalValue()));
+        total.setText(Double.toString(equity.getValue()));
 
         sectors.setItems(FXCollections.observableArrayList(equity.getMarketSectors()));
 
@@ -151,7 +151,7 @@ public class EquityController implements Initializable{
         cancel.setDisable(false);
         purchase.setVisible(true);
         purchase.setDisable(true);
-        double transaction_value = equity.getTotalValue()-(equity.getPrice_per_share()*value);
+        double transaction_value = equity.getValue()-(equity.getPrice_per_share()*value);
         transaction_total.setText(Double.toString(transaction_value));
         for(OnTransactionListener l : transactionListeners)
             l.update(transaction_value);

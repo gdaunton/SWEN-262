@@ -62,7 +62,7 @@ public class MainController implements Initializable {
 
     public void setApp(Controller app){
         this.app = app;
-        updateLists(holdings);
+        updateLists(app.currentPortfolio.getHoldings());
         if(account_list != null && equity_list != null)
             initLists();
     }
@@ -104,12 +104,20 @@ public class MainController implements Initializable {
         });
         account.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-
+                try {
+                    ((main.view.dialog.AccountController) createDialogScene("account.fxml")).setController(MainController.this);
+                } catch (Exception e) {
+                    System.err.println("Error inflating new account dialog");
+                }
             }
         });
         equity.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-
+                try {
+                    ((main.view.dialog.EquityController) createDialogScene("equity.fxml")).setController(MainController.this);
+                } catch (Exception e) {
+                    System.err.println("Error inflating new equity dialog");
+                }
             }
         });
     }

@@ -22,6 +22,7 @@
             <Font name="Segoe UI Light" size="36.0" />
          </font>
       </Text>
+      <Text fx:id="error" fill="#cd0000" layoutX="217.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" />
       
    </children>
 </Pane>

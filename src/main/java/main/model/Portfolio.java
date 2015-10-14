@@ -36,7 +36,7 @@ public class Portfolio implements Serializable{
      * Get all of the holdings attached to this portfolio
      * @return All of the accounts attached to this portfolio
      */
-    public static ArrayList<Holding> getHoldings() {
+    public ArrayList<Holding> getHoldings() {
         return holdings;
     }
 
