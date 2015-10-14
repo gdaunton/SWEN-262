@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.dialog.AccountController">
+   <children>
+      <TextField fx:id="name" layoutX="248.0" layoutY="130.0" />
+      <Label layoutX="209.0" layoutY="134.0" text="Name" />
+      <Label layoutX="203.0" layoutY="168.0" text="Balance" />
+      <TextField fx:id="balance" layoutX="248.0" layoutY="163.0" prefHeight="27.0" prefWidth="149.0" />
+      <TextField fx:id="date" disable="true" editable="false" layoutX="248.0" layoutY="205.0" />
+      <Label layoutX="217.0" layoutY="209.0" text="Date" />
+      <ChoiceBox fx:id="type" layoutX="248.0" layoutY="245.0" prefWidth="150.0" />
+      <Label layoutX="215.0" layoutY="249.0" text="Type" />
+      <Button fx:id="create" defaultButton="true" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" text="Create" />
+      <Button fx:id="cancel" cancelButton="true" layoutX="472.0" layoutY="361.0" mnemonicParsing="false" text="Cancel" />
+      <Text layoutX="67.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Account">
+         <font>
+            <Font name="Segoe UI Light" size="36.0" />
+         </font>
+      </Text>
+      
+   </children>
+</Pane>

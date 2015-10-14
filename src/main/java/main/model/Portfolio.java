@@ -16,7 +16,7 @@ public class Portfolio implements Serializable{
 
     /**
      * Creates a new Portfolio Object
-     * @param user The user to attach to this portfolio
+     * @param users The users to attach to this portfolio
      */
     public Portfolio(ArrayList<User> users, String name) {
         this.users = users;
@@ -79,6 +79,9 @@ public class Portfolio implements Serializable{
     }
 	
 	public double eval() {
-		
+        double total = 0;
+        for(Holding h : holdings)
+            total += h.getValue();
+		return  total;
 	}
 }

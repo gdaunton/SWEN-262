@@ -10,16 +10,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.util.Callback;
 import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
 import main.view.MainController;
-import main.view.custom.CustomComboBox;
 
 import java.net.URL;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AccountController implements Initializable{
@@ -31,7 +26,7 @@ public class AccountController implements Initializable{
     @FXML
     private TextField date;
     @FXML
-    private CustomComboBox<Account> destination;
+    private ComboBox<Account> destination;
     @FXML
     private TextField post;
     @FXML
@@ -70,6 +65,7 @@ public class AccountController implements Initializable{
                 apply.setDisable(true);
                 cancel.setDisable(true);
                 transaction_total.setText("");
+                action.selectToggle(null);
             }
         });
         apply.setOnAction(new EventHandler<ActionEvent>() {
@@ -85,6 +81,7 @@ public class AccountController implements Initializable{
                 else if(action.getSelectedToggle().equals(transfer))
                     controller.sendCommand(HoldingCommand.Action.MODIFY, account, destination.getValue(), HoldingCommand.Modification.TRANSFER, value);
                 transaction_total.setText("");
+                action.selectToggle(null);
             }
         });
         action.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {

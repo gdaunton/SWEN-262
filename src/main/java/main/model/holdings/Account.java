@@ -102,6 +102,10 @@ public abstract class Account extends Holding {
         return opened;
     }
 
+    public double getValue() {
+        return getBalance();
+    }
+
     public class OverDrawException extends Exception{
         public OverDrawException(String message){
             super(message);

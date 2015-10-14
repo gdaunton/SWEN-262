@@ -4,13 +4,17 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import main.FPTS;
 import main.controller.Controller;
 import main.controller.command.HoldingCommand;
@@ -36,6 +40,21 @@ public class MainController implements Initializable {
     private ListView<String> account_list;
     @FXML
     private ListView<String> equity_list;
+    @FXML
+    private MenuItem inport;
+    @FXML
+    private MenuItem export;
+    @FXML
+    private MenuItem bear;
+    @FXML
+    private MenuItem bull;
+    @FXML
+    private MenuItem no_grow;
+    @FXML
+    private MenuItem account;
+    @FXML
+    private MenuItem equity;
+
 
     private Scene currentScene;
     private ArrayList<Account> accounts;
@@ -49,11 +68,50 @@ public class MainController implements Initializable {
     }
 
     public void initialize(URL location, ResourceBundle resources) {
+        initMenu();
         accounts = new ArrayList<Account>();
         equities = new ArrayList<Equity>();
         if(account_list != null && equity_list != null)
             initLists();
         gotoAccount(null);
+    }
+
+    private void initMenu() {
+        inport.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+            }
+        });
+        export.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+            }
+        });
+        bear.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+            }
+        });
+        bull.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+            }
+        });
+        no_grow.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+            }
+        });
+        account.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+            }
+        });
+        equity.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+            }
+        });
     }
 
     private void initLists() {
@@ -152,6 +210,24 @@ public class MainController implements Initializable {
         }
     }
 
+    private Initializable createDialogScene(String fxml) throws Exception {
+        fxml = "/dialog/" + fxml;
+        Stage s = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        InputStream in = getClass().getResourceAsStream(fxml);
+        loader.setBuilderFactory(new JavaFXBuilderFactory());
+        loader.setLocation(FPTS.class.getResource(fxml));
+        Pane page;
+        try {
+            page = (Pane) loader.load(in);
+        } finally {
+            in.close();
+        }
+        Scene newScene = new Scene(page);
+        s.setScene(newScene);
+        s.show();
+        return loader.getController();
+    }
     private Initializable changeScene(String fxml) throws Exception {
         fxml = "/main/" + fxml;
         FXMLLoader loader = new FXMLLoader();

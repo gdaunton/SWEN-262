@@ -1,8 +1,9 @@
 package main.model.holdings;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Equity extends Holding {
+public class Equity extends Holding implements Serializable{
 
     public enum Type{
         STOCK,
@@ -15,7 +16,6 @@ public class Equity extends Holding {
     private int shares;
     private double price_per_share;
     private double totalValue;
-    private int marketIndex;
     private Type type;
     private ArrayList<String> marketSectors;
 
@@ -90,7 +90,7 @@ public class Equity extends Holding {
      * Get the total value of the Equity
      * @return The total value of the Equity
      */
-    public double getTotalValue() {
+    public double getValue() {
         return totalValue;
     }
 
