@@ -16,7 +16,6 @@ import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.view.MainController;
-import org.apache.commons.lang.SerializationUtils;
 
 import java.net.URL;
 import java.text.NumberFormat;
@@ -96,8 +95,7 @@ public class EquityController implements Initializable{
                 apply.setDisable(true);
                 cancel.setDisable(true);
                 if(!equity_list.getSelectionModel().isEmpty() && (!accounts.getSelectionModel().isEmpty() || outside.isSelected())) {
-                    Equity equity = (Equity)SerializationUtils.clone(equity_list.getSelectionModel().getSelectedItem());
-                    equity.setShares(Integer.parseInt(shares.getText()));
+                    Equity equity = equity_list.getSelectionModel().getSelectedItem();
                     controller.sendCommand(HoldingCommand.Action.ADD, equity);
                     if (!outside.isSelected()) {
                         double transaction = equity.getValue() - (equity.getPrice_per_share() * Integer.parseInt(shares.getText()));
