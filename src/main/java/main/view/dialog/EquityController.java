@@ -1,4 +1,4 @@
-package main.view.sub;
+package main.view.dialog;
 
 
 import javafx.beans.value.ChangeListener;
@@ -16,6 +16,7 @@ import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.view.MainController;
+import org.apache.commons.lang.SerializationUtils;
 
 import java.net.URL;
 import java.text.NumberFormat;
@@ -26,37 +27,27 @@ import java.util.ResourceBundle;
 public class EquityController implements Initializable{
 
     @FXML
-    private TextField name;
-    @FXML
-    private TextField ticker;
-    @FXML
-    private TextField ppshare;
-    @FXML
     private TextField shares;
-    @FXML
-    private ListView sectors;
-    @FXML
-    private TextField total;
     @FXML
     private Pane purchase;
     @FXML
-    private TextField transaction_total;
-    @FXML
-    private ListView accounts;
+    private ListView<Account> accounts;
     @FXML
     private CheckBox outside;
     @FXML
     private Button cancel;
     @FXML
     private Button apply;
+    @FXML
+    private ListView<Equity> equity_list;
+    @FXML
+    private TextField transaction_total;
 
-    private Equity equity;
     private MainController controller;
     private ArrayList<OnTransactionListener> transactionListeners;
 
-    public void setEquity(MainController controller, Equity equity){
+    public void setController(MainController controller) {
         this.controller = controller;
-        this.equity = equity;
         initValues();
     }
 
@@ -92,41 +83,40 @@ public class EquityController implements Initializable{
         });
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-            purchase.setVisible(false);
             purchase.setDisable(true);
             apply.setDisable(true);
             cancel.setDisable(true);
-            shares.setText(Integer.toString(equity.getShares()));
+            shares.setText("");
             }
         });
 
         apply.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                purchase.setVisible(false);
                 purchase.setDisable(true);
                 apply.setDisable(true);
                 cancel.setDisable(true);
-                controller.sendCommand(HoldingCommand.Action.MODIFY, equity, HoldingCommand.Modification.SHARES, Double.parseDouble(shares.getText()));
-                if(!outside.isSelected()) {
-                    double transaction = equity.getValue() - (equity.getPrice_per_share() * Integer.parseInt(shares.getText()));
-                    if (transaction < 0)
-                        controller.sendCommand(HoldingCommand.Action.MODIFY, getSelectedAccount(), HoldingCommand.Modification.WITHDRAW, Math.abs(transaction));
-                    else
-                        controller.sendCommand(HoldingCommand.Action.MODIFY, getSelectedAccount(), HoldingCommand.Modification.DEPOSIT, transaction);
+                if(!equity_list.getSelectionModel().isEmpty() && (!accounts.getSelectionModel().isEmpty() || outside.isSelected())) {
+                    Equity equity = (Equity)SerializationUtils.clone(equity_list.getSelectionModel().getSelectedItem());
+                    equity.setShares(Integer.parseInt(shares.getText()));
+                    controller.sendCommand(HoldingCommand.Action.ADD, equity);
+                    if (!outside.isSelected()) {
+                        double transaction = equity.getValue() - (equity.getPrice_per_share() * Integer.parseInt(shares.getText()));
+                        if (transaction < 0)
+                            controller.sendCommand(HoldingCommand.Action.MODIFY, getSelectedAccount(), HoldingCommand.Modification.WITHDRAW, Math.abs(transaction));
+                        else
+                            controller.sendCommand(HoldingCommand.Action.MODIFY, getSelectedAccount(), HoldingCommand.Modification.DEPOSIT, transaction);
+                    }
                 }
             }
         });
     }
 
     private void initValues() {
-        name.setText(equity.getName());
-        ticker.setText(equity.getTickerSymbol());
-        ppshare.setText(Double.toString(equity.getPrice_per_share()));
-        shares.setText(Integer.toString(equity.getShares()));
-        total.setText(Double.toString(equity.getValue()));
+        equity_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Equity>() {
+            public void changed(ObservableValue<? extends Equity> observable, Equity oldValue, Equity newValue) {
 
-        sectors.setItems(FXCollections.observableArrayList(equity.getMarketSectors()));
-
+            }
+        });
         accounts = new ListView<Account>(FXCollections.observableArrayList(controller.getAccounts()));
         accounts.setCellFactory(new Callback<ListView<Account>, ListCell<Account>>() {
             public ListCell<Account> call(ListView<Account> list) {
@@ -143,14 +133,11 @@ public class EquityController implements Initializable{
     }
 
     private Account getSelectedAccount() {
-        return controller.getAccounts().get(accounts.getSelectionModel().getSelectedIndex());
+        return accounts.getSelectionModel().getSelectedItem();
     }
 
     private void showTransaction(int value) {
-        apply.setDisable(false);
-        cancel.setDisable(false);
-        purchase.setVisible(true);
-        purchase.setDisable(true);
+        Equity equity = equity_list.getSelectionModel().getSelectedItem();
         double transaction_value = equity.getValue()-(equity.getPrice_per_share()*value);
         transaction_total.setText(Double.toString(transaction_value));
         for(OnTransactionListener l : transactionListeners)

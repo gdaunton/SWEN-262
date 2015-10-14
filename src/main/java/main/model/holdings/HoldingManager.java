@@ -22,32 +22,74 @@ public class HoldingManager {
 		holding_list.put(p, p.getHoldings());
 	}
 
-    public static ArrayList<Holding> search(String input, String field_name, Portfolio p) throws UnimportedEquitiesException, IllegalAccessException {
-        if(equities_list == null) {
-            throw new UnimportedEquitiesException("Please make sure that the Equities are imported before calling this function.");
-		}
-        ArrayList<Holding> out = new ArrayList<Holding>();
-        for(Holding h : holding_list.get(p)) {
-			ArrayList<Field> fields = null;
-			if(h instanceof Equity) {
-				fields = new ArrayList<Field>(Arrays.asList(((Equity) h).getClass().getFields()));
+    public static ArrayList<Holding> search(String input, String field_name, Portfolio p) throws IllegalAccessException {
+		try {
+			ArrayList<Holding> out = new ArrayList<Holding>();
+			for (Holding h : holding_list.get(p)) {
+				ArrayList<Field> fields = null;
+				if (h instanceof Equity) {
+					fields = new ArrayList<Field>(Arrays.asList(((Equity) h).getClass().getFields()));
 //				if(((Equity)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
-			}
-			else if(h instanceof Account) {
-				fields = new ArrayList<Field>(Arrays.asList(((Account) h).getClass().getFields()));
+				} else if (h instanceof Account) {
+					fields = new ArrayList<Field>(Arrays.asList(((Account) h).getClass().getFields()));
 //				if(((Account)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
-			}
-			else {
-				fields = new ArrayList<Field>(Arrays.asList(h.getClass().getFields()));
+				} else {
+					fields = new ArrayList<Field>(Arrays.asList(h.getClass().getFields()));
 //				if(h.getField(field_name).get(h).toString().contains(input)) { out.add(h); }
+				}
+				for (Field f : fields) {
+					if (!f.getName().contains(field_name)) {
+						fields.remove(f);
+					}
+				}
+				for (Field f : fields) {
+					if (f.get(h).toString().contains(input)) {
+						out.add(h);
+					}
+				}
 			}
-			for(Field f : fields) { if(! f.getName().contains(field_name)) { fields.remove(f); } }
-			for(Field f : fields) {
-				if(f.get(h).toString().contains(input)) { out.add(h); }
-			}
-        }
-        return out;
+			return out;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
     }
+
+	public static ArrayList<Holding> searchAll(String input, String field_name) throws UnimportedEquitiesException {
+		if(equities_list == null) {
+			throw new UnimportedEquitiesException("Please make sure that the Equities are imported before calling this function.");
+		}
+		try {
+			ArrayList<Holding> out = new ArrayList<Holding>();
+			for (Holding h : equities_list) {
+				ArrayList<Field> fields = null;
+				if (h instanceof Equity) {
+					fields = new ArrayList<Field>(Arrays.asList(((Equity) h).getClass().getFields()));
+//				if(((Equity)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
+				} else if (h instanceof Account) {
+					fields = new ArrayList<Field>(Arrays.asList(((Account) h).getClass().getFields()));
+//				if(((Account)h).getField(field_name).get(h).toString().contains(input)) { out.add(h); }
+				} else {
+					fields = new ArrayList<Field>(Arrays.asList(h.getClass().getFields()));
+//				if(h.getField(field_name).get(h).toString().contains(input)) { out.add(h); }
+				}
+				for (Field f : fields) {
+					if (!f.getName().contains(field_name)) {
+						fields.remove(f);
+					}
+				}
+				for (Field f : fields) {
+					if (f.get(h).toString().contains(input)) {
+						out.add(h);
+					}
+				}
+			}
+			return out;
+		} catch(IllegalAccessException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
     public static ArrayList<Holding> filter(String filter, Portfolio p) throws UnimportedEquitiesException {
         if(equities_list == null) {
