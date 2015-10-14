@@ -103,7 +103,6 @@ public class MainController implements Initializable {
                 try {
                     ((main.view.dialog.AccountController) createDialogScene("account.fxml")).setController(MainController.this);
                 } catch (Exception e) {
-                    e.printStackTrace();
                     System.err.println("Error inflating new account dialog");
                 }
             }
@@ -113,6 +112,7 @@ public class MainController implements Initializable {
                 try {
                     ((main.view.dialog.EquityController) createDialogScene("equity.fxml")).setController(MainController.this);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     System.err.println("Error inflating new equity dialog");
                 }
             }
@@ -200,6 +200,7 @@ public class MainController implements Initializable {
             AccountController a = (AccountController)changeScene("account.fxml");
             a.setAccount(this, account);
         } catch(Exception e) {
+            e.printStackTrace();
             System.err.println("Error inflating account view");
         }
     }

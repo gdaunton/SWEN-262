@@ -10,12 +10,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import main.controller.Controller;
 import main.model.Portfolio;
 import main.model.User;
 import main.model.UserManager;
+import main.model.holdings.HoldingManager;
 import main.model.util.HashSlingingSlasher;
 import main.view.LoginController;
 import main.view.MainController;
@@ -24,6 +26,8 @@ import main.view.UserCreateController;
 
 import java.io.*;
 import java.lang.reflect.Array;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -40,6 +44,17 @@ public class FPTS extends Application{
     public void start(Stage primaryStage) throws Exception{
         new File(dataRoot).mkdir();
         um = new UserManager(dataRoot);
+        File equities = new File(dataRoot + "equities.csv");
+        if(!equities.exists()) {
+            FileChooser.ExtensionFilter csv = new FileChooser.ExtensionFilter("csv", "*.csv");
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(csv);
+            fileChooser.setTitle("Select Equities File");
+            File file = fileChooser.showOpenDialog(stage);
+            equities.createNewFile();
+            copyFile(file, equities);
+        }
+        HoldingManager.import_equities(equities);
         try {
             stage = primaryStage;
             gotoLogin();
@@ -56,6 +71,20 @@ public class FPTS extends Application{
             ex.printStackTrace();
         }
     }
+
+    private static void copyFile(File source, File dest) throws IOException {
+        FileChannel inputChannel = null;
+        FileChannel outputChannel = null;
+        try {
+            inputChannel = new FileInputStream(source).getChannel();
+            outputChannel = new FileOutputStream(dest).getChannel();
+            outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+        } finally {
+            inputChannel.close();
+            outputChannel.close();
+        }
+    }
+
 
     public static void main(String[] args) {
         launch(args);

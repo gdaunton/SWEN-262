@@ -15,7 +15,7 @@ public class HoldingManager {
 	public static ArrayList<Equity> equities_list = null;
 
     public static void import_equities (File f) throws IOException {
-        equities_list = CSVImporter.ImportAllEquity(f);
+        equities_list = CSVImporter.importAllEquity(f);
     }
 	
 	public static void link_holdings(Portfolio p) {

@@ -13,8 +13,11 @@ import javafx.scene.layout.Pane;
 import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
 import main.view.MainController;
+import org.apache.commons.codec.binary.StringUtils;
 
 import java.net.URL;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AccountController implements Initializable{
@@ -32,17 +35,15 @@ public class AccountController implements Initializable{
     @FXML
     private ToggleGroup action;
     @FXML
-    private Toggle withdraw;
+    private RadioButton withdraw;
     @FXML
-    private Toggle deposit;
+    private RadioButton deposit;
     @FXML
-    private Toggle transfer;
+    private RadioButton transfer;
     @FXML
     private ChoiceBox<Account.Type> type;
     @FXML
     private TextField transaction_total;
-    @FXML
-    private Pane transaction;
     @FXML
     private Button cancel;
     @FXML
@@ -61,7 +62,7 @@ public class AccountController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                transaction.setDisable(true);
+                disableElements(true);
                 apply.setDisable(true);
                 cancel.setDisable(true);
                 transaction_total.setText("");
@@ -70,9 +71,8 @@ public class AccountController implements Initializable{
         });
         apply.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                transaction.setDisable(true);
-                apply.setDisable(true);
-                cancel.setDisable(true);
+                disableElements(true);
+
                 double value = Double.parseDouble(transaction_total.getText());
                 if(action.getSelectedToggle().equals(withdraw))
                     controller.sendCommand(HoldingCommand.Action.MODIFY, account, HoldingCommand.Modification.WITHDRAW, value);
@@ -87,39 +87,44 @@ public class AccountController implements Initializable{
         action.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 if(action.getSelectedToggle() != null) {
-                    transaction.setDisable(false);
+                    disableElements(false);
+                    if(!action.getSelectedToggle().equals(transfer))
+                        destination.setDisable(true);
                     transaction_total.textProperty().addListener(new ChangeListener<String>() {
                         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                            if (newValue.matches("\\d+")) {
-                                try {
-                                    int value = Integer.parseInt(newValue);
-                                    if (value < 0)
-                                        transaction_total.setText(oldValue);
-                                    else {
-                                        showTransaction(value);
-                                    }
-                                } catch (Exception e){
-                                    transaction_total.setText(oldValue);
-                                }
-                            } else {
-                                transaction_total.setText(oldValue);
-                            }
+                            if(!newValue.equals(""))
+                                showTransaction(Double.parseDouble(newValue));
+                            else
+                                post.setText("");
                         }
                     });
-                }else {
-                    transaction.setDisable(true);
+                } else {
+                    disableElements(true);
                 }
             }
         });
     }
 
+    private void disableElements(boolean disabled){
+        transaction_total.setDisable(disabled);
+        destination.setDisable(disabled);
+    }
+
     private void initValues() {
-        name.setText(account.getName());
-        balance.setText(Double.toString(account.getBalance()));
-        date.setText(account.getOpened().toString());
-        type.getItems().setAll(Account.Type.values());
-        type.setValue(account.getType());
-        destination.setItems(FXCollections.observableArrayList(controller.getAccounts()));
+        try {
+            if (controller.getAccounts().size() < 2)
+                transfer.setDisable(true);
+            name.setText(account.getName());
+            balance.setText(NumberFormat.getCurrencyInstance().format(account.getBalance()));
+            date.setText(account.getOpened().toString());
+            type.getItems().setAll(Account.Type.values());
+            type.setValue(account.getType());
+            ArrayList<Account> temp = new ArrayList<Account>();
+            for(Account a : controller.getAccounts())
+                if(a != this.account)
+                    temp.add(a);
+            destination.setItems(FXCollections.observableArrayList(temp));
+        } catch (Exception e){}
     }
 
     private void showTransaction(double value) {
@@ -131,7 +136,7 @@ public class AccountController implements Initializable{
         else if(action.getSelectedToggle().equals(deposit))
             transaction_value = value;
         else
-            transaction_value = value;
-        post.setText(Double.toString(account.getBalance() + transaction_value));
+            transaction_value = (-1) * value;
+        post.setText(NumberFormat.getCurrencyInstance().format(account.getBalance() + transaction_value));
     }
 }
