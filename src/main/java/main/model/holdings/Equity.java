@@ -10,6 +10,13 @@ public class Equity extends Holding implements Serializable{
         BOND,
         MUTUAL_FUND
     };
+	
+	public static Type typeFromString(String s) {
+		if(s.toUpperCase().equals("STOCK")) { return Type.STOCK; }
+		if(s.toUpperCase().equals("BOND")) { return Type.BOND; }
+		if(s.toUpperCase().equals("MUTUAL_FUND")) { return Type.MUTUAL_FUND; }
+		return Type.STOCK;
+	}
 
     private String tickerSymbol;
     private String name;

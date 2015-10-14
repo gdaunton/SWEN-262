@@ -9,6 +9,12 @@ public class Account extends Holding {
         BANK,
         MONEY_MARKET
     };
+	
+	public static Type typeFromString(String s) {
+		if(s.toUpperCase().equals("BANK")) { return Type.BANK; }
+		if(s.toUpperCase().equals("MONEY_MARKET")) { return Type.MONEY_MARKET; }
+		return Type.BANK;
+	}
 
     private String name;
     private double balance;

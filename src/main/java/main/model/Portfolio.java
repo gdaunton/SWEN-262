@@ -97,4 +97,38 @@ public class Portfolio implements Serializable{
 	public double eval() {
 		return eval_accounts() + eval_equities();
 	}
+	
+	public void import_holdings(File f) { import_holdings(f, false); }
+	public void import_holdings(File f, boolean clear_old) {
+		if(clear_old) { holdings.clear(); }
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		String str = null;
+		while((str = br.readLine()) != null) {
+			String[] fs = str.split(",");
+			if(fs.length > 5) { //equity
+				String ticker = fs[0];
+				String shares = fs[1];
+				String currPr = fs[2];
+				
+				String eqName = fs[3];
+				String eqType = fs[4];
+				ArrayList<String> sectors = new ArrayList<String>();
+				for(int i = 5; i < fs.length; ++i) { sectors.add(fs[i]); }
+				
+				holdings.add(new Equity(Equity.typeFromString(type), ticker, name, Integer.parseInt(shares), Double.parseDouble(currPr), sectors));
+			}
+			else {				//account
+				String acName = fs[0];
+				String acType = fs[1];
+				String Balnce = fs[2];
+				String dateSt = fs[3];
+				
+				holdings.add(new Account(acName, Double.parseDouble(Balnce), Account.typeFromString(acType)));
+			}
+		}
+	}
+	
+	public void export_holdings(File f) {
+		
+	}
 }
