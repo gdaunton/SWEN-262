@@ -1,8 +1,9 @@
 package main.model.holdings;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Equity extends Holding {
+public class Equity extends Holding implements Serializable{
 
     public enum Type{
         STOCK,
@@ -15,7 +16,6 @@ public class Equity extends Holding {
     private int shares;
     private double price_per_share;
     private double totalValue;
-    private int marketIndex;
     private Type type;
     private ArrayList<String> marketSectors;
 
@@ -84,13 +84,14 @@ public class Equity extends Holding {
      */
     public void setPrice_per_share(double price_per_share) {
         this.price_per_share = price_per_share;
+		totalValue = price_per_share * shares;
     }
 
     /**
      * Get the total value of the Equity
      * @return The total value of the Equity
      */
-    public double getTotalValue() {
+    public double getValue() {
         return totalValue;
     }
 
@@ -104,14 +105,5 @@ public class Equity extends Holding {
 
     public String toString(){
        return "";
-    }
-    
-    public int compareTo(Object o) {
-        return 0;
-    }
-    
-    public String[] as_table_row() {
-        String[] out = new String[1];
-        return out;
     }
 }

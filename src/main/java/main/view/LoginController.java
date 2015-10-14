@@ -48,7 +48,10 @@ public class LoginController  implements Initializable {
                             errorText.setText("User does not exist");
                         errorText.setVisible(true);
                     } catch(UserManager.InvalidPasswordException e) {
-                        errorText.setText("Password is incorrect");
+                        errorText.setText(e.getMessage());
+                        errorText.setVisible(true);
+                    } catch(FPTS.UnassociatedUserException e1) {
+                        errorText.setText(e1.getMessage());
                         errorText.setVisible(true);
                     } catch (Exception e){
                         e.printStackTrace();

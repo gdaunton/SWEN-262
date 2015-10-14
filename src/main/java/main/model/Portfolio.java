@@ -10,17 +10,18 @@ import java.util.ArrayList;
 
 public class Portfolio implements Serializable{
     private ArrayList<User> users;
-    private ArrayList<Holding> holdings;
-    private String name;
+    private static ArrayList<Holding> holdings;
+    public String name;
 
 
     /**
      * Creates a new Portfolio Object
-     * @param user The user to attach to this portfolio
+     * @param users The users to attach to this portfolio
      */
-    public Portfolio(ArrayList<User> user, String name) {
+    public Portfolio(ArrayList<User> users, String name) {
         this.users = users;
         this.name = name;
+        this.holdings = new ArrayList<Holding>();
     }
 
     /**
@@ -76,4 +77,24 @@ public class Portfolio implements Serializable{
         }
         return true;
     }
+	
+	public double eval_equities() {
+        double total = 0;
+        for(Holding h : holdings) {
+            if(h instanceof Equity) { total += h.getValue(); }
+		}
+		return  total;
+	}
+	
+	public double eval_accounts() {
+        double total = 0;
+        for(Holding h : holdings) {
+            if(h instanceof Account) { total += h.getValue(); }
+		}
+		return  total;
+	}
+	
+	public double eval() {
+		return eval_accounts() + eval_equities();
+	}
 }
