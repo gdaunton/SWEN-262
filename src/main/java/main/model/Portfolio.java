@@ -98,8 +98,52 @@ public class Portfolio implements Serializable{
 		return eval_accounts() + eval_equities();
 	}
 	
-	public void import_holdings(File f) throws IOException { import_holdings(f, false); }
-	public void import_holdings(File f, boolean clear_old) throws IOException {
+	//simplest - no clear, their format
+	public void import_holdings(File f) { import_holdings(f, false); }
+	
+	//next simplest - ask if clear, their format
+	public void import_holdings(File f, boolean clear_old) { import_holdings(f, clear_old, false); }
+	
+	//most complex - ask if clear, ask whose format
+	public void import_holdings(File f, boolean clear_old, boolean own_format) {
+		try {
+			if(own_format)	{ import_holdings_o(f, clear_old); }
+			else			{ export_holdings_e(f, clear_old); }
+		} catch(Exception e) {}
+	}
+	
+	//import their holdings
+	private void import_holdings_e(File f, boolean clear_old) throws IOException {
+		if(clear_old) { holdings.clear(); }
+		
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		String str = null;
+		while((str = br.readLine()) != null) {
+			String[] fs = str.split(",");
+			if(fs.length > 4) { //equity
+				String ticker = fs[0];
+				String shares = fs[1];
+				String currPr = fs[3];
+				
+				ArrayList<String> sectors = new ArrayList<String>();
+				
+				holdings.add(new Equity(Equity.Type.STOCK, ticker, ticker, Integer.parseInt(shares), Double.parseDouble(currPr), sectors));
+			}
+			else {				//account
+				String acName = fs[0];
+				String balnce = fs[2];
+				String dateSt = fs[3];
+				
+				Account a = new Account(acName, Double.parseDouble(balnce), Account.Type.BANK);
+				SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy")
+				a.opened = Account.parseDate(dateSt);
+				holdings.add(a);
+			}
+		}
+	}
+	
+	//import our holdings
+	private void import_holdings_o(File f, boolean clear_old) throws IOException {
 		if(clear_old) { holdings.clear(); }
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		String str = null;
@@ -130,7 +174,14 @@ public class Portfolio implements Serializable{
 		}
 	}
 	
-	public void export_holdings(File f) throws IOException {
+	public void export_holdings(File f) { export_holdings(f, true); }
+	public void export_holdings(File f, boolean own_format) {
+		try {
+			if(own_format) { export_holdings_o(f); return; }
+			export_holdings_e(f);
+		} catch(Exception e) {}
+	}
+	private void export_holdings_o(File f) throws IOException {
 		FileWriter fw = new FileWriter(f);
 		boolean first = true;
 		for(Holding h : holdings) {
@@ -158,5 +209,8 @@ public class Portfolio implements Serializable{
 			}
 			fw.write(line);
 		}
+	}
+	private void export_holdings_e(File f) throws IOException {
+		
 	}
 }
