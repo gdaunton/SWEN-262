@@ -175,7 +175,7 @@ public class Portfolio implements Serializable{
 		}
 	}
 	
-	//default to their format
+	//default to our format
 	public void export_holdings(File f) { export_holdings(f, true); }
 	//choose format
 	public void export_holdings(File f, boolean own_format) {
