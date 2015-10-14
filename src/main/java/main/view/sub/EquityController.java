@@ -42,13 +42,13 @@ public class EquityController implements Initializable{
     @FXML
     private TextField transaction_total;
     @FXML
+    private Button apply;
+    @FXML
     private ListView accounts;
     @FXML
     private CheckBox outside;
     @FXML
     private Button cancel;
-    @FXML
-    private Button apply;
 
     private Equity equity;
     private MainController controller;

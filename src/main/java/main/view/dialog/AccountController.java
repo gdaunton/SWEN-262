@@ -5,11 +5,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
 import main.view.MainController;
@@ -17,7 +20,8 @@ import main.view.MainController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AccountController {
+public class AccountController implements Initializable, DialogController{
+
     @FXML
     private TextField name;
     @FXML
@@ -31,6 +35,7 @@ public class AccountController {
     @FXML
     private Text error;
 
+    private Stage stage;
     private MainController controller;
 
     public void setController(MainController controller) {
@@ -41,7 +46,7 @@ public class AccountController {
         type.getItems().setAll(Account.Type.values());
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-
+                stage.close();
             }
         });
         apply.setOnAction(new EventHandler<ActionEvent>() {
@@ -57,7 +62,12 @@ public class AccountController {
                     Account account = new Account(name.getText(), Double.parseDouble(balance.getText()), type.getValue());
                     controller.sendCommand(HoldingCommand.Action.ADD, account);
                 }
+                stage.close();
             }
         });
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

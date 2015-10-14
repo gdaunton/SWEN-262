@@ -10,11 +10,11 @@
       <Label layoutX="90.0" layoutY="44.0" text="Name" />
       <TextField fx:id="ticker" disable="true" editable="false" layoutX="132.0" layoutY="77.0" />
       <Label layoutX="90.0" layoutY="81.0" text="Ticker" />
-      <Label layoutX="41.0" layoutY="120.0" text="Price Per Share   $" />
+      <Label layoutX="41.0" layoutY="120.0" text="Price Per Share" />
       <TextField fx:id="ppshare" disable="true" editable="false" layoutX="128.0" layoutY="115.0" prefHeight="27.0" prefWidth="149.0" />
       <Label layoutX="88.0" layoutY="155.0" text="Shares" />
       <TextField fx:id="shares" layoutX="128.0" layoutY="150.0" prefHeight="27.0" prefWidth="149.0" />
-      <Label layoutX="59.0" layoutY="192.0" text="Total Value    $" />
+      <Label layoutX="59.0" layoutY="192.0" text="Total Value" />
       <ListView fx:id="sectors" disable="true" layoutX="126.0" layoutY="221.0" prefHeight="109.0" prefWidth="149.0" />
       <Label layoutX="41.0" layoutY="267.0" text="Market Sectors" />
       <TextField fx:id="total" disable="true" editable="false" layoutX="128.0" layoutY="188.0" prefHeight="25.0" prefWidth="149.0" />
@@ -22,7 +22,7 @@
       <Button fx:id="cancel" cancelButton="true" disable="true" layoutX="474.0" layoutY="361.0" mnemonicParsing="false" text="Cancel" />
       <AnchorPane fx:id="purchase" disable="true" layoutX="317.0" layoutY="32.0" prefHeight="299.0" prefWidth="277.0">
          <children>
-            <Label layoutX="1.0" layoutY="14.0" text="Transaction Total   $" />
+            <Label layoutX="1.0" layoutY="14.0" text="Transaction Total" />
             <TextField fx:id="transaction_total" disable="true" editable="false" layoutX="100.0" layoutY="10.0" prefHeight="25.0" prefWidth="159.0" />
             <ListView fx:id="accounts" layoutX="101.0" layoutY="42.0" prefHeight="109.0" prefWidth="159.0" />
             <Label layoutX="45.0" layoutY="88.0" text="Account" />

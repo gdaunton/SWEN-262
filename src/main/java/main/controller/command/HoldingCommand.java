@@ -56,8 +56,10 @@ public class HoldingCommand implements Command {
         switch(type){
             case ADD:
                 portfolio.addHolding(target);
+                break;
             case DELETE:
                 portfolio.removeHolding(target);
+                break;
             case MODIFY:
                 switch(mod){
                     case SHARES:
@@ -66,25 +68,30 @@ public class HoldingCommand implements Command {
                         } catch(ClassCastException e){
                             System.err.println("Please only give equity objects while using the SHARES modifier");
                         }
+                        break;
                     case WITHDRAW:
                         try {
                             ((Account) target).withdraw(modifier);
                         } catch(ClassCastException e){
                             System.err.println("Please only give account objects while using the WITHDRAW modifier");
                         }
+                        break;
                     case DEPOSIT:
                         try {
                             ((Account) target).deposit(modifier);
                         } catch(ClassCastException e){
                             System.err.println("Please only give account objects while using the DEPOSIT modifier");
                         }
+                        break;
                     case TRANSFER:
                         try {
                             ((Account) target).transfer(modifier, dest_account);
                         } catch(ClassCastException e){
                             System.err.println("Please only give account objects while using the TRANSFER modifier");
                         }
+                        break;
                 }
+                break;
         }
     }
 
@@ -92,8 +99,10 @@ public class HoldingCommand implements Command {
         switch(type){
             case ADD:
                 portfolio.removeHolding(target);
+                break;
             case DELETE:
                 portfolio.addHolding(target);
+                break;
             case MODIFY:
                 switch(mod){
                     case SHARES:
@@ -102,25 +111,30 @@ public class HoldingCommand implements Command {
                         } catch(ClassCastException e){
                             System.err.println("Please only give equity objects while using the SHARES modifier");
                         }
+                        break;
                     case WITHDRAW:
                         try {
                             ((Account) target).deposit(modifier);
                         } catch(ClassCastException e){
                             System.err.println("Please only give account objects while using the WITHDRAW modifier");
                         }
+                        break;
                     case DEPOSIT:
                         try {
                             ((Account) target).withdraw(modifier);
                         } catch(ClassCastException e){
                             System.err.println("Please only give account objects while using the DEPOSIT modifier");
                         }
+                        break;
                     case TRANSFER:
                         try {
                             dest_account.transfer(modifier, (Account)target);
                         } catch(ClassCastException e){
                             System.err.println("Please only give account objects while using the TRANSFER modifier");
                         }
+                        break;
                 }
+                break;
         }
     }
 }

@@ -1,11 +1,12 @@
 package main.model.holdings;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Account extends Holding {
+public class Account extends Holding implements Serializable{
 
     public enum Type{
         BANK,
@@ -149,5 +150,10 @@ public class Account extends Holding {
         public NullAccountException(String message){
             super(message);
         }
+    }
+
+    @Override
+    public String toString(){
+        return this.getName();
     }
 }

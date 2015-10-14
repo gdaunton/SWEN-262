@@ -71,7 +71,9 @@ public class Portfolio implements Serializable{
         Portfolio port = (Portfolio)p;
         if(!port.name.equals(this.name))
             return false;
-        else{
+        else if(holdings.size() != port.holdings.size())
+			return false;
+		else{
             for(int i = 0; i < this.holdings.size(); i++){
                 if(!port.holdings.get(i).equals(this.holdings.get(i)))
                     return false;

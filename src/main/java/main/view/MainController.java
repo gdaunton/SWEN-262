@@ -15,12 +15,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import main.FPTS;
 import main.controller.Controller;
 import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
+import main.view.dialog.DialogController;
 import main.view.sub.AccountController;
 import main.view.sub.EquityController;
 
@@ -32,14 +34,13 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
 
     private Controller app;
-    private ArrayList<Holding> holdings;
 
     @FXML
     private Pane content;
     @FXML
-    private ListView<String> account_list;
+    private ListView<Account> account_list;
     @FXML
-    private ListView<String> equity_list;
+    private ListView<Equity> equity_list;
     @FXML
     private MenuItem inport;
     @FXML
@@ -57,8 +58,6 @@ public class MainController implements Initializable {
 
 
     private Scene currentScene;
-    private ArrayList<Account> accounts;
-    private ArrayList<Equity> equities;
 
     public void setApp(Controller app){
         this.app = app;
@@ -69,11 +68,8 @@ public class MainController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         initMenu();
-        accounts = new ArrayList<Account>();
-        equities = new ArrayList<Equity>();
         if(account_list != null && equity_list != null)
             initLists();
-        gotoAccount(null);
     }
 
     private void initMenu() {
@@ -107,6 +103,7 @@ public class MainController implements Initializable {
                 try {
                     ((main.view.dialog.AccountController) createDialogScene("account.fxml")).setController(MainController.this);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     System.err.println("Error inflating new account dialog");
                 }
             }
@@ -126,13 +123,13 @@ public class MainController implements Initializable {
         account_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 equity_list.getSelectionModel().clearSelection();
-                gotoAccount(accounts.get(account_list.getSelectionModel().getSelectedIndex()));
+                gotoAccount(account_list.getSelectionModel().getSelectedItem());
             }
         });
         equity_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 account_list.getSelectionModel().clearSelection();
-                gotoEquity(equities.get(equity_list.getSelectionModel().getSelectedIndex()));
+                gotoEquity(equity_list.getSelectionModel().getSelectedItem());
             }
         });
     }
@@ -155,40 +152,37 @@ public class MainController implements Initializable {
      */
     public Holding getSelectedItem(){
         if(!equity_list.getSelectionModel().isEmpty())
-            return equities.get(equity_list.getSelectionModel().getSelectedIndex());
+            return equity_list.getSelectionModel().getSelectedItem();
         if(!account_list.getSelectionModel().isEmpty())
-            return accounts.get(account_list.getSelectionModel().getSelectedIndex());
+            return account_list.getSelectionModel().getSelectedItem();
         return null;
     }
 
     public ArrayList<Account> getAccounts(){
-        return this.accounts;
+        return new ArrayList<Account>(this.account_list.getItems());
+    }
+
+    public void update() {
+        updateLists(app.currentPortfolio.getHoldings());
+        if(!account_list.getSelectionModel().isEmpty())
+            gotoAccount(account_list.getSelectionModel().getSelectedItem());
+        else if(!equity_list.getSelectionModel().isEmpty())
+            gotoAccount(account_list.getSelectionModel().getSelectedItem());
     }
 
     private void updateLists(ArrayList<Holding> holdings) {
-        accounts.removeAll(accounts);
-        equities.removeAll(equities);
-        ObservableList<String> accountItems = FXCollections.observableArrayList();
-        ObservableList<String> equityItems = FXCollections.observableArrayList();
+        ObservableList<Account> accountItems = FXCollections.observableArrayList();
+        ObservableList<Equity> equityItems = FXCollections.observableArrayList();
         if(holdings != null) {
             for (Holding h : holdings) {
-                try {
-                    Account a = (Account) h;
-                    accountItems.add(a.getName());
-                    accounts.add(a);
-                } catch (ClassCastException e) {
-                    try {
-                        Equity eq = (Equity) h;
-                        equityItems.add(eq.getName());
-                        equities.add(eq);
-                    } catch (ClassCastException e1) {
-                        System.err.println("Error sorting out accounts and equities from holdings");
-                    }
-                } finally {
-                    account_list.setItems(accountItems);
-                    equity_list.setItems(equityItems);
+                if(h instanceof Account){
+                    accountItems.add((Account) h);
+                } else if(h instanceof Equity) {
+                    equityItems.add((Equity) h);
                 }
             }
+            account_list.setItems(accountItems);
+            equity_list.setItems(equityItems);
         }
     }
 
@@ -221,6 +215,7 @@ public class MainController implements Initializable {
     private Initializable createDialogScene(String fxml) throws Exception {
         fxml = "/dialog/" + fxml;
         Stage s = new Stage();
+        s.initStyle(StageStyle.UTILITY);
         FXMLLoader loader = new FXMLLoader();
         InputStream in = getClass().getResourceAsStream(fxml);
         loader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -234,6 +229,7 @@ public class MainController implements Initializable {
         Scene newScene = new Scene(page);
         s.setScene(newScene);
         s.show();
+        ((DialogController)loader.getController()).setStage(s);
         return loader.getController();
     }
     private Initializable changeScene(String fxml) throws Exception {

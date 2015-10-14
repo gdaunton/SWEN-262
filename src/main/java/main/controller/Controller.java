@@ -41,18 +41,21 @@ public class Controller {
     public void executeCommand(Command command) {
         command.execute();
         commandBackStack.add(command);
+        view.update();
     }
 
     public void undo() {
         Command undo = commandBackStack.poll();
         undo.undo();
         commandUndoStack.add(undo);
+        view.update();
     }
 
     public void redo() {
         Command redo = commandUndoStack.poll();
         redo.execute();
         commandUndoStack.add(redo);
+        view.update();
     }
 
     public void setOnLogout(OnLogout handler) {

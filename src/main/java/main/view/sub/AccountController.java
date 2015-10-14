@@ -38,7 +38,7 @@ public class AccountController implements Initializable{
     @FXML
     private Toggle transfer;
     @FXML
-    private ChoiceBox type;
+    private ChoiceBox<Account.Type> type;
     @FXML
     private TextField transaction_total;
     @FXML
@@ -117,6 +117,7 @@ public class AccountController implements Initializable{
         name.setText(account.getName());
         balance.setText(Double.toString(account.getBalance()));
         date.setText(account.getOpened().toString());
+        type.getItems().setAll(Account.Type.values());
         type.setValue(account.getType());
         destination.setItems(FXCollections.observableArrayList(controller.getAccounts()));
     }

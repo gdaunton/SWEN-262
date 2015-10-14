@@ -8,9 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class EquityController implements Initializable{
+public class EquityController implements Initializable, DialogController{
 
     @FXML
     private TextField shares;
@@ -42,6 +44,7 @@ public class EquityController implements Initializable{
     @FXML
     private TextField transaction_total;
 
+    private Stage stage;
     private MainController controller;
     private ArrayList<OnTransactionListener> transactionListeners;
 
@@ -82,10 +85,11 @@ public class EquityController implements Initializable{
         });
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-            purchase.setDisable(true);
-            apply.setDisable(true);
-            cancel.setDisable(true);
-            shares.setText("");
+                purchase.setDisable(true);
+                apply.setDisable(true);
+                cancel.setDisable(true);
+                shares.setText("");
+                stage.close();
             }
         });
 
@@ -105,6 +109,7 @@ public class EquityController implements Initializable{
                             controller.sendCommand(HoldingCommand.Action.MODIFY, getSelectedAccount(), HoldingCommand.Modification.DEPOSIT, transaction);
                     }
                 }
+                stage.close();
             }
         });
     }
@@ -144,6 +149,10 @@ public class EquityController implements Initializable{
 
     public void registerCellTransactionListener(OnTransactionListener transactionListener) {
         transactionListeners.add(transactionListener);
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     private class AccountCell extends ListCell<Account> implements OnTransactionListener{

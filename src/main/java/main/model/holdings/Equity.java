@@ -116,7 +116,8 @@ public class Equity extends Holding implements Serializable{
         return marketSectors;
     }
 
+    @Override
     public String toString(){
-       return "";
+        return this.getName();
     }
 }
