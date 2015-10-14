@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Portfolio implements Serializable{
     private ArrayList<User> users;
     private static ArrayList<Holding> holdings;
-    private String name;
+    public String name;
 
 
     /**
@@ -78,7 +78,11 @@ public class Portfolio implements Serializable{
         return true;
     }
 	
-	public double eval() {
+	public double eval_equities() {
+		
+	}
+	
+	public double eval_accounts() {
 		
 	}
 }

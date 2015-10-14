@@ -84,6 +84,7 @@ public class Equity extends Holding {
      */
     public void setPrice_per_share(double price_per_share) {
         this.price_per_share = price_per_share;
+		totalValue = price_per_share * shares;
     }
 
     /**
