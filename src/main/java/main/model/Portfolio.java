@@ -8,6 +8,7 @@ import javax.sound.sampled.Port;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Portfolio implements Serializable{
     private ArrayList<User> users;
@@ -214,6 +215,31 @@ public class Portfolio implements Serializable{
 		}
 	}
 	private void export_holdings_e(File f) throws IOException {
-		
+		FileWriter fw = new FileWriter(f);
+		boolean first = true;
+		for(Holding h : holdings) {
+			if(!first) { fw.write("\n"); }
+			first = false;
+			
+			String line = "";
+			if(h instanceof Equity) {
+				Equity e = (Equity)h;
+				line = line.concat(e.getTickerSymbol());
+				line = line.concat("," + e.getShares());
+				line = line.concat("," + e.get_old_price());
+				line = line.concat("," + e.getPrice_per_share());
+				SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+				line = line.concat("," + sdf.format(Calendar.getInstance().getTime()));
+			}
+			else {
+				Account a = (Account)h;
+				line = line.concat(a.getName());
+				line = line.concat("," + a.get_start_balance());
+				line = line.concat("," + a.getBalance());
+				SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+				line = line.concat("," + sdf.format(a.getOpened()));
+			}
+			fw.write(line);
+		}
 	}
 }

@@ -20,6 +20,7 @@ public class Account extends Holding {
 
     private String name;
     private double balance;
+	private double start_balance;
     public Date opened;
     private Type type;
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
@@ -33,6 +34,7 @@ public class Account extends Holding {
     public Account(String name, double balance, Type type) {
         this.name = name;
         this.balance = balance;
+		start_balance = balance;
         this.type = type;
         opened = Calendar.getInstance().getTime();
     }
@@ -51,6 +53,10 @@ public class Account extends Holding {
      */
     public double getBalance() {
         return balance;
+    }
+	
+    public double get_start_balance() {
+        return start_balance;
     }
 
     /**
