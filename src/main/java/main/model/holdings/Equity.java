@@ -10,13 +10,21 @@ public class Equity extends Holding implements Serializable{
         BOND,
         MUTUAL_FUND
     };
+	
+	public static Type typeFromString(String s) {
+		if(s.toUpperCase().equals("STOCK")) { return Type.STOCK; }
+		if(s.toUpperCase().equals("BOND")) { return Type.BOND; }
+		if(s.toUpperCase().equals("MUTUAL_FUND")) { return Type.MUTUAL_FUND; }
+		return Type.STOCK;
+	}
 
     private String tickerSymbol;
     private String name;
     private int shares;
     private double price_per_share;
+	private double old_price;
     private double totalValue;
-    private Type type;
+    public Type type;
     private ArrayList<String> marketSectors;
 
     /**
@@ -33,6 +41,7 @@ public class Equity extends Holding implements Serializable{
         this.name = name;
         this.shares = shares;
         this.price_per_share = price_per_share;
+		old_price = price_per_share;
         this.totalValue = this.shares * this.price_per_share;
         this.type = type;
         this.marketSectors = marketSectors;
@@ -76,6 +85,10 @@ public class Equity extends Holding implements Serializable{
      */
     public double getPrice_per_share() {
         return price_per_share;
+    }
+	
+	public double get_old_price() {
+        return old_price;
     }
 
     /**

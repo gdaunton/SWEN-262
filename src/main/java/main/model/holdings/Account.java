@@ -1,5 +1,7 @@
 package main.model.holdings;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -9,11 +11,19 @@ public class Account extends Holding {
         BANK,
         MONEY_MARKET
     };
+	
+	public static Type typeFromString(String s) {
+		if(s.toUpperCase().equals("BANK")) { return Type.BANK; }
+		if(s.toUpperCase().equals("MONEY_MARKET")) { return Type.MONEY_MARKET; }
+		return Type.BANK;
+	}
 
     private String name;
     private double balance;
-    private Date opened;
+	private double start_balance;
+    public Date opened;
     private Type type;
+	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 
     /**
      * Creates a new Account object
@@ -24,6 +34,7 @@ public class Account extends Holding {
     public Account(String name, double balance, Type type) {
         this.name = name;
         this.balance = balance;
+		start_balance = balance;
         this.type = type;
         opened = Calendar.getInstance().getTime();
     }
@@ -42,6 +53,10 @@ public class Account extends Holding {
      */
     public double getBalance() {
         return balance;
+    }
+	
+    public double get_start_balance() {
+        return start_balance;
     }
 
     /**
@@ -100,6 +115,18 @@ public class Account extends Holding {
      */
     public Date getOpened() {
         return opened;
+    }
+	
+	public String getOpenedString() {
+		return sdf.format(opened);
+	}
+	public static Date parseDate(String s) {
+        try {
+            return sdf.parse(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public double getValue() {

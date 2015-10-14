@@ -21,6 +21,13 @@ public class HoldingManager {
 	public static void link_holdings(Portfolio p) {
 		holding_list.put(p, p.getHoldings());
 	}
+	
+	public static Equity get_by_ticker(String ticker) {
+		for(Equity e : equities_list) {
+			if(e.getTickerSymbol().equals(ticker)) { return e; }
+		}
+		return null;
+	}
 
     public static ArrayList<Holding> search(String input, String field_name, Portfolio p) throws IllegalAccessException {
 		try {
