@@ -6,6 +6,7 @@ import main.model.holdings.Holding;
 
 import javax.sound.sampled.Port;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Portfolio implements Serializable{
@@ -108,7 +109,7 @@ public class Portfolio implements Serializable{
 	public void import_holdings(File f, boolean clear_old, boolean own_format) {
 		try {
 			if(own_format)	{ import_holdings_o(f, clear_old); }
-			else			{ export_holdings_e(f, clear_old); }
+			else			{ import_holdings_e(f, clear_old); }
 		} catch(Exception e) {}
 	}
 	
@@ -135,7 +136,7 @@ public class Portfolio implements Serializable{
 				String dateSt = fs[3];
 				
 				Account a = new Account(acName, Double.parseDouble(balnce), Account.Type.BANK);
-				SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy")
+				SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
 				a.opened = Account.parseDate(dateSt);
 				holdings.add(a);
 			}
@@ -174,11 +175,13 @@ public class Portfolio implements Serializable{
 		}
 	}
 	
+	//default to their format
 	public void export_holdings(File f) { export_holdings(f, true); }
+	//choose format
 	public void export_holdings(File f, boolean own_format) {
 		try {
-			if(own_format) { export_holdings_o(f); return; }
-			export_holdings_e(f);
+			if(own_format)	{ export_holdings_o(f); }
+			else			{ export_holdings_e(f); }
 		} catch(Exception e) {}
 	}
 	private void export_holdings_o(File f) throws IOException {
