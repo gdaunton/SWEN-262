@@ -1,6 +1,7 @@
 package main.controller;
 
 
+import javafx.stage.Stage;
 import main.model.Portfolio;
 import main.model.User;
 import main.view.MainController;
@@ -17,10 +18,12 @@ public class Controller {
     private OnLogout logoutListener;
     private ArrayList<Portfolio> portfolios;
     public Portfolio currentPortfolio;
+    public Stage stage;
 
-    public Controller(ArrayList<Portfolio> portfolios, User user, MainController mainController) {
+    public Controller(ArrayList<Portfolio> portfolios, User user, MainController mainController, Stage mainStage) {
         this.portfolios = portfolios;
         this.user = user;
+        this.stage = mainStage;
         this.view = mainController;
         for(Portfolio p : portfolios){
             if(p.getUsers().contains(user))

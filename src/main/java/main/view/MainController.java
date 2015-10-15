@@ -11,10 +11,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.FPTS;
@@ -28,9 +31,11 @@ import main.view.dialog.DialogController;
 import main.view.sub.AccountController;
 import main.view.sub.EquityController;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -77,12 +82,12 @@ public class MainController implements Initializable {
     private void initMenu() {
         inport.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-
+                showTeamEDialog(false);
             }
         });
         export.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-
+                showTeamEDialog(true);
             }
         });
         bear.setOnAction(new EventHandler<ActionEvent>() {
@@ -119,6 +124,39 @@ public class MainController implements Initializable {
                 }
             }
         });
+    }
+
+    private void showTeamEDialog(boolean export){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Are you team E?");
+        ButtonType e = new ButtonType("Team E Click Here!");
+        ButtonType no = new ButtonType("No!");
+        alert.getButtonTypes().setAll(e, no);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        FileChooser.ExtensionFilter csv = new FileChooser.ExtensionFilter("csv", "*.csv");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(csv);
+
+        File file;
+        if(export){
+            fileChooser.setTitle("Export Portfolio");
+            file = fileChooser.showSaveDialog(content.getScene().getWindow());
+        } else {
+            fileChooser.setTitle("Import Portfolio");
+            file = fileChooser.showOpenDialog(content.getScene().getWindow());
+        }
+        if (result.get() == e){
+            if(export)
+                app.currentPortfolio.export_holdings(file, false);
+            else
+                app.currentPortfolio.import_holdings(file, false);
+        } else {
+            if(export)
+                app.currentPortfolio.export_holdings(file);
+            else
+                app.currentPortfolio.import_holdings(file);
+        }
     }
 
     private void initLists() {
