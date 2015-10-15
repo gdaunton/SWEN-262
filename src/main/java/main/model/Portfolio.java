@@ -11,10 +11,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Portfolio implements Serializable{
+public class Portfolio implements Serializable {
     private ArrayList<User> users;
     private ArrayList<Holding> holdings;
     public String name;
+	public ArrayList<Record> history = new ArrayList<Record>;
 
 
     /**

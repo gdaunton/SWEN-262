@@ -80,8 +80,10 @@ public class HoldingCommand implements Command {
 		switch (type) {
 		case ADD:
 			portfolio.addHolding(target);
+			portfolio.history.add(new Record());
 			break;
 		case DELETE:
+			portfolio.history.add(new Record());
 			portfolio.removeHolding(target);
 			break;
 		case MODIFY:
@@ -89,6 +91,7 @@ public class HoldingCommand implements Command {
 			case SHARES:
 				try {
 					((Equity) target).setShares((int) Math.round(modifier));
+					portfolio.history.add(new Record(Record.EQUITY_BUY_SELL, [target, Math.round(modifier)]);
 				} catch (ClassCastException e) {
 					System.err.println("Please only give equity objects while using the SHARES modifier");
 				}
@@ -96,6 +99,7 @@ public class HoldingCommand implements Command {
 			case WITHDRAW:
 				try {
 					((Account) target).withdraw(modifier);
+					portfolio.history.add(new Record(Record.ACCOUNT_WITHDRAW, [target, modifier]));
 				} catch (ClassCastException e) {
 					System.err.println("Please only give account objects while using the WITHDRAW modifier");
 				}
@@ -103,6 +107,7 @@ public class HoldingCommand implements Command {
 			case DEPOSIT:
 				try {
 					((Account) target).deposit(modifier);
+					portfolio.history.add(new Record(Record.ACCOUNT_DEPOSIT, [target, modifier]));
 				} catch (ClassCastException e) {
 					System.err.println("Please only give account objects while using the DEPOSIT modifier");
 				}
@@ -110,6 +115,7 @@ public class HoldingCommand implements Command {
 			case TRANSFER:
 				try {
 					((Account) target).transfer(modifier, dest_account);
+					portfolio.history.add(new Record(Record.ACCOUNT_TRANSFER, [target, dest_account, modifier]));
 				} catch (ClassCastException e) {
 					System.err.println("Please only give account objects while using the TRANSFER modifier");
 				}
@@ -163,5 +169,6 @@ public class HoldingCommand implements Command {
 			}
 			break;
 		}
+		profile.history.remove(profile.history.size() - 1);
 	}
 }
