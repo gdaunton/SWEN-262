@@ -6,6 +6,7 @@ import main.model.holdings.Holding;
 
 import javax.sound.sampled.Port;
 import java.io.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -139,8 +140,12 @@ public class Portfolio implements Serializable{
 				String dateSt = fs[3];
 				
 				Account a = new Account(acName, Double.parseDouble(balnce), Account.Type.BANK);
-				SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
-				a.opened = Account.parseDate(dateSt);
+				SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy");
+				try {
+					a.opened = sdf.parse(dateSt);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 				holdings.add(a);
 			}
 		}
@@ -193,6 +198,7 @@ public class Portfolio implements Serializable{
 		for(Holding h : holdings) {
 			if(!first) { fw.write("\n"); }
 			first = false;
+			System.out.print("* ");
 			
 			String line = "";
 			if(h instanceof Equity) {
@@ -213,8 +219,10 @@ public class Portfolio implements Serializable{
 				
 				line = line.concat("," + a.getOpenedString());
 			}
+			System.out.println("O: " + line);
 			fw.write(line);
 		}
+		fw.close();
 	}
 	private void export_holdings_e(File f) throws IOException {
 		FileWriter fw = new FileWriter(f);
@@ -225,6 +233,7 @@ public class Portfolio implements Serializable{
 			
 			String line = "";
 			if(h instanceof Equity) {
+				System.out.print("E");
 				Equity e = (Equity)h;
 				line = line.concat(e.getTickerSymbol());
 				line = line.concat("," + e.getShares());
@@ -233,15 +242,26 @@ public class Portfolio implements Serializable{
 				SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
 				line = line.concat("," + sdf.format(Calendar.getInstance().getTime()));
 			}
-			else {
+			else if(h instanceof Account) {
+				System.out.print("A");
 				Account a = (Account)h;
 				line = line.concat(a.getName());
 				line = line.concat("," + a.get_start_balance());
 				line = line.concat("," + a.getBalance());
 				SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
-				line = line.concat("," + sdf.format(a.getOpened()));
+				if(a.getOpened() != null) {
+					line = line.concat("," + sdf.format(a.getOpened()));
+				}
+				else {
+					line = line.concat("," + sdf.format(Calendar.getInstance().getTime()));
+				}
 			}
+			else {
+				System.out.print("??? - " + h.getClass().getName() + " - ");
+			}
+			System.out.println("E: " + line);
 			fw.write(line);
 		}
+		fw.close();
 	}
 }
