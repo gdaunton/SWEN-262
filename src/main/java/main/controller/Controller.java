@@ -1,68 +1,102 @@
 package main.controller;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import main.model.Portfolio;
 import main.model.User;
 import main.view.MainController;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class Controller {
-    private Queue<Command> commandUndoStack = new LinkedList<Command>();
-    private Queue<Command> commandBackStack = new LinkedList<Command>();
-    private MainController view;
-    private User user;
-    private OnLogout logoutListener;
-    private ArrayList<Portfolio> portfolios;
-    public Portfolio currentPortfolio;
+	private Queue<Command> commandUndoStack = new LinkedList<Command>();
+	private Queue<Command> commandBackStack = new LinkedList<Command>();
+	private MainController view;
+	private User user;
+	private OnLogout logoutListener;
+	private ArrayList<Portfolio> portfolios;
+	public Portfolio currentPortfolio;
 
-    public Controller(ArrayList<Portfolio> portfolios, User user, MainController mainController) {
-        this.portfolios = portfolios;
-        this.user = user;
-        this.view = mainController;
-        for(Portfolio p : portfolios){
-            if(p.getUsers().contains(user))
-                currentPortfolio = p;
-        }
-        view.setApp(this);
-    }
+	/**
+	 * Initializes the controller.
+	 * 
+	 * @param portfolios
+	 *            The list of portfolios.
+	 * @param user
+	 *            The logged in user.
+	 * @param mainController
+	 *            The main controller.
+	 */
+	public Controller(ArrayList<Portfolio> portfolios, User user, MainController mainController) {
+		this.portfolios = portfolios;
+		this.user = user;
+		this.view = mainController;
+		for (Portfolio p : portfolios) {
+			if (p.getUsers().contains(user))
+				currentPortfolio = p;
+		}
+		view.setApp(this);
+	}
 
-    public ArrayList<Portfolio> getUserPortfolios(User user){
-        ArrayList<Portfolio> temp = new ArrayList<Portfolio>();
-        for(Portfolio p : this.portfolios){
-            if(p.getUsers().contains(user))
-                temp.add(p);
-        }
-        return temp;
-    }
+	/**
+	 * Gets portfolios for an user.
+	 * 
+	 * @param user
+	 *            The user.
+	 * @return The list of portfolios.
+	 */
+	public ArrayList<Portfolio> getUserPortfolios(User user) {
+		ArrayList<Portfolio> temp = new ArrayList<Portfolio>();
+		for (Portfolio p : this.portfolios) {
+			if (p.getUsers().contains(user))
+				temp.add(p);
+		}
+		return temp;
+	}
 
-    public void executeCommand(Command command) {
-        command.execute();
-        commandBackStack.add(command);
-        view.update();
-    }
+	/**
+	 * Executes a command.
+	 * 
+	 * @param command
+	 *            The command.
+	 */
+	public void executeCommand(Command command) {
+		command.execute();
+		commandBackStack.add(command);
+		view.update();
+	}
 
-    public void undo() {
-        Command undo = commandBackStack.poll();
-        undo.undo();
-        commandUndoStack.add(undo);
-        view.update();
-    }
+	/**
+	 * Undoes a command.
+	 */
+	public void undo() {
+		Command undo = commandBackStack.poll();
+		undo.undo();
+		commandUndoStack.add(undo);
+		view.update();
+	}
 
-    public void redo() {
-        Command redo = commandUndoStack.poll();
-        redo.execute();
-        commandUndoStack.add(redo);
-        view.update();
-    }
+	/**
+	 * Redoes a command.
+	 */
+	public void redo() {
+		Command redo = commandUndoStack.poll();
+		redo.execute();
+		commandUndoStack.add(redo);
+		view.update();
+	}
 
-    public void setOnLogout(OnLogout handler) {
-        this.logoutListener = handler;
-    }
+	/**
+	 * Sets the logout handler.
+	 * 
+	 * @param handler
+	 *            The handler.
+	 */
+	public void setOnLogout(OnLogout handler) {
+		this.logoutListener = handler;
+	}
 
-    public interface OnLogout {
-        void Logout();
-    }
+	public interface OnLogout {
+		void Logout();
+	}
 }
