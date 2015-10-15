@@ -161,7 +161,7 @@ public class FPTS extends Application {
 	 *            The user to initialize the controller with.
 	 */
 	private void initPortfolio(User user) {
-		Controller c = new Controller(portfolios, user, gotoMain());
+		Controller c = new Controller(portfolios, user, gotoMain(), stage);
 		c.setOnLogout(new Controller.OnLogout() {
 			public void Logout() {
 				if (checkDataChanged())

@@ -138,7 +138,6 @@ public class EquityController implements Initializable, DialogController {
 					showTransaction(shares.getInteger());
 			}
 		});
-
 		accounts.setItems(FXCollections.observableArrayList(controller.getAccounts()));
 		accounts.setCellFactory(new Callback<ListView<Account>, ListCell<Account>>() {
 			public ListCell<Account> call(ListView<Account> list) {
