@@ -23,7 +23,6 @@ public class Equity extends Holding implements Serializable{
     private int shares;
     private double price_per_share;
 	private double old_price;
-    private double totalValue;
     public Type type;
     private ArrayList<String> marketSectors;
 
@@ -42,7 +41,6 @@ public class Equity extends Holding implements Serializable{
         this.shares = shares;
         this.price_per_share = price_per_share;
 		old_price = price_per_share;
-        this.totalValue = this.shares * this.price_per_share;
         this.type = type;
         this.marketSectors = marketSectors;
     }
@@ -97,7 +95,6 @@ public class Equity extends Holding implements Serializable{
      */
     public void setPrice_per_share(double price_per_share) {
         this.price_per_share = price_per_share;
-		totalValue = price_per_share * shares;
     }
 
     /**
@@ -105,7 +102,7 @@ public class Equity extends Holding implements Serializable{
      * @return The total value of the Equity
      */
     public double getValue() {
-        return totalValue;
+        return price_per_share*shares;
     }
 
     /**

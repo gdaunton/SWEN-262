@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
@@ -17,7 +18,9 @@ import javafx.util.Callback;
 import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
+import main.model.holdings.HoldingManager;
 import main.view.MainController;
+import main.view.elements.IntegerTextField;
 
 import java.net.URL;
 import java.text.NumberFormat;
@@ -28,9 +31,7 @@ import java.util.ResourceBundle;
 public class EquityController implements Initializable, DialogController{
 
     @FXML
-    private TextField shares;
-    @FXML
-    private Pane purchase;
+    private IntegerTextField shares;
     @FXML
     private ListView<Account> accounts;
     @FXML
@@ -54,21 +55,15 @@ public class EquityController implements Initializable, DialogController{
     }
 
     public void initialize(URL location, ResourceBundle resources) {
+        transactionListeners = new ArrayList<OnTransactionListener>();
+        setDisabledElements(true);
         shares.textProperty().addListener(new ChangeListener<String>() {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.matches("\\d+")) {
-                    try {
-                        int value = Integer.parseInt(newValue);
-                        if (value < 0)
-                            shares.setText(oldValue);
-                        else {
-                            showTransaction(value);
-                        }
-                    } catch (Exception e){
-                        shares.setText(oldValue);
-                    }
+                if(!newValue.equals("")) {
+                    cancel.setDisable(false);
+                    showTransaction(Integer.parseInt(newValue));
                 } else {
-                    shares.setText(oldValue);
+                    cancel.setDisable(true);
                 }
             }
         });
@@ -76,18 +71,18 @@ public class EquityController implements Initializable, DialogController{
         outside.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 if (outside.isSelected()) {
+                    apply.setDisable(false);
                     accounts.setDisable(true);
                     accounts.getSelectionModel().clearSelection();
                 } else {
+                    apply.setDisable(true);
                     accounts.setDisable(false);
                 }
             }
         });
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                purchase.setDisable(true);
-                apply.setDisable(true);
-                cancel.setDisable(true);
+                setDisabledElements(true);
                 shares.setText("");
                 stage.close();
             }
@@ -95,12 +90,11 @@ public class EquityController implements Initializable, DialogController{
 
         apply.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                purchase.setDisable(true);
-                apply.setDisable(true);
-                cancel.setDisable(true);
+                setDisabledElements(true);
                 if(!equity_list.getSelectionModel().isEmpty() && (!accounts.getSelectionModel().isEmpty() || outside.isSelected())) {
                     Equity equity = equity_list.getSelectionModel().getSelectedItem();
-                    controller.sendCommand(HoldingCommand.Action.ADD, equity);
+                    Equity temp = new Equity(equity.type, equity.getTickerSymbol(), equity.getName(), shares.getInteger(), equity.getPrice_per_share(), equity.getMarketSectors());
+                    controller.sendCommand(HoldingCommand.Action.ADD, temp);
                     if (!outside.isSelected()) {
                         double transaction = equity.getValue() - (equity.getPrice_per_share() * Integer.parseInt(shares.getText()));
                         if (transaction < 0)
@@ -115,12 +109,16 @@ public class EquityController implements Initializable, DialogController{
     }
 
     private void initValues() {
-        equity_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Equity>() {
-            public void changed(ObservableValue<? extends Equity> observable, Equity oldValue, Equity newValue) {
-
+        equity_list.setItems(FXCollections.observableArrayList(HoldingManager.equities_list));
+        equity_list.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                setDisabledElements(false);
+                if(!shares.getText().equals(""))
+                    showTransaction(shares.getInteger());
             }
         });
-        accounts = new ListView<Account>(FXCollections.observableArrayList(controller.getAccounts()));
+
+        accounts.setItems(FXCollections.observableArrayList(controller.getAccounts()));
         accounts.setCellFactory(new Callback<ListView<Account>, ListCell<Account>>() {
             public ListCell<Account> call(ListView<Account> list) {
                 return new AccountCell(EquityController.this);
@@ -128,9 +126,14 @@ public class EquityController implements Initializable, DialogController{
         });
         accounts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Account>() {
             public void changed(ObservableValue observable, Account oldValue, Account newValue) {
-                double transaction = Double.parseDouble(transaction_total.getText()) * (-1);
-                if(newValue.getBalance() > transaction)
-                    accounts.getSelectionModel().clearSelection();
+                if(newValue != null) {
+                    Equity equity = equity_list.getSelectionModel().getSelectedItem();
+                    double transaction = equity.getValue() - (equity.getPrice_per_share() * shares.getInteger());
+                    if (newValue.getBalance() + transaction > 0 && !shares.getText().equals("")) {
+                        apply.setDisable(false);
+                    } else
+                        apply.setDisable(true);
+                }
             }
         });
     }
@@ -140,11 +143,27 @@ public class EquityController implements Initializable, DialogController{
     }
 
     private void showTransaction(int value) {
+        setDisabledElements(false);
         Equity equity = equity_list.getSelectionModel().getSelectedItem();
         double transaction_value = equity.getValue()-(equity.getPrice_per_share()*value);
-        transaction_total.setText(Double.toString(transaction_value));
+        if(transaction_value < 0)
+            transaction_total.setText("-" + NumberFormat.getCurrencyInstance().format(transaction_value * (-1)));
+        else
+            transaction_total.setText(NumberFormat.getCurrencyInstance().format(transaction_value));
+        if(!accounts.getSelectionModel().isEmpty()) {
+            if (accounts.getSelectionModel().getSelectedItem().getBalance() + transaction_value > 0) {
+                apply.setDisable(false);
+            } else
+                apply.setDisable(true);
+        }
         for(OnTransactionListener l : transactionListeners)
             l.update(transaction_value);
+    }
+
+    private void setDisabledElements(boolean disabled){
+        shares.setDisable(disabled);
+        accounts.setDisable(disabled);
+        outside.setDisable(disabled);
     }
 
     public void registerCellTransactionListener(OnTransactionListener transactionListener) {
@@ -156,25 +175,30 @@ public class EquityController implements Initializable, DialogController{
     }
 
     private class AccountCell extends ListCell<Account> implements OnTransactionListener{
-        private double transaction_value;
+        private Account item;
 
         public AccountCell(EquityController parent) {
             parent.registerCellTransactionListener(this);
-            this.transaction_value = 0;
         }
 
         public void update(double value) {
-            transaction_value = value;
+            setText(item == null ? "" : item.getName() + "    " + NumberFormat.getCurrencyInstance().format(item.getBalance()));
+            if (item != null) {
+                double transaction_value = item.getBalance() + value;
+                setTextFill(transaction_value < 0 ? Color.RED : Color.BLACK);
+            }
         }
 
         @Override
         protected void updateItem(Account item, boolean empty) {
             super.updateItem(item, empty);
-            setText(item == null ? "" : item.getName() + "    " + NumberFormat.getCurrencyInstance().format(item.getBalance()));
-
-            if (item != null) {
-                double value = item.getBalance() + transaction_value;
-                setTextFill(isSelected() ? Color.WHITE : value < 0 ? Color.RED : Color.BLACK);
+            this.item = item;
+            if(!empty) {
+                setText(item == null ? "" : item.getName() + "    " + NumberFormat.getCurrencyInstance().format(item.getBalance()));
+                if (item != null) {
+                    double value = item.getBalance();
+                    setTextFill(value < 0 ? Color.RED : Color.BLACK);
+                }
             }
         }
     }

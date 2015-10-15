@@ -18,7 +18,7 @@ public class CSVImporter {
         CSVParser parser = CSVFormat.RFC4180.parse(new FileReader(file));
         for(CSVRecord r : parser){
             ArrayList<String> markets = new ArrayList<String>();
-            for(int i = 2; i < r.size(); i++)
+            for(int i = 3; i < r.size(); i++)
                 markets.add(r.get(i));
             new_equity.add(new Equity(Equity.Type.STOCK, r.get(0), r.get(1), 0, Double.parseDouble(r.get(2)), markets));
         }

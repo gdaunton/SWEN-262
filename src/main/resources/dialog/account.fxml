@@ -5,12 +5,13 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
+<?import main.view.elements.DoubleTextField?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.dialog.AccountController">
    <children>
       <Label layoutX="209.0" layoutY="134.0" text="Name" />
       <TextField fx:id="name" layoutX="249.0" layoutY="130.0" />
       <Label layoutX="203.0" layoutY="168.0" text="Balance" />
-      <TextField fx:id="balance" layoutX="248.0" layoutY="163.0" prefHeight="27.0" prefWidth="149.0" />
+      <DoubleTextField fx:id="balance" layoutX="248.0" layoutY="163.0" prefHeight="27.0" prefWidth="149.0" />
       <ChoiceBox fx:id="type" layoutX="248.0" layoutY="200.0" prefWidth="150.0" />
       <Label layoutX="215.0" layoutY="204.0" text="Type" />
       <Button fx:id="apply" defaultButton="true" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" text="Create" />

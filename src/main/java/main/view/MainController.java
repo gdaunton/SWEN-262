@@ -1,5 +1,6 @@
 package main.view;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,6 +23,7 @@ import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
+import main.model.holdings.HoldingManager;
 import main.view.dialog.DialogController;
 import main.view.sub.AccountController;
 import main.view.sub.EquityController;
@@ -120,16 +122,34 @@ public class MainController implements Initializable {
     }
 
     private void initLists() {
-        account_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                equity_list.getSelectionModel().clearSelection();
-                gotoAccount(account_list.getSelectionModel().getSelectedItem());
+        account_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Account>() {
+            public void changed(ObservableValue observable, Account oldValue, final Account newValue) {
+                if(newValue != null) {
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            if (!equity_list.getSelectionModel().isEmpty()) {
+                                equity_list.getSelectionModel().clearSelection();
+                                account_list.getSelectionModel().select(newValue);
+                            }
+                        }
+                    });
+                    gotoAccount(account_list.getSelectionModel().getSelectedItem());
+                }
             }
         });
-        equity_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                account_list.getSelectionModel().clearSelection();
-                gotoEquity(equity_list.getSelectionModel().getSelectedItem());
+        equity_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Equity>() {
+            public void changed(ObservableValue observable, Equity oldValue, final Equity newValue) {
+                if(newValue != null) {
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            if (!account_list.getSelectionModel().isEmpty()) {
+                                account_list.getSelectionModel().clearSelection();
+                                equity_list.getSelectionModel().select(newValue);
+                            }
+                        }
+                    });
+                    gotoEquity(newValue);
+                }
             }
         });
     }
@@ -167,7 +187,7 @@ public class MainController implements Initializable {
         if(!account_list.getSelectionModel().isEmpty())
             gotoAccount(account_list.getSelectionModel().getSelectedItem());
         else if(!equity_list.getSelectionModel().isEmpty())
-            gotoAccount(account_list.getSelectionModel().getSelectedItem());
+            gotoEquity(equity_list.getSelectionModel().getSelectedItem());
     }
 
     private void updateLists(ArrayList<Holding> holdings) {
@@ -190,7 +210,7 @@ public class MainController implements Initializable {
         try{
             EquityController e = (EquityController)changeScene("equity.fxml");
             e.setEquity(this, equity);
-        } catch(Exception e) {
+        } catch(Exception e) {e.printStackTrace();
             System.err.println("Error inflating equity view");
         }
     }
