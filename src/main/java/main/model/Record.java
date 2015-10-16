@@ -43,4 +43,14 @@ public class Record {
 	public String toString() {
 		
 	}
+	
+	public String h1ToString() {
+		if(h1 != null) { return h1.toString(); }
+		return "";
+	}
+	
+	public String h2ToString() {
+		if(h2 != null) { return h2.toString(); }
+		return "";
+	}
 }
