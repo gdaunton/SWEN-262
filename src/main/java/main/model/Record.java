@@ -39,4 +39,8 @@ public class Record {
 								break;
 		}
 	}
+	
+	public String toString() {
+		
+	}
 }
