@@ -151,9 +151,9 @@ public class MainController implements Initializable {
 	 */
 	private void showTeamEDialog(boolean export) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Are you team E?");
-		ButtonType e = new ButtonType("Team E Click Here!");
-		ButtonType no = new ButtonType("No!");
+		alert.setTitle("Choose export format");
+		ButtonType e = new ButtonType("Team E's format");
+		ButtonType no = new ButtonType("Team D's format");
 		alert.getButtonTypes().setAll(e, no);
 		Optional<ButtonType> result = alert.showAndWait();
 
