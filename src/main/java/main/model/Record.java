@@ -6,11 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Record {
-	public Date date;
+	Date date;
 	Holding h1, h2;
-	public double amount;
+	double amount;
 	Portfolio p;
-	public Type type;
+	Type type;
 	
 	public enum Type {
 		ACCOUNT_TRANSFER,
@@ -44,7 +44,7 @@ public class Record {
 	}
 	
 	public String toString() {
-		return "RECORD_TO_STRING_NOT_YET_IMPLEMENTED";
+		
 	}
 	
 	public String h1ToString() {

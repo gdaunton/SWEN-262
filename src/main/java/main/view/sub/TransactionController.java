@@ -3,24 +3,9 @@ package main.view.sub;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
-import main.controller.command.HoldingCommand;
 import main.model.Record;
 import main.view.MainController;
 
@@ -35,8 +20,6 @@ public class TransactionController {
 	private TextField amount;
 	@FXML
 	private TextField date;
-	@FXML
-	private TextField type;
 
 	private Record record;
 	private MainController controller;
@@ -77,7 +60,6 @@ public class TransactionController {
 		h2.setDisable(disabled);
 		amount.setDisable(disabled);
 		date.setDisable(disabled);
-		type.setDisable(disabled);
 	}
 
 	/**
@@ -91,8 +73,6 @@ public class TransactionController {
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
 			date.setText(sdf.format(record.date));
-			
-			type.setText(record.type.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

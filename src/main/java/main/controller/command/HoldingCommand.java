@@ -81,11 +81,11 @@ public class HoldingCommand implements Command {
 		switch (type) {
 		case ADD:
 			portfolio.addHolding(target);
-//			portfolio.history.add(new Record());
+			portfolio.history.add(new Record());
 			break;
 		case DELETE:
+			portfolio.history.add(new Record());
 			portfolio.removeHolding(target);
-//			portfolio.history.add(new Record());
 			break;
 		case MODIFY:
 			switch (mod) {
@@ -170,6 +170,6 @@ public class HoldingCommand implements Command {
 			}
 			break;
 		}
-		portfolio.history.remove(portfolio.history.size() - 1);
+		profile.history.remove(profile.history.size() - 1);
 	}
 }
