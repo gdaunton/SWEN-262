@@ -8,12 +8,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import main.model.Portfolio;
+import main.model.Record;
 import main.model.util.CSVImporter;
 
 public class HoldingManager {
 	public static HashMap<Portfolio, ArrayList<Holding>> holding_list = new HashMap<Portfolio, ArrayList<Holding>>();
 	public static ArrayList<Equity> equities_list = null;
-	public static ArrayList<Record> history = new ArrayList<Record>;
+	public static ArrayList<Record> history = new ArrayList<Record>();
 
 	/**
 	 * Imports equities from a file.

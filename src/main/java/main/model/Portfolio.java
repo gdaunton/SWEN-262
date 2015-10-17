@@ -4,7 +4,6 @@ import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
 
-import javax.sound.sampled.Port;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +14,7 @@ public class Portfolio implements Serializable {
     private ArrayList<User> users;
     private ArrayList<Holding> holdings;
     public String name;
-	public ArrayList<Record> history = new ArrayList<Record>;
+	public ArrayList<Record> history = new ArrayList<Record>();
 
 
     /**
@@ -70,6 +69,8 @@ public class Portfolio implements Serializable {
 
     @Override
     public boolean equals(Object p){
+		if(p == null)
+			return false;
         Portfolio port = (Portfolio)p;
         if(!port.name.equals(this.name))
             return false;
@@ -83,6 +84,11 @@ public class Portfolio implements Serializable {
         }
         return true;
     }
+
+	@Override
+	public String toString() {
+		return this.name;
+	}
 	
 	public double eval_equities() {
         double total = 0;

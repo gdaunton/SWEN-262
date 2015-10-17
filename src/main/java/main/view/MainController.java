@@ -19,10 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -30,6 +27,7 @@ import javafx.stage.StageStyle;
 import main.FPTS;
 import main.controller.Controller;
 import main.controller.command.HoldingCommand;
+import main.model.Portfolio;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
@@ -61,6 +59,8 @@ public class MainController implements Initializable {
 	private MenuItem account;
 	@FXML
 	private MenuItem equity;
+	@FXML
+	private MenuItem open;
 
 	private Scene currentScene;
 
@@ -75,6 +75,9 @@ public class MainController implements Initializable {
 		updateLists(app.currentPortfolio.getHoldings());
 		if (account_list != null && equity_list != null)
 			initLists();
+		if(app.getOtherPortfolios().size() == 0) {
+			open.setDisable(true);
+		}
 	}
 
 	/**
@@ -89,6 +92,10 @@ public class MainController implements Initializable {
 		initMenu();
 		if (account_list != null && equity_list != null)
 			initLists();
+	}
+
+	public void changePortfolio() {
+		updateLists(app.currentPortfolio.getHoldings());
 	}
 
 	/**
@@ -138,6 +145,20 @@ public class MainController implements Initializable {
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.err.println("Error inflating new equity dialog");
+				}
+			}
+		});
+		open.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				ArrayList<Portfolio> temp = app.getOtherPortfolios();
+				if(temp.size() != 0) {
+					ChoiceDialog<Portfolio> dialog = new ChoiceDialog<Portfolio>(temp.get(0), temp);
+					dialog.setTitle("Open Portfolio");
+					dialog.setHeaderText("Open a different portfolio...");
+					Optional<Portfolio> result = dialog.showAndWait();
+					if (result.isPresent()){
+						app.setPortfolio(result.get());
+					}
 				}
 			}
 		});

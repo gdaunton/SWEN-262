@@ -4,9 +4,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.MainController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.MainController">
     <MenuBar prefHeight="25.0" prefWidth="858.0">
         <Menu mnemonicParsing="false" text="File">
+         <MenuItem fx:id="open" mnemonicParsing="false" text="Open Portfolio..." />
+         <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="inport" mnemonicParsing="false" text="Import" />
             <MenuItem fx:id="export" mnemonicParsing="false" text="Export" />
             <SeparatorMenuItem mnemonicParsing="false" />
