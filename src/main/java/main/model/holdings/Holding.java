@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public abstract class Holding implements Serializable {
 	public abstract double getValue();
+	public abstract String toString();
 
 	@Override
 	public boolean equals(Object p) {

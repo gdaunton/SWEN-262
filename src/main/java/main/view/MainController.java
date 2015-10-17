@@ -46,6 +46,8 @@ public class MainController implements Initializable {
 	@FXML
 	private ListView<Equity> equity_list;
 	@FXML
+	private ListView<Record> record_list;
+	@FXML
 	private MenuItem inport;
 	@FXML
 	private MenuItem export;
@@ -172,9 +174,9 @@ public class MainController implements Initializable {
 	 */
 	private void showTeamEDialog(boolean export) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Are you team E?");
-		ButtonType e = new ButtonType("Team E Click Here!");
-		ButtonType no = new ButtonType("No!");
+		alert.setTitle("Choose export format");
+		ButtonType e = new ButtonType("Team E's format");
+		ButtonType no = new ButtonType("Team D's format");
 		alert.getButtonTypes().setAll(e, no);
 		Optional<ButtonType> result = alert.showAndWait();
 
@@ -212,6 +214,7 @@ public class MainController implements Initializable {
 				if (newValue != null) {
 					Platform.runLater(new Runnable() {
 						public void run() {
+							if(!record_list.getSelectionModel().isEmpty()) { record_list.getSelectionModel().clearSelection(); }
 							if (!equity_list.getSelectionModel().isEmpty()) {
 								equity_list.getSelectionModel().clearSelection();
 								account_list.getSelectionModel().select(newValue);
@@ -227,6 +230,7 @@ public class MainController implements Initializable {
 				if (newValue != null) {
 					Platform.runLater(new Runnable() {
 						public void run() {
+							if(!record_list.getSelectionModel().isEmpty()) { record_list.getSelectionModel().clearSelection(); }
 							if (!account_list.getSelectionModel().isEmpty()) {
 								account_list.getSelectionModel().clearSelection();
 								equity_list.getSelectionModel().select(newValue);
@@ -297,6 +301,8 @@ public class MainController implements Initializable {
 			return equity_list.getSelectionModel().getSelectedItem();
 		if (!account_list.getSelectionModel().isEmpty())
 			return account_list.getSelectionModel().getSelectedItem();
+		if (!record_list.getSelectionModel().isEmpty())
+			return record_list.getSelectionModel().getSelectedItem();
 		return null;
 	}
 
@@ -314,10 +320,13 @@ public class MainController implements Initializable {
 	 */
 	public void update() {
 		updateLists(app.currentPortfolio.getHoldings());
-		if (!account_list.getSelectionModel().isEmpty())
+		if (!account_list.getSelectionModel().isEmpty()) {
 			gotoAccount(account_list.getSelectionModel().getSelectedItem());
-		else if (!equity_list.getSelectionModel().isEmpty())
+		}
+		else if (!equity_list.getSelectionModel().isEmpty()) {
 			gotoEquity(equity_list.getSelectionModel().getSelectedItem());
+		}
+		record_list.setItems(app.currentPortfolio.history);
 	}
 
 	/**
@@ -377,10 +386,12 @@ public class MainController implements Initializable {
 	/**
 	 * Go to a transaction.
 	 */
-	public void gotoTransaction() {
+	public void gotoTransaction(Record record) {
 		try {
-			changeScene("transaction.fxml");
+			TransactionController t = (TransactionController) changeScene("transaction.fxml");
+			t.setTransaction(this, record);
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("Error inflating transaction view");
 		}
 	}
