@@ -6,10 +6,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Record {
-	Date date;
-	Holding h1, h2;
-	double amount;
-	Portfolio p;
+	public Date date;
+	public Holding h1, h2;
+	public double amount;
 	
 	public enum Type {
 		ACCOUNT_TRANSFER,
@@ -39,10 +38,6 @@ public class Record {
 				amount = (Double)args[1];
 				break;
 		}
-	}
-	
-	public String toString() {
-		
 	}
 	
 	public String h1ToString() {

@@ -6,9 +6,7 @@ import java.util.ArrayList;
 public class Equity extends Holding implements Serializable {
 
 	public enum Type {
-		STOCK, BOND, MUTUAL_FUND,
-		
-		public String toString() { return name().toLowerCase().replace('_', ' '); }
+		STOCK, BOND, MUTUAL_FUND
 	};
 
 	/**
@@ -151,6 +149,6 @@ public class Equity extends Holding implements Serializable {
 
 	@Override
 	public String toString() {
-		return tickerSymbol + ": " + String.valueOf(shares) + "shares at $" + String.valueOf(price_per_share) + " per share (a " + type.toString() + "from " + name;
+		return name;
 	}
 }

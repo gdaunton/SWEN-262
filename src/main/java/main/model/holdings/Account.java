@@ -10,8 +10,6 @@ public class Account extends Holding implements Serializable {
 
 	public enum Type {
 		BANK, MONEY_MARKET,
-		
-		public String toString() { return name().toLowerCase().replace('_', ' '); }
 	};
 
 	/**
@@ -200,6 +198,6 @@ public class Account extends Holding implements Serializable {
 
 	@Override
 	public String toString() {
-		return name + ": a " + type.toString() + " account containing $" + String.valueOf(balance);
+		return name;
 	}
 }

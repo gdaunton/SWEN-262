@@ -28,12 +28,14 @@ import main.FPTS;
 import main.controller.Controller;
 import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
+import main.model.Record;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
 import main.view.dialog.DialogController;
 import main.view.sub.AccountController;
 import main.view.sub.EquityController;
+import main.view.sub.TransactionController;
 
 public class MainController implements Initializable {
 
@@ -214,14 +216,16 @@ public class MainController implements Initializable {
 				if (newValue != null) {
 					Platform.runLater(new Runnable() {
 						public void run() {
-							if(!record_list.getSelectionModel().isEmpty()) { record_list.getSelectionModel().clearSelection(); }
+							if(!record_list.getSelectionModel().isEmpty()) {
+								record_list.getSelectionModel().clearSelection();
+							}
 							if (!equity_list.getSelectionModel().isEmpty()) {
 								equity_list.getSelectionModel().clearSelection();
-								account_list.getSelectionModel().select(newValue);
 							}
+							account_list.getSelectionModel().select(newValue);
 						}
 					});
-					gotoAccount(account_list.getSelectionModel().getSelectedItem());
+					gotoAccount(newValue);
 				}
 			}
 		});
@@ -230,11 +234,13 @@ public class MainController implements Initializable {
 				if (newValue != null) {
 					Platform.runLater(new Runnable() {
 						public void run() {
-							if(!record_list.getSelectionModel().isEmpty()) { record_list.getSelectionModel().clearSelection(); }
+							if(!record_list.getSelectionModel().isEmpty()) {
+								record_list.getSelectionModel().clearSelection();
+							}
 							if (!account_list.getSelectionModel().isEmpty()) {
 								account_list.getSelectionModel().clearSelection();
-								equity_list.getSelectionModel().select(newValue);
 							}
+							equity_list.getSelectionModel().select(newValue);
 						}
 					});
 					gotoEquity(newValue);
@@ -301,8 +307,6 @@ public class MainController implements Initializable {
 			return equity_list.getSelectionModel().getSelectedItem();
 		if (!account_list.getSelectionModel().isEmpty())
 			return account_list.getSelectionModel().getSelectedItem();
-		if (!record_list.getSelectionModel().isEmpty())
-			return record_list.getSelectionModel().getSelectedItem();
 		return null;
 	}
 
@@ -326,7 +330,6 @@ public class MainController implements Initializable {
 		else if (!equity_list.getSelectionModel().isEmpty()) {
 			gotoEquity(equity_list.getSelectionModel().getSelectedItem());
 		}
-		record_list.setItems(app.currentPortfolio.history);
 	}
 
 	/**

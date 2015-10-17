@@ -79,6 +79,12 @@ public class HoldingCommand implements Command {
 	 */
 	public void execute() {
 		switch (type) {
+		case ADD:
+			portfolio.addHolding(target);
+			break;
+		case DELETE:
+			portfolio.removeHolding(target);
+			break;
 		case MODIFY:
 			switch (mod) {
 			case SHARES:
