@@ -9,7 +9,7 @@ import java.util.Date;
 public class Account extends Holding implements Serializable {
 
 	public enum Type {
-		BANK, MONEY_MARKET,
+		BANK, MONEY_MARKET;
 		
 		public String toString() { return name().toLowerCase().replace('_', ' '); }
 	};

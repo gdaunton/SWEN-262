@@ -30,12 +30,14 @@ import javafx.stage.StageStyle;
 import main.FPTS;
 import main.controller.Controller;
 import main.controller.command.HoldingCommand;
+import main.model.Record;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
 import main.view.dialog.DialogController;
 import main.view.sub.AccountController;
 import main.view.sub.EquityController;
+import main.view.sub.TransactionController;
 
 public class MainController implements Initializable {
 
@@ -280,8 +282,6 @@ public class MainController implements Initializable {
 			return equity_list.getSelectionModel().getSelectedItem();
 		if (!account_list.getSelectionModel().isEmpty())
 			return account_list.getSelectionModel().getSelectedItem();
-		if (!record_list.getSelectionModel().isEmpty())
-			return record_list.getSelectionModel().getSelectedItem();
 		return null;
 	}
 
@@ -305,7 +305,7 @@ public class MainController implements Initializable {
 		else if (!equity_list.getSelectionModel().isEmpty()) {
 			gotoEquity(equity_list.getSelectionModel().getSelectedItem());
 		}
-		record_list.setItems(app.currentPortfolio.history);
+		record_list.setItems(FXCollections.observableArrayList(app.currentPortfolio.history));
 	}
 
 	/**
