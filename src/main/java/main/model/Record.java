@@ -43,10 +43,6 @@ public class Record {
 		}
 	}
 	
-	public String toString() {
-		
-	}
-	
 	public String h1ToString() {
 		if(h1 != null) { return h1.toString(); }
 		return "";

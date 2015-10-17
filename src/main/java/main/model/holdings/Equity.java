@@ -151,6 +151,6 @@ public class Equity extends Holding implements Serializable {
 
 	@Override
 	public String toString() {
-		return tickerSymbol + ": " + String.valueOf(shares) + "shares at $" + String.valueOf(price_per_share) + " per share (a " + type.toString() + "from " + name;
+		return name;
 	}
 }

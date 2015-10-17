@@ -57,6 +57,20 @@ public class Controller {
 		return temp;
 	}
 
+	public ArrayList<Portfolio> getOtherPortfolios() {
+		ArrayList<Portfolio> temp = new ArrayList<Portfolio>();
+		for (Portfolio p : this.portfolios) {
+			if (p != currentPortfolio && p.getUsers().contains(user))
+				temp.add(p);
+		}
+		return temp;
+	}
+
+	public void setPortfolio(Portfolio portfolio) {
+		this.currentPortfolio = portfolio;
+		view.changePortfolio();
+	}
+
 	/**
 	 * Executes a command.
 	 * 
