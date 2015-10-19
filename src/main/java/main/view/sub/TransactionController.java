@@ -65,7 +65,7 @@ public class TransactionController {
 		h2.setDisable(disabled);
 		amount.setDisable(disabled);
 		date.setDisable(disabled);
-		type.setDisable(disable);
+		type.setDisable(disabled);
 	}
 
 	/**

@@ -6,11 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Record {
-	Date date;
+	public Date date;
 	Holding h1, h2;
-	double amount;
+	public double amount;
 	Portfolio p;
-	Type type;
+	public Type type;
 	
 	public enum Type {
 		ACCOUNT_TRANSFER,

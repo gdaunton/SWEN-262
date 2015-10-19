@@ -330,7 +330,7 @@ public class MainController implements Initializable {
 		else if (!equity_list.getSelectionModel().isEmpty()) {
 			gotoEquity(equity_list.getSelectionModel().getSelectedItem());
 		}
-		record_list.setItems(new FXCollections.observableArrayList(app.currentPortfolio.history));
+		record_list.setItems(FXCollections.observableArrayList(app.currentPortfolio.history));
 	}
 
 	/**
