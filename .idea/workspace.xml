@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FPTS.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FPTS.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/main/FPTS.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6352584">
-              <caret line="295" column="8" selection-start-line="295" selection-start-column="8" selection-end-line="295" selection-end-column="8" />
+            <state vertical-scroll-proportion="-19.65625">
+              <caret line="306" column="35" selection-start-line="306" selection-start-column="35" selection-end-line="306" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2287#2422#0" expanded="true" />
@@ -38,8 +38,22 @@
                 <element signature="e#4848#4849#0" expanded="true" />
                 <element signature="e#5025#5026#0" expanded="true" />
                 <element signature="e#5062#5063#0" expanded="true" />
-                <element signature="e#9935#9936#0" expanded="true" />
-                <element signature="e#9958#9959#0" expanded="true" />
+                <element signature="e#8742#8753#0" expanded="true" />
+                <element signature="e#10000#10001#0" expanded="true" />
+                <element signature="e#10023#10024#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/main/view/MainController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.3480243">
+              <caret line="443" column="26" selection-start-line="443" selection-start-column="26" selection-end-line="443" selection-end-column="26" />
+              <folding>
+                <element signature="e#6655#7018#0" expanded="true" />
+                <element signature="e#7017#7018#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -65,37 +79,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/main/view/MainController.java">
+      <file leaf-file-name="FXMLLoader.java" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/javafx-src.zip!/javafx/fxml/FXMLLoader.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="66" column="26" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
-              <folding>
-                <element signature="e#2405#2406#0" expanded="false" />
-                <element signature="e#2459#2460#0" expanded="false" />
-                <element signature="e#2546#2659#0" expanded="false" />
-                <element signature="e#2658#2659#0" expanded="false" />
-                <element signature="e#2683#2795#0" expanded="false" />
-                <element signature="e#2794#2795#0" expanded="false" />
-                <element signature="e#3147#3461#0" expanded="false" />
-                <element signature="e#3460#3461#0" expanded="false" />
-                <element signature="e#3485#3822#0" expanded="false" />
-                <element signature="e#3821#3822#0" expanded="false" />
-                <element signature="e#3844#4337#0" expanded="false" />
-                <element signature="e#4060#4071#0" expanded="false" />
-                <element signature="e#4336#4337#0" expanded="false" />
-                <element signature="e#5694#6279#0" expanded="false" />
-                <element signature="e#5872#6234#0" expanded="false" />
-                <element signature="e#6233#6234#0" expanded="false" />
-                <element signature="e#6278#6279#0" expanded="false" />
-                <element signature="e#6351#6933#0" expanded="false" />
-                <element signature="e#6526#6889#0" expanded="false" />
-                <element signature="e#6888#6889#0" expanded="false" />
-                <element signature="e#6932#6933#0" expanded="false" />
-                <element signature="e#8885#8886#0" expanded="false" />
-                <element signature="e#8951#8952#0" expanded="false" />
-                <marker date="1445256598273" expanded="true" signature="27:1190" placeholder="..." />
-              </folding>
+              <caret line="2424" column="0" selection-start-line="2424" selection-start-column="0" selection-end-line="2424" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/main/controller/Controller.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -161,40 +160,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Account.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/main/model/holdings/Account.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="200" column="13" selection-start-line="200" selection-start-column="13" selection-end-line="200" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#1425#1426#0" expanded="false" />
-                <element signature="e#1443#1444#0" expanded="false" />
-                <element signature="e#1549#1550#0" expanded="false" />
-                <element signature="e#1570#1571#0" expanded="false" />
-                <element signature="e#1608#1609#0" expanded="false" />
-                <element signature="e#1635#1636#0" expanded="false" />
-                <element signature="e#2970#2971#0" expanded="false" />
-                <element signature="e#2988#2989#0" expanded="false" />
-                <element signature="e#3115#3116#0" expanded="false" />
-                <element signature="e#3135#3136#0" expanded="false" />
-                <element signature="e#3245#3246#0" expanded="false" />
-                <element signature="e#3277#3278#0" expanded="false" />
-                <element signature="e#3628#3629#0" expanded="false" />
-                <element signature="e#3654#3655#0" expanded="false" />
-                <element signature="e#3752#3753#0" expanded="false" />
-                <element signature="e#3775#3776#0" expanded="false" />
-                <element signature="e#3886#3887#0" expanded="false" />
-                <element signature="e#3909#3910#0" expanded="false" />
-                <element signature="e#4016#4017#0" expanded="false" />
-                <element signature="e#4039#4040#0" expanded="false" />
-                <element signature="e#4082#4083#0" expanded="false" />
-                <element signature="e#4100#4101#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="Git.Settings">
@@ -214,10 +179,10 @@
         <option value="$PROJECT_DIR$/src/main/java/main/model/holdings/Account.java" />
         <option value="$PROJECT_DIR$/src/main/java/main/model/holdings/Equity.java" />
         <option value="$PROJECT_DIR$/src/main/java/main/view/sub/TransactionController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/main/view/MainController.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/.project" />
         <option value="$PROJECT_DIR$/src/main/java/main/FPTS.java" />
+        <option value="$PROJECT_DIR$/src/main/java/main/view/MainController.java" />
       </list>
     </option>
   </component>
@@ -358,32 +323,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SWEN-262" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SWEN-262" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -407,6 +346,11 @@
     <property name="settings.editor.selected.configurable" value="project.propCompiler" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Joe IBP Laptop\Dropbox\School 2015-2016\Fall\Engineering of Software Subsystems\repo\SWEN-262\src\main\resources" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.FPTS">
     <configuration default="false" name="FPTS" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -654,7 +598,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -668,30 +612,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2405#2406#0" expanded="false" />
-            <element signature="e#2459#2460#0" expanded="false" />
-            <element signature="e#2546#2659#0" expanded="false" />
-            <element signature="e#2658#2659#0" expanded="false" />
-            <element signature="e#2683#2795#0" expanded="false" />
-            <element signature="e#2794#2795#0" expanded="false" />
-            <element signature="e#3147#3461#0" expanded="false" />
-            <element signature="e#3460#3461#0" expanded="false" />
-            <element signature="e#3485#3822#0" expanded="false" />
-            <element signature="e#3821#3822#0" expanded="false" />
-            <element signature="e#3844#4337#0" expanded="false" />
-            <element signature="e#4060#4071#0" expanded="false" />
-            <element signature="e#4336#4337#0" expanded="false" />
-            <element signature="e#5694#6279#0" expanded="false" />
-            <element signature="e#5872#6234#0" expanded="false" />
-            <element signature="e#6233#6234#0" expanded="false" />
-            <element signature="e#6278#6279#0" expanded="false" />
-            <element signature="e#6351#6933#0" expanded="false" />
-            <element signature="e#6526#6889#0" expanded="false" />
-            <element signature="e#6888#6889#0" expanded="false" />
-            <element signature="e#6932#6933#0" expanded="false" />
-            <element signature="e#8885#8886#0" expanded="false" />
-            <element signature="e#8951#8952#0" expanded="false" />
-            <marker date="1445256598273" expanded="true" signature="27:1190" placeholder="..." />
+            <element signature="e#6655#7018#0" expanded="true" />
+            <element signature="e#7017#7018#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -797,30 +719,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="93" column="9" selection-start-line="93" selection-start-column="9" selection-end-line="93" selection-end-column="9" />
           <folding>
-            <element signature="e#2405#2406#0" expanded="false" />
-            <element signature="e#2459#2460#0" expanded="false" />
-            <element signature="e#2546#2659#0" expanded="false" />
-            <element signature="e#2658#2659#0" expanded="false" />
-            <element signature="e#2683#2795#0" expanded="false" />
-            <element signature="e#2794#2795#0" expanded="false" />
-            <element signature="e#3147#3461#0" expanded="false" />
-            <element signature="e#3460#3461#0" expanded="false" />
-            <element signature="e#3485#3822#0" expanded="false" />
-            <element signature="e#3821#3822#0" expanded="false" />
-            <element signature="e#3844#4337#0" expanded="false" />
-            <element signature="e#4060#4071#0" expanded="false" />
-            <element signature="e#4336#4337#0" expanded="false" />
-            <element signature="e#5694#6279#0" expanded="false" />
-            <element signature="e#5872#6234#0" expanded="false" />
-            <element signature="e#6233#6234#0" expanded="false" />
-            <element signature="e#6278#6279#0" expanded="false" />
-            <element signature="e#6351#6933#0" expanded="false" />
-            <element signature="e#6526#6889#0" expanded="false" />
-            <element signature="e#6888#6889#0" expanded="false" />
-            <element signature="e#6932#6933#0" expanded="false" />
-            <element signature="e#8885#8886#0" expanded="false" />
-            <element signature="e#8951#8952#0" expanded="false" />
-            <marker date="1445256598273" expanded="true" signature="27:1190" placeholder="..." />
+            <element signature="e#6655#7018#0" expanded="true" />
+            <element signature="e#7017#7018#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -881,8 +781,9 @@
             <element signature="e#4848#4849#0" expanded="true" />
             <element signature="e#5025#5026#0" expanded="true" />
             <element signature="e#5062#5063#0" expanded="true" />
-            <element signature="e#9935#9936#0" expanded="true" />
-            <element signature="e#9958#9959#0" expanded="true" />
+            <element signature="e#8742#8753#0" expanded="true" />
+            <element signature="e#10000#10001#0" expanded="true" />
+            <element signature="e#10023#10024#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -996,22 +897,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/main/controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="90" column="20" selection-start-line="90" selection-start-column="20" selection-end-line="90" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#305#314#0" expanded="false" />
-            <element signature="e#375#384#0" expanded="false" />
-            <element signature="e#1368#1379#0" expanded="false" />
-            <element signature="e#1594#1605#0" expanded="false" />
-            <element signature="e#2535#2536#0" expanded="false" />
-            <element signature="e#2571#2572#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/main/controller/command/HoldingCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1102,39 +987,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/main/view/MainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="26" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
-          <folding>
-            <element signature="e#2405#2406#0" expanded="false" />
-            <element signature="e#2459#2460#0" expanded="false" />
-            <element signature="e#2546#2659#0" expanded="false" />
-            <element signature="e#2658#2659#0" expanded="false" />
-            <element signature="e#2683#2795#0" expanded="false" />
-            <element signature="e#2794#2795#0" expanded="false" />
-            <element signature="e#3147#3461#0" expanded="false" />
-            <element signature="e#3460#3461#0" expanded="false" />
-            <element signature="e#3485#3822#0" expanded="false" />
-            <element signature="e#3821#3822#0" expanded="false" />
-            <element signature="e#3844#4337#0" expanded="false" />
-            <element signature="e#4060#4071#0" expanded="false" />
-            <element signature="e#4336#4337#0" expanded="false" />
-            <element signature="e#5694#6279#0" expanded="false" />
-            <element signature="e#5872#6234#0" expanded="false" />
-            <element signature="e#6233#6234#0" expanded="false" />
-            <element signature="e#6278#6279#0" expanded="false" />
-            <element signature="e#6351#6933#0" expanded="false" />
-            <element signature="e#6526#6889#0" expanded="false" />
-            <element signature="e#6888#6889#0" expanded="false" />
-            <element signature="e#6932#6933#0" expanded="false" />
-            <element signature="e#8885#8886#0" expanded="false" />
-            <element signature="e#8951#8952#0" expanded="false" />
-            <marker date="1445256598273" expanded="true" signature="27:1190" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/main.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.0">
@@ -1212,10 +1064,26 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main/controller/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/javafx-src.zip!/javafx/fxml/FXMLLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2424" column="0" selection-start-line="2424" selection-start-column="0" selection-end-line="2424" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/main/FPTS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6352584">
-          <caret line="295" column="8" selection-start-line="295" selection-start-column="8" selection-end-line="295" selection-end-column="8" />
+        <state vertical-scroll-proportion="-19.65625">
+          <caret line="306" column="35" selection-start-line="306" selection-start-column="35" selection-end-line="306" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2287#2422#0" expanded="true" />
@@ -1226,8 +1094,31 @@
             <element signature="e#4848#4849#0" expanded="true" />
             <element signature="e#5025#5026#0" expanded="true" />
             <element signature="e#5062#5063#0" expanded="true" />
-            <element signature="e#9935#9936#0" expanded="true" />
-            <element signature="e#9958#9959#0" expanded="true" />
+            <element signature="e#8742#8753#0" expanded="true" />
+            <element signature="e#10000#10001#0" expanded="true" />
+            <element signature="e#10023#10024#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/account.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main/view/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3480243">
+          <caret line="443" column="26" selection-start-line="443" selection-start-column="26" selection-end-line="443" selection-end-column="26" />
+          <folding>
+            <element signature="e#6655#7018#0" expanded="true" />
+            <element signature="e#7017#7018#0" expanded="true" />
           </folding>
         </state>
       </provider>

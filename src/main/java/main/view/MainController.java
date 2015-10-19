@@ -118,17 +118,17 @@ public class MainController implements Initializable {
 		});
 		bear.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-
+				bear_simulation(app.currentPortfolio);
 			}
 		});
 		bull.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-
+				bull_simulation(app.currentPortfolio);
 			}
 		});
 		no_grow.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-
+				no_grow_simulation(app.currentPortfolio);
 			}
 		});
 		account.setOnAction(new EventHandler<ActionEvent>() {
@@ -330,6 +330,7 @@ public class MainController implements Initializable {
 		else if (!equity_list.getSelectionModel().isEmpty()) {
 			gotoEquity(equity_list.getSelectionModel().getSelectedItem());
 		}
+		if (record_list == null) { record_list = new ListView<Record>(); }
 		record_list.setItems(FXCollections.observableArrayList(app.currentPortfolio.history));
 	}
 
@@ -440,7 +441,7 @@ public class MainController implements Initializable {
 	 *             If an error occurs.
 	 */
 	private Initializable changeScene(String fxml) throws Exception {
-		fxml = "/main/" + fxml;
+		fxml = "/" + fxml;
 		FXMLLoader loader = new FXMLLoader();
 		InputStream in = getClass().getResourceAsStream(fxml);
 		loader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -449,7 +450,12 @@ public class MainController implements Initializable {
 		try {
 			page = (Pane) loader.load(in);
 		} finally {
-			in.close();
+			try {
+				in.close();
+			} catch(NullPointerException npe) {
+				System.err.println(fxml);
+				throw npe;
+			}
 		}
 		Scene newScene = new Scene(page);
 		if (currentScene != null)
@@ -457,5 +463,17 @@ public class MainController implements Initializable {
 		content.getChildren().add(newScene.getRoot());
 		currentScene = newScene;
 		return loader.getController();
+	}
+	
+	public void no_grow_simulation (Portfolio p) {
+		
+	}
+	
+	public void bull_simulation (Portfolio p) {
+		
+	}
+	
+	public void bear_simulation (Portfolio p) {
+		
 	}
 }

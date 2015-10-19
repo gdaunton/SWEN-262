@@ -293,7 +293,7 @@ public class FPTS extends Application {
 		InputStream in = getClass().getResourceAsStream(fxml);
 		loader.setBuilderFactory(new JavaFXBuilderFactory());
 		loader.setLocation(getClass().getResource(fxml));
-		
+
 		Pane page;
 		page = (Pane) loader.load(in);
 		in.close();
@@ -328,6 +328,7 @@ public class FPTS extends Application {
 		 * @return All of the portfolio objects
 		 */
 		public ArrayList<Portfolio> getPortfolios() {
+			//TODO: fix the second exception error
 			ArrayList<Portfolio> out = new ArrayList<Portfolio>();
 			try {
 				Portfolio current;
@@ -341,6 +342,7 @@ public class FPTS extends Application {
 				return out;
 			} catch (Exception e) {
 				System.err.println("Error retrieving portfolios from file");
+				e.printStackTrace();
 			}
 			return out;
 		}
