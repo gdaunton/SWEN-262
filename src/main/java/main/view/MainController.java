@@ -27,10 +27,7 @@ import javafx.stage.StageStyle;
 import main.FPTS;
 import main.controller.Controller;
 import main.controller.command.HoldingCommand;
-<<<<<<< HEAD
-=======
 import main.model.Portfolio;
->>>>>>> 14c67ff6ed873e378ebeeb45b1ec9fdf5166f5c9
 import main.model.Record;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
