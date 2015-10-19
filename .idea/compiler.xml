@@ -12,6 +12,7 @@
       <entry name="!?*.kt" />
       <entry name="!?*.clj" />
       <entry name="!?*.aj" />
+      <entry name="?*.fxml" />
     </wildcardResourcePatterns>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="false">
@@ -27,7 +28,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="FPTS" target="1.5" />
-      <module name="SWEN-262" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

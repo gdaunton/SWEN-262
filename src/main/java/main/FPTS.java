@@ -293,12 +293,10 @@ public class FPTS extends Application {
 		InputStream in = getClass().getResourceAsStream(fxml);
 		loader.setBuilderFactory(new JavaFXBuilderFactory());
 		loader.setLocation(getClass().getResource(fxml));
+		
 		Pane page;
-		try {
-			page = (Pane) loader.load(in);
-		} finally {
-			in.close();
-		}
+		page = (Pane) loader.load(in);
+		in.close();
 		Scene scene = new Scene(page);
 		stage.setScene(scene);
 		stage.sizeToScene();
