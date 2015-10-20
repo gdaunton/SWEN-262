@@ -35,8 +35,10 @@ public class Controller {
 		this.stage = mainStage;
 		this.view = mainController;
 		for (Portfolio p : portfolios) {
-			if (p.getUsers().contains(user))
+			if (p.getUsers().contains(user)) {
 				currentPortfolio = p;
+				break;
+			}
 		}
 		view.setApp(this);
 	}
@@ -116,4 +118,6 @@ public class Controller {
 	public interface OnLogout {
 		void Logout();
 	}
+	
+	public void update() { view.update(); }
 }

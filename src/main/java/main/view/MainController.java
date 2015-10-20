@@ -139,6 +139,7 @@ public class MainController implements Initializable {
 				} catch (Exception e) {
 					System.err.println("Error inflating new account dialog");
 				}
+				app.update();
 			}
 		});
 		equity.setOnAction(new EventHandler<ActionEvent>() {
@@ -150,6 +151,7 @@ public class MainController implements Initializable {
 					e.printStackTrace();
 					System.err.println("Error inflating new equity dialog");
 				}
+				app.update();
 			}
 		});
 		open.setOnAction(new EventHandler<ActionEvent>() {
@@ -164,6 +166,7 @@ public class MainController implements Initializable {
 						app.setPortfolio(result.get());
 					}
 				}
+				app.update();
 			}
 		});
 	}
@@ -466,14 +469,41 @@ public class MainController implements Initializable {
 	}
 	
 	public void no_grow_simulation (Portfolio p) {
-		
+		//TODO: simulate
+		//show a window that summarizes the portfolio (MUST be a deep copy) and lets the user advance a simulation of it by X time in X manner
+		//need a button to return simulated p to equal p
+		try {
+			NoGrowController c = (NoGrowController) changeScene("no_grow.fxml");
+			c.setPortfolio(this, p);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Error inflating no_grow view");
+		}
 	}
 	
 	public void bull_simulation (Portfolio p) {
-		
+		//TODO: simulate
+		//show a window that summarizes the portfolio (MUST be a deep copy) and lets the user advance a simulation of it by X time in X manner
+		//need a button to return simulated p to equal p
+		try {
+			BullController c = (NoGrowController) changeScene("bull.fxml");
+			c.setPortfolio(this, p);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Error inflating bull view");
+		}
 	}
 	
 	public void bear_simulation (Portfolio p) {
-		
+		//TODO: simulate
+		//show a window that summarizes the portfolio (MUST be a deep copy) and lets the user advance a simulation of it by X time in X manner
+		//need a button to return simulated p to equal p
+		try {
+			BearController c = (NoGrowController) changeScene("bear.fxml");
+			c.setPortfolio(this, p);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Error inflating bear view");
+		}
 	}
 }

@@ -271,4 +271,9 @@ public class Portfolio implements Serializable {
 		}
 		fw.close();
 	}
+	
+	public Portfolio clone() {
+		//TODO: return a *DEEP* copy of this Portfolio
+		
+	}
 }
