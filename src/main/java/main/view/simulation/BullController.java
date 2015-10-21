@@ -1,4 +1,4 @@
-package main.view;
+package main.view.simulation;
 
 import java.net.URL;
 import java.text.NumberFormat;
@@ -12,12 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
-import main.model.simulation.NoGrowth;
+import main.model.simulation.Bull;
+<<<<<<< HEAD:src/main/java/main/view/BullController.java
 import main.model.simulation.Simulation;
+=======
+>>>>>>> 0dab0e13afcd3c0fd11fd17080a8249a73a34074:src/main/java/main/view/simulation/BullController.java
 import main.view.MainController;
 
 
-public class NoGrowController {
+public class BullController {
 
 	//buttons
 	@FXML
@@ -37,7 +40,7 @@ public class NoGrowController {
 	private Portfolio p;
 	private Portfolio op;
 	private MainController controller;
-	private NoGrowth s = new NoGrowth();
+	private Bull s = new Bull();
 
 	/**
 	 * Sets the record.
@@ -80,7 +83,8 @@ public class NoGrowController {
 	}
 	
 	public void do_simulate() {
-		p = s.simulate(steps(), step_size(), p);
+		//TODO Simulaiton
+		//p = s.simulate(steps(), step_size(), p);
 	}
 
 	private Simulation.STEP_SIZE step_size() {
