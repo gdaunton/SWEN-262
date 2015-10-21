@@ -274,6 +274,6 @@ public class Portfolio implements Serializable {
 	
 	public Portfolio clone() {
 		//TODO: return a *DEEP* copy of this Portfolio
-		
+		return null;
 	}
 }
