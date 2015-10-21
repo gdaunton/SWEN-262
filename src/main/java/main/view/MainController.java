@@ -118,17 +118,17 @@ public class MainController implements Initializable {
 		});
 		bear.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				bear_simulation(app.currentPortfolio);
+				//TODO Implement Simulations
 			}
 		});
 		bull.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				bull_simulation(app.currentPortfolio);
+				//TODO Implement Simulations
 			}
 		});
 		no_grow.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				no_grow_simulation(app.currentPortfolio);
+				//TODO Implement Simulations
 			}
 		});
 		account.setOnAction(new EventHandler<ActionEvent>() {
@@ -367,7 +367,7 @@ public class MainController implements Initializable {
 	 */
 	public void gotoEquity(Equity equity) {
 		try {
-			EquityController e = (EquityController) changeScene("equity.fxml");
+			EquityController e = (EquityController) changeScene("sub/equity.fxml");
 			e.setEquity(this, equity);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -383,7 +383,7 @@ public class MainController implements Initializable {
 	 */
 	public void gotoAccount(Account account) {
 		try {
-			AccountController a = (AccountController) changeScene("account.fxml");
+			AccountController a = (AccountController) changeScene("sub/account.fxml");
 			a.setAccount(this, account);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -396,7 +396,7 @@ public class MainController implements Initializable {
 	 */
 	public void gotoTransaction(Record record) {
 		try {
-			TransactionController t = (TransactionController) changeScene("transaction.fxml");
+			TransactionController t = (TransactionController) changeScene("sub/transaction.fxml");
 			t.setTransaction(this, record);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -466,44 +466,5 @@ public class MainController implements Initializable {
 		content.getChildren().add(newScene.getRoot());
 		currentScene = newScene;
 		return loader.getController();
-	}
-	
-	public void no_grow_simulation (Portfolio p) {
-		//TODO: simulate
-		//show a window that summarizes the portfolio (MUST be a deep copy) and lets the user advance a simulation of it by X time in X manner
-		//need a button to return simulated p to equal p
-		try {
-			NoGrowController c = (NoGrowController) changeScene("no_grow.fxml");
-			c.setPortfolio(this, p);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("Error inflating no_grow view");
-		}
-	}
-	
-	public void bull_simulation (Portfolio p) {
-		//TODO: simulate
-		//show a window that summarizes the portfolio (MUST be a deep copy) and lets the user advance a simulation of it by X time in X manner
-		//need a button to return simulated p to equal p
-		try {
-			BullController c = (NoGrowController) changeScene("bull.fxml");
-			c.setPortfolio(this, p);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("Error inflating bull view");
-		}
-	}
-	
-	public void bear_simulation (Portfolio p) {
-		//TODO: simulate
-		//show a window that summarizes the portfolio (MUST be a deep copy) and lets the user advance a simulation of it by X time in X manner
-		//need a button to return simulated p to equal p
-		try {
-			BearController c = (NoGrowController) changeScene("bear.fxml");
-			c.setPortfolio(this, p);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("Error inflating bear view");
-		}
 	}
 }

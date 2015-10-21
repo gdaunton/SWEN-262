@@ -1,5 +1,11 @@
+.DS_Store
+.idea
+.project
+.classpath
+*.iml
 *.dat
 data/
+.idea/
 ### Maven template
 target/
 pom.xml.tag
