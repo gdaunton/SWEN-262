@@ -32,7 +32,7 @@ public class Equity extends Holding implements Serializable {
 	}
 
 	private String tickerSymbol;
-	private String name;					//bank name
+	private String name;					//company name
 	private int shares;
 	private double price_per_share;
 	private double old_price;

@@ -14,6 +14,11 @@ import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+
+import static java.util.concurrent.TimeUnit.*;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -38,7 +43,12 @@ import main.view.MainController;
 import main.view.PortfolioCreateController;
 import main.view.UserCreateController;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 public class FPTS extends Application {
+	
+	private static boolean file_basis = false;
+	public static int poll_cooldown_sec = 10;
 
 	private ArrayList<Portfolio> portfolios;
 	private PortfolioManager manager;
@@ -47,6 +57,10 @@ public class FPTS extends Application {
 	private User loggedUser;
 	private String dataRoot = "data/";
 
+	private ScheduledFuture<?> pollerHandle = null;
+
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
 	/**
 	 * Starts the stage.
 	 */
@@ -54,17 +68,39 @@ public class FPTS extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		new File(dataRoot).mkdir();
 		um = new UserManager(dataRoot);
-		File equities = new File(dataRoot + "equities.csv");
-		if (!equities.exists()) {
-			FileChooser.ExtensionFilter csv = new FileChooser.ExtensionFilter("csv", "*.csv");
-			FileChooser fileChooser = new FileChooser();
-			fileChooser.getExtensionFilters().add(csv);
-			fileChooser.setTitle("Select Equities File");
-			File file = fileChooser.showOpenDialog(stage);
-			equities.createNewFile();
-			copyFile(file, equities);
+
+		if(file_basis) { //import the equities from the file
+			File equities = new File(dataRoot + "equities.csv");
+			if (!equities.exists()) {
+				FileChooser.ExtensionFilter csv = new FileChooser.ExtensionFilter("csv", "*.csv");
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.getExtensionFilters().add(csv);
+				fileChooser.setTitle("Select Equities File");
+				File file = fileChooser.showOpenDialog(stage);
+				equities.createNewFile();
+				copyFile(file, equities);
+			}
+			HoldingManager.import_equities(equities);
 		}
-		HoldingManager.import_equities(equities);
+		else { //import the equities from Yahoo
+			HoldingManager.import_equities_yahoo();
+
+			//TODO: ask user for market poll cooldown
+
+			final Runnable poller = new Runnable() {
+				public void run() {
+					try {
+						HoldingManager.import_equities_yahoo();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (ParserConfigurationException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			pollerHandle = scheduler.scheduleAtFixedRate(poller, FPTS.poll_cooldown_sec, FPTS.poll_cooldown_sec, SECONDS);
+		}
+		
 		try {
 			stage = primaryStage;
 			gotoLogin();
@@ -73,8 +109,8 @@ public class FPTS extends Application {
 			portfolios = manager.getPortfolios();
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
-					if (!checkDataChanged())
-						we.consume();
+					pollerHandle.cancel(true);
+					if (!checkDataChanged()) { we.consume(); }
 				}
 			});
 		} catch (Exception ex) {
@@ -368,6 +404,10 @@ public class FPTS extends Application {
 				}
 			}
 		}
+	}
+	
+	public void import_prices() {
+		
 	}
 
 	public class UnassociatedUserException extends Exception {

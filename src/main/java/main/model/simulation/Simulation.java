@@ -8,7 +8,7 @@ public abstract class Simulation {
 
 	double change = 0;
 
-	enum STEP_SIZE {
+	public enum STEP_SIZE {
 		DAY, MONTH, YEAR
 	}
 

@@ -4,11 +4,16 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
+import main.model.simulation.Bear;
+import main.model.simulation.Simulation;
 import main.view.MainController;
 
 
@@ -76,6 +81,14 @@ public class BearController {
 	
 	public void do_simulate() {
 		p = s.simulate(steps(), step_size(), p);
+	}
+
+	private Simulation.STEP_SIZE step_size() {
+		return null;
+	}
+
+	private int steps() {
+		return 0;
 	}
 
 	/**
