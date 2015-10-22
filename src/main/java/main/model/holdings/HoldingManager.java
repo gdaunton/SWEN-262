@@ -184,8 +184,7 @@ public class HoldingManager {
      * @return An list of equities.
      * @throws IllegalAccessException If an access error occurs.
      */
-    public static ArrayList<Holding> search(String input, String field_name, Portfolio p)
-            throws IllegalAccessException {
+    public static ArrayList<Holding> search(String input, String field_name, Portfolio p) throws IllegalAccessException {
         try {
             ArrayList<Holding> out = new ArrayList<Holding>();
             for (Holding h : holding_list.get(p)) {
