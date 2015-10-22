@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
@@ -27,9 +28,9 @@ public class BearController {
     private Button restart;
 
     //configuration
-    //dropdown (or radio buttons?) for choosing the simulation length
+    //dropdown for choosing the simulation length
 	@FXML
-	private ComboBox<Simulation.STEP_SIZE> sim_len = new ComboBox<>();
+	private ComboBox<Simulation.STEP_SIZE> sim_len = new ComboBox<Simulation.STEP_SIZE>();
     //textfield for rate of growth
     @FXML
     private TextField rate_field;
@@ -85,7 +86,7 @@ public class BearController {
     }
 
     public void do_simulate() {
-        p = s.simulate(steps(), step_size(), p, step_size());
+        p = s.simulate(steps(), step_size(), p, rate());
     }
 
     private Simulation.STEP_SIZE step_size() {
@@ -94,6 +95,10 @@ public class BearController {
 
     private int steps() {
         return Integer.parseInt(step_field.getText());
+    }
+
+    private double rate() {
+        return Double.parseDouble(rate_field.getText());
     }
 
     /**

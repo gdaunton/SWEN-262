@@ -9,10 +9,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
 import main.model.simulation.NoGrowth;
+import main.model.simulation.Simulation;
 import main.view.MainController;
 
 
@@ -26,8 +28,11 @@ public class NoGrowController {
 
     //configuration
     //dropdown for choosing the simulation length
-
-    //rate of growth? would be a textfield
+	@FXML
+	private ComboBox<Simulation.STEP_SIZE> sim_len = new ComboBox<Simulation.STEP_SIZE>();
+	//steps
+    @FXML
+    private TextField step_field;
 
     //portfolio summation stuff
 
@@ -72,11 +77,13 @@ public class NoGrowController {
                 updateView();
             }
         });
+		
+		sim_len.getItems().setAll(Simulation.STEP_SIZE.values());
     }
 
     public void do_simulate() {
         //TODO do simulation
-        //p = s.simulate(steps(), step_size(), p);
+        //p = s.simulate(steps(), step_size(), p, 0.0);
     }
 
     /**
