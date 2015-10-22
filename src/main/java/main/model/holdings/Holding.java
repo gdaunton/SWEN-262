@@ -15,4 +15,6 @@ public abstract class Holding implements Serializable {
 			return false;
 		}
 	}
+
+	public abstract boolean match(String query);
 }

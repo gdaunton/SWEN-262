@@ -187,6 +187,10 @@ public class Account extends Holding implements Serializable {
         }
     }
 
+    public boolean match(String query) {
+        return name.contains(query);
+    }
+
     @Override
     public String toString() {
         return name;

@@ -110,7 +110,10 @@ public class FPTS extends Application {
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					pollerHandle.cancel(true);
-					if (!checkDataChanged()) { we.consume(); }
+					if (!checkDataChanged())
+						we.consume();
+					else
+						System.exit(0);
 				}
 			});
 		} catch (Exception ex) {
