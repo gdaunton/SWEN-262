@@ -84,7 +84,7 @@ public class HoldingCommand implements Command {
                     case SHARES:
                         try {
                             ((Equity) target).setShares((int) Math.round(modifier));
-                            portfolio.history.add(new Transaction(Transaction.Type.EQUITY_BUY_SELL, new Object[]{target, Math.round(modifier)}));
+                            portfolio.history.add(new Transaction(Transaction.Type.EQUITY_BUY_SELL, new Object[]{target, (double)Math.round(modifier)}));
                         } catch (ClassCastException e) {
                             System.err.println("Please only give equity objects while using the SHARES modifier");
                             e.printStackTrace();

@@ -55,14 +55,16 @@ public class Transaction implements Serializable {
                 break;
             case EQUITY_BUY_SELL:
                 h1 = (Holding) args[0];
-                amount = (Double) args[1];
+                amount = (Double)args[1];
                 break;
         }
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy kk:mm");
         date = sdf.format(Calendar.getInstance().getTime());
         this.type = type.toString();
-        if (amount != 0)
+        if (amount != 0 && type != Type.EQUITY_BUY_SELL)
             this.amount = NumberFormat.getCurrencyInstance().format(amount);
+        else
+            this.amount = Integer.toString((int)amount);
         String hFinal = h1.toString();
         if (h2 != null)
             hFinal += (", " + h2.toString());
