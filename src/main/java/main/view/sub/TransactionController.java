@@ -18,7 +18,7 @@ import main.model.Transaction;
 import main.view.MainController;
 
 
-public class TransactionController implements Initializable{
+public class TransactionController implements Initializable {
 
     @FXML
     private TableView<Transaction> table;
@@ -57,7 +57,7 @@ public class TransactionController implements Initializable{
                 return new SimpleStringProperty(t.getValue().date);
             }
         });
-        if(transactions != null)
+        if (transactions != null)
             table.setItems(FXCollections.observableArrayList(transactions));
         table.getColumns().addAll(type, holding, value, date);
     }

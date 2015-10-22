@@ -7,16 +7,24 @@ public class User implements Serializable {
     public String passwordHash;
     private int id;
 
-    public User(String username, String hash, int id){
+    /**
+     * Creates a new User object
+     *
+     * @param username the user's username
+     * @param hash     the password hash
+     * @param id       the user's id
+     */
+    public User(String username, String hash, int id) {
         this.username = username;
         this.passwordHash = hash;
     }
 
     /**
      * Get this users ID
+     *
      * @return
      */
-    public int getId(){
+    public int getId() {
         return this.id;
     }
 
@@ -27,6 +35,6 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object user) {
-        return ((User)user).username.equals(this.username) && ((User)user).passwordHash.equals(this.passwordHash);
+        return ((User) user).username.equals(this.username) && ((User) user).passwordHash.equals(this.passwordHash);
     }
 }

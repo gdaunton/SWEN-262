@@ -18,90 +18,86 @@ import main.view.MainController;
 
 public class NoGrowController {
 
-	//buttons
-	@FXML
-	private Button run;
-	@FXML
-	private Button restart;
-	
-	//configuration
-		//dropdown for choosing the simulation length
-	
-	//rate of growth? would be a textfield
-	
-	//portfolio summation stuff
-	
+    //buttons
+    @FXML
+    private Button run;
+    @FXML
+    private Button restart;
 
-	//objects
-	private Portfolio p;
-	private Portfolio op;
-	private MainController controller;
-	private NoGrowth s = new NoGrowth();
+    //configuration
+    //dropdown for choosing the simulation length
 
-	/**
-	 * Sets the record.
-	 * 
-	 * @param controller
-	 *            The controller.
-	 * @param p
-	 *            The portfolio.
-	 */
-	public void setTransaction(MainController controller, Portfolio p) {
-		this.p = p.clone();
-		this.op = p;
-		this.controller = controller;
-		initValues();
-	}
+    //rate of growth? would be a textfield
 
-	/**
-	 * Initializes the record controller.
-	 * 
-	 * @param location
-	 *            The location.
-	 * @param resources
-	 *            The resources.
-	 */
-	public void initialize(URL location, ResourceBundle resources) {
-		assert run != null : "fx:id=\"run\" was not injected: check your FXML file.";
-		run.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				do_simulate();
-			}
-		});
+    //portfolio summation stuff
 
-		assert restart != null : "fx:id=\"restart\" was not injected: check your FXML file.";
-		restart.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				p = p.clone();
-				updateView();
-			}
-		});
-	}
-	
-	public void do_simulate() {
-		//TODO do simulation
-		//p = s.simulate(steps(), step_size(), p);
-	}
 
-	/**
-	 * Sets the initial values of the components.
-	 */
-	private void initValues() {
-		try {
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    //objects
+    private Portfolio p;
+    private Portfolio op;
+    private MainController controller;
+    private NoGrowth s = new NoGrowth();
 
-	/**
-	 * Reset the values of the components.
-	 */
-	public void updateView() {
-		try {
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Sets the record.
+     *
+     * @param controller The controller.
+     * @param p          The portfolio.
+     */
+    public void setTransaction(MainController controller, Portfolio p) {
+        this.p = p.clone();
+        this.op = p;
+        this.controller = controller;
+        initValues();
+    }
+
+    /**
+     * Initializes the record controller.
+     *
+     * @param location  The location.
+     * @param resources The resources.
+     */
+    public void initialize(URL location, ResourceBundle resources) {
+        assert run != null : "fx:id=\"run\" was not injected: check your FXML file.";
+        run.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                do_simulate();
+            }
+        });
+
+        assert restart != null : "fx:id=\"restart\" was not injected: check your FXML file.";
+        restart.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                p = p.clone();
+                updateView();
+            }
+        });
+    }
+
+    public void do_simulate() {
+        //TODO do simulation
+        //p = s.simulate(steps(), step_size(), p);
+    }
+
+    /**
+     * Sets the initial values of the components.
+     */
+    private void initValues() {
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Reset the values of the components.
+     */
+    public void updateView() {
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

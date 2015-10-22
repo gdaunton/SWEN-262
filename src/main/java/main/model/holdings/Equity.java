@@ -144,7 +144,7 @@ public class Equity extends Holding implements Serializable {
     }
 
     public boolean match(String query) {
-        for(String s : marketSectors)
+        for (String s : marketSectors)
             return s.contains(query);
         return tickerSymbol.toLowerCase().contains(query) || name.toLowerCase().contains(query);
     }

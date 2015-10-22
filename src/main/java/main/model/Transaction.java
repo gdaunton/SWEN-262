@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Transaction implements Serializable{
+public class Transaction implements Serializable {
     public String date;
     public String holding;
     public String amount = "";
@@ -24,6 +24,12 @@ public class Transaction implements Serializable{
         EQUITY_BUY_SELL
     }
 
+    /**
+     * Creates a new transaction object
+     *
+     * @param type the type of transaction
+     * @param args the arguments
+     */
     public Transaction(Type type, Object[] args) {
         Holding h1 = null, h2 = null;
         double amount = 0;
@@ -55,7 +61,7 @@ public class Transaction implements Serializable{
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy kk:mm");
         date = sdf.format(Calendar.getInstance().getTime());
         this.type = type.toString();
-        if(amount != 0)
+        if (amount != 0)
             this.amount = NumberFormat.getCurrencyInstance().format(amount);
         String hFinal = h1.toString();
         if (h2 != null)

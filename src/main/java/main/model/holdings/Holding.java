@@ -3,18 +3,25 @@ package main.model.holdings;
 import java.io.Serializable;
 
 public abstract class Holding implements Serializable {
-	public abstract double getValue();
-	public abstract String toString();
+    public abstract double getValue();
 
-	@Override
-	public boolean equals(Object p) {
-		Holding h = (Holding) p;
-		try {
-			return h.getValue() == this.getValue();
-		} catch (Exception e) {
-			return false;
-		}
-	}
+    public abstract String toString();
 
-	public abstract boolean match(String query);
+    @Override
+    public boolean equals(Object p) {
+        Holding h = (Holding) p;
+        try {
+            return h.getValue() == this.getValue();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Searches for a match with the given query. Use this for the search function.
+     *
+     * @param query The query to search for
+     * @return Whether or not this holding matches the given query.
+     */
+    public abstract boolean match(String query);
 }

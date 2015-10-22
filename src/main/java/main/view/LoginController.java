@@ -16,76 +16,73 @@ import main.model.UserManager;
 
 public class LoginController implements Initializable {
 
-	@FXML
-	private Button loginButton;
-	@FXML
-	private Button createPortfolio;
-	@FXML
-	private Button createUser;
-	@FXML
-	private TextField username;
-	@FXML
-	private PasswordField password;
-	@FXML
-	private Text errorText;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button createPortfolio;
+    @FXML
+    private Button createUser;
+    @FXML
+    private TextField username;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private Text errorText;
 
-	private FPTS app;
+    private FPTS app;
 
-	/**
-	 * Sets the FPTS app.
-	 * 
-	 * @param app
-	 *            The app.
-	 */
-	public void setApp(FPTS app) {
-		this.app = app;
-	}
+    /**
+     * Sets the FPTS app.
+     *
+     * @param app The app.
+     */
+    public void setApp(FPTS app) {
+        this.app = app;
+    }
 
-	/**
-	 * Initializes the login controller.
-	 * 
-	 * @param location
-	 *            The location.
-	 * @param resources
-	 *            The resources.
-	 */
-	public void initialize(URL location, ResourceBundle resources) {
-		assert loginButton != null : "fx:id=\"loginButton\" was not injected: check your FXML file.";
-		loginButton.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				if (app == null) {
-					errorText.setVisible(true);
-					errorText.setText("Hello " + username.getText());
-				} else {
-					try {
-						if (!app.handleLogin(username.getText(), password.getText()))
-							errorText.setText("User does not exist");
-						errorText.setVisible(true);
-					} catch (UserManager.InvalidPasswordException e) {
-						errorText.setText(e.getMessage());
-						errorText.setVisible(true);
-					} catch (FPTS.UnassociatedUserException e1) {
-						errorText.setText(e1.getMessage());
-						errorText.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
+    /**
+     * Initializes the login controller.
+     *
+     * @param location  The location.
+     * @param resources The resources.
+     */
+    public void initialize(URL location, ResourceBundle resources) {
+        assert loginButton != null : "fx:id=\"loginButton\" was not injected: check your FXML file.";
+        loginButton.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                if (app == null) {
+                    errorText.setVisible(true);
+                    errorText.setText("Hello " + username.getText());
+                } else {
+                    try {
+                        if (!app.handleLogin(username.getText(), password.getText()))
+                            errorText.setText("User does not exist");
+                        errorText.setVisible(true);
+                    } catch (UserManager.InvalidPasswordException e) {
+                        errorText.setText(e.getMessage());
+                        errorText.setVisible(true);
+                    } catch (FPTS.UnassociatedUserException e1) {
+                        errorText.setText(e1.getMessage());
+                        errorText.setVisible(true);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
 
-		assert createUser != null : "fx:id=\"createUser\" was not injected: check your FXML file.";
-		createUser.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				app.gotoCreateUser();
-			}
-		});
+        assert createUser != null : "fx:id=\"createUser\" was not injected: check your FXML file.";
+        createUser.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                app.gotoCreateUser();
+            }
+        });
 
-		assert createPortfolio != null : "fx:id=\"createPortfolio\" was not injected: check your FXML file.";
-		createPortfolio.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				app.gotoCreatePortfolio();
-			}
-		});
-	}
+        assert createPortfolio != null : "fx:id=\"createPortfolio\" was not injected: check your FXML file.";
+        createPortfolio.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                app.gotoCreatePortfolio();
+            }
+        });
+    }
 }

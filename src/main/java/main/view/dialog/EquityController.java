@@ -130,7 +130,7 @@ public class EquityController implements Initializable, DialogController {
                 });
                 try {
                     equity_list.setItems(FXCollections.observableArrayList(HoldingManager.searchAll(newValue, "")));
-                } catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

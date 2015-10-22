@@ -36,6 +36,12 @@ public class HoldingManager {
         equities_list = CSVImporter.importAllEquity(f);
     }
 
+    /**
+     * Imports a list of equities form yahoo finance
+     *
+     * @throws IOException
+     * @throws ParserConfigurationException
+     */
     public static void import_equities_yahoo() throws IOException, ParserConfigurationException {
         String url = "";
         url = "http://query.yahooapis.com/v1/public/yql?q=select symbol, LastTradePriceOnly, Name from yahoo.finance.quotes where symbol in ";
@@ -121,6 +127,12 @@ public class HoldingManager {
         }
     }
 
+    /**
+     * Loads the given string into an xml format to be parsed.
+     *
+     * @param xml the string to parse
+     * @return The xml document
+     */
     private static Document loadXMLFromString(String xml) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
