@@ -190,7 +190,7 @@ public class Account extends Holding implements Serializable {
     }
 
     public boolean match(String query) {
-        return name.contains(query);
+        return name.toLowerCase().contains(query.toLowerCase());
     }
 
     @Override
