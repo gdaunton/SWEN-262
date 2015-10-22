@@ -90,6 +90,7 @@ public class FPTS extends Application {
                 public void run() {
                     try {
                         HoldingManager.import_equities_yahoo();
+                        //TODO: update the display - will need to figure out how to propagate the update as well
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ParserConfigurationException e) {
@@ -393,10 +394,6 @@ public class FPTS extends Application {
                 }
             }
         }
-    }
-
-    public void import_prices() {
-
     }
 
     public class UnassociatedUserException extends Exception {
