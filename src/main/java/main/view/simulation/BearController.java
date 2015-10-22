@@ -27,10 +27,16 @@ public class BearController {
     private Button restart;
 
     //configuration
-    //dropdown for choosing the simulation length
-
-    //rate of growth? would be a textfield
-
+    //dropdown (or radio buttons?) for choosing the simulation length
+	@FXML
+	private ComboBox<Simulation.STEP_SIZE> sim_len = new ComboBox<>();
+    //textfield for rate of growth
+    @FXML
+    private TextField rate_field;
+	//steps
+    @FXML
+    private TextField step_field;
+	
     //portfolio summation stuff
 
 
@@ -47,8 +53,8 @@ public class BearController {
      * @param p          The portfolio.
      */
     public void setTransaction(MainController controller, Portfolio p) {
-        this.p = p.clone();
         this.op = p;
+        this.p = op.clone();
         this.controller = controller;
         initValues();
     }
@@ -74,19 +80,20 @@ public class BearController {
                 updateView();
             }
         });
+		
+		sim_len.getItems().setAll(Simulation.STEP_SIZE.values());
     }
 
     public void do_simulate() {
-        //TODO Simulation
-        //p = s.simulate(steps(), step_size(), p);
+        p = s.simulate(steps(), step_size(), p, step_size());
     }
 
     private Simulation.STEP_SIZE step_size() {
-        return null;
+        return (Simulation.STEP_SIZE) sim_len.getValue();
     }
 
     private int steps() {
-        return 0;
+        return Integer.parseInt(step_field.getText());
     }
 
     /**

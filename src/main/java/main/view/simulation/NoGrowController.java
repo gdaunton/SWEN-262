@@ -91,11 +91,19 @@ public class NoGrowController {
     }
 
     /**
-     * Reset the values of the components.
+     * Reset the values of the components to match their original state - stored in "op"
+     */
+	public void resetView() {
+		p = op.clone();
+		updateView();
+	}
+	
+	/**
+     * Update the displayed values to match "p"
      */
     public void updateView() {
         try {
-
+			
         } catch (Exception e) {
             e.printStackTrace();
         }
