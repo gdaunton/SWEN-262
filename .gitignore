@@ -33,3 +33,5 @@ org_*.xml
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+#extra files for people to keep - just put whatever you want here
+Record.java
