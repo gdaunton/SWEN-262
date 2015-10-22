@@ -90,9 +90,11 @@ public class Controller {
 	 */
 	public void undo() {
 		Command undo = commandBackStack.poll();
-		undo.undo();
-		commandUndoStack.add(undo);
-		view.update();
+		if(undo != null) {
+			undo.undo();
+			commandUndoStack.add(undo);
+			view.update();
+		}
 	}
 
 	/**
@@ -100,9 +102,19 @@ public class Controller {
 	 */
 	public void redo() {
 		Command redo = commandUndoStack.poll();
-		redo.execute();
-		commandUndoStack.add(redo);
-		view.update();
+		if(redo != null) {
+			redo.execute();
+			commandBackStack.add(redo);
+			view.update();
+		}
+	}
+
+	public boolean canUndo(){
+		return commandBackStack.size() != 0;
+	}
+
+	public boolean canRedo(){
+		return commandUndoStack.size() != 0;
 	}
 
 	/**

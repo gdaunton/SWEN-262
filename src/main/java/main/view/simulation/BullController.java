@@ -13,10 +13,7 @@ import javafx.scene.control.TextField;
 import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
 import main.model.simulation.Bull;
-<<<<<<< HEAD:src/main/java/main/view/BullController.java
 import main.model.simulation.Simulation;
-=======
->>>>>>> 0dab0e13afcd3c0fd11fd17080a8249a73a34074:src/main/java/main/view/simulation/BullController.java
 import main.view.MainController;
 
 

@@ -7,17 +7,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import main.model.Portfolio;
-import main.model.Record;
+import main.model.Transaction;
 import main.model.util.CSVImporter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import sun.plugin.dom.core.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,7 +24,7 @@ import javax.xml.parsers.ParserConfigurationException;
 public class HoldingManager {
 	public static HashMap<Portfolio, ArrayList<Holding>> holding_list = new HashMap<Portfolio, ArrayList<Holding>>();
 	public static ArrayList<Equity> equities_list = null;
-	public static ArrayList<Record> history = new ArrayList<Record>();
+	public static ArrayList<Transaction> history = new ArrayList<Transaction>();
 
 	/**
 	 * Imports equities from a file.

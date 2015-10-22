@@ -14,7 +14,7 @@ public class Portfolio implements Serializable {
     private ArrayList<User> users;
     private ArrayList<Holding> holdings;
     public String name;
-	public ArrayList<Record> history = new ArrayList<Record>();
+	public ArrayList<Transaction> history = new ArrayList<Transaction>();
 
 
     /**

@@ -3,86 +3,72 @@ package main.view.sub;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
-import main.controller.command.HoldingCommand;
-import main.model.Record;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+import main.model.Transaction;
 import main.view.MainController;
 
 
-public class TransactionController {
+public class TransactionController implements Initializable{
 
-	@FXML
-	private TextField h1;
-	@FXML
-	private TextField h2;
-	@FXML
-	private TextField amount;
-	@FXML
-	private TextField date;
-	@FXML
-	private TextField type;
+    @FXML
+    private TableView<Transaction> table;
 
-	private Record record;
-	private MainController controller;
+    private MainController controller;
 
-	/**
-	 * Sets the record.
-	 * 
-	 * @param controller
-	 *            The controller.
-	 * @param record
-	 *            The record.
-	 */
-	public void setTransaction(MainController controller, Record record) {
-		this.record = record;
-		this.controller = controller;
-		initValues();
-		disableElements(true);
-	}
+    /**
+     * Sets the record.
+     *
+     * @param controller   The controller.
+     * @param transactions The transactions.
+     */
+    public void setTransaction(MainController controller, ArrayList<Transaction> transactions) {
+        this.controller = controller;
+        TableColumn type = new TableColumn("Transaction Type");
+        type.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Transaction, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Transaction, String> t) {
+                return new SimpleStringProperty(t.getValue().type);
+            }
+        });
+        TableColumn holding = new TableColumn("Holding(s)");
+        holding.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Transaction, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Transaction, String> t) {
+                return new SimpleStringProperty(t.getValue().holding);
+            }
+        });
+        TableColumn value = new TableColumn("Value");
+        value.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Transaction, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Transaction, String> t) {
+                return new SimpleStringProperty(t.getValue().amount);
+            }
+        });
+        TableColumn date = new TableColumn("Date");
+        date.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Transaction, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Transaction, String> t) {
+                return new SimpleStringProperty(t.getValue().date);
+            }
+        });
+        if(transactions != null)
+            table.setItems(FXCollections.observableArrayList(transactions));
+        table.getColumns().addAll(type, holding, value, date);
+    }
 
-	/**
-	 * Initializes the record controller.
-	 * 
-	 * @param location
-	 *            The location.
-	 * @param resources
-	 *            The resources.
-	 */
-	public void initialize(URL location, ResourceBundle resources) {}
+    /**
+     * Initializes the record controller.
+     *
+     * @param location  The location.
+     * @param resources The resources.
+     */
+    public void initialize(URL location, ResourceBundle resources) {
 
-	/**
-	 * Sets the disabled elements.
-	 * 
-	 * @param disabled
-	 *            True to disable; false otherwise.
-	 */
-	private void disableElements(boolean disabled) {
-		h1.setDisable(disabled);
-		h2.setDisable(disabled);
-		amount.setDisable(disabled);
-		date.setDisable(disabled);
-		type.setDisable(disabled);
-	}
-
-	/**
-	 * Sets the initial values.
-	 */
-	private void initValues() {
-		try {
-			h1.setText(record.h1ToString());
-			h2.setText(record.h2ToString());
-			amount.setText(NumberFormat.getCurrencyInstance().format(record.amount));
-			
-			SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
-			date.setText(sdf.format(record.date));
-			
-			type.setText(record.type.toString());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    }
 }
