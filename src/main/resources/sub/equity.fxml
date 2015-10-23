@@ -16,19 +16,6 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT">
                            <children>
-                              <Label text="Market Sectors" />
-                              <ListView fx:id="sectors" disable="true" prefHeight="109.0" prefWidth="167.0">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </ListView>
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_RIGHT">
-                           <children>
                               <Label text="Name" />
                               <TextField fx:id="name" disable="true" editable="false">
                                  <HBox.margin>
@@ -88,6 +75,22 @@
                                  </HBox.margin>
                               </TextField>
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT">
+                           <children>
+                              <Label text="Market Sectors" />
+                              <ListView fx:id="sectors" disable="true" prefHeight="109.0" prefWidth="167.0">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </ListView>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </HBox>
                      </children>
                      <padding>
@@ -101,10 +104,13 @@
                               <Label text="Transaction Total" />
                               <TextField fx:id="transaction_total" disable="true" editable="false">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" />
+                                    <Insets left="10.0" />
                                  </HBox.margin>
                               </TextField>
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
                         </HBox>
                         <HBox alignment="CENTER_RIGHT">
                            <children>

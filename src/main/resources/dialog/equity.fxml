@@ -1,33 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 <?import main.view.elements.IntegerTextField?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.dialog.EquityController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.dialog.EquityController">
    <children>
-      <Button fx:id="apply" defaultButton="true" disable="true" layoutX="627.0" layoutY="361.0" mnemonicParsing="false" text="Confirm" />
-      <Button fx:id="cancel" cancelButton="true" disable="true" layoutX="572.0" layoutY="361.0" mnemonicParsing="false" text="Cancel" />
-      <Text layoutX="24.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Equity">
-         <font>
-            <Font name="Segoe UI Light" size="36.0" />
-         </font>
-      </Text>
-      <Label layoutX="45.0" layoutY="92.0" text="Select Equity" />
-      <Pane fx:id="purchase" layoutX="472.0" layoutY="92.0" prefHeight="252.0" prefWidth="200.0">
+      <VBox prefHeight="400.0" prefWidth="700.0">
          <children>
-            <Label layoutX="2.0" layoutY="9.0" text="Shares" />
-            <IntegerTextField fx:id="shares" layoutX="46.0" layoutY="5.0" />
-            <ListView fx:id="accounts" layoutX="50.0" layoutY="82.0" prefHeight="144.0" prefWidth="149.0" />
-            <Label layoutX="-4.0" layoutY="135.0" text="Account" />
-            <CheckBox fx:id="outside" layoutX="107.0" layoutY="235.0" mnemonicParsing="false" text="Outside FPTS" />
-            <TextField fx:id="transaction_total" disable="true" editable="false" layoutX="46.0" layoutY="43.0" />
-            <Label fx:id="total" layoutX="14.0" layoutY="47.0" text="Total" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add Equity">
+               <font>
+                  <Font name="Segoe UI Light" size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="20.0" />
+               </VBox.margin>
+            </Text>
+            <HBox prefHeight="503.0" prefWidth="700.0">
+               <children>
+                  <VBox prefHeight="321.0" prefWidth="344.0">
+                     <children>
+                        <Label text="Select Equity">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="search" promptText="Search" />
+                        <TableView fx:id="equity_list" prefHeight="229.0" prefWidth="406.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="20.0" right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="321.0" prefWidth="247.0">
+                     <children>
+                        <HBox alignment="CENTER_RIGHT">
+                           <children>
+                              <Label text="Shares" />
+                              <IntegerTextField fx:id="shares">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </IntegerTextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT">
+                           <children>
+                              <Label fx:id="total" text="Total" />
+                              <TextField fx:id="transaction_total" disable="true" editable="false">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT">
+                           <children>
+                              <Label text="Account" />
+                              <ListView fx:id="accounts" prefHeight="144.0" prefWidth="167.0">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </ListView>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT">
+                           <children>
+                              <CheckBox fx:id="outside" mnemonicParsing="false" text="Outside FPTS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="214.0" prefWidth="299.0">
+               <children>
+                  <Button fx:id="cancel" cancelButton="true" disable="true" mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="apply" defaultButton="true" disable="true" mnemonicParsing="false" text="Confirm">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" right="10.0" />
+               </VBox.margin>
+            </HBox>
          </children>
-      </Pane>
-      <TextField fx:id="search" layoutX="45.0" layoutY="117.0" promptText="Search" />
-      <TableView fx:id="equity_list" layoutX="45.0" layoutY="142.0" prefHeight="229.0" prefWidth="406.0" />
+      </VBox>
    </children>
 </Pane>
