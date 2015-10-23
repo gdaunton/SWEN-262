@@ -3,6 +3,8 @@ package main.model;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
+import main.model.holdings.Transaction;
+import main.model.user.User;
 
 import java.io.*;
 import java.text.ParseException;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Portfolio implements Serializable {
+    static final long serialVersionUID = 42L;
+
     private ArrayList<User> users;
     private ArrayList<Holding> holdings;
     public String name;

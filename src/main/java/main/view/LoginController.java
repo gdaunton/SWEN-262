@@ -12,7 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import main.FPTS;
-import main.model.UserManager;
+import main.model.user.UserManager;
 
 public class LoginController implements Initializable {
 

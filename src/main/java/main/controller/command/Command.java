@@ -1,4 +1,4 @@
-package main.controller;
+package main.controller.command;
 
 public interface Command {
     void execute();

@@ -1,8 +1,6 @@
 package main.view.sub;
 
 import java.net.URL;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -12,9 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-import main.model.Transaction;
+import main.model.holdings.Transaction;
 import main.view.MainController;
 
 

@@ -5,8 +5,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import javafx.stage.Stage;
+import main.controller.command.Command;
 import main.model.Portfolio;
-import main.model.User;
+import main.model.user.User;
 import main.view.MainController;
 
 public class Controller {

@@ -1,8 +1,7 @@
 package main.controller.command;
 
-import main.controller.Command;
 import main.model.Portfolio;
-import main.model.Transaction;
+import main.model.holdings.Transaction;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;

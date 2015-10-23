@@ -28,7 +28,6 @@ import main.FPTS;
 import main.controller.Controller;
 import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
-import main.model.Transaction;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;

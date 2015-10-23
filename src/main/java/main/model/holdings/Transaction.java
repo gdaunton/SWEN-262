@@ -1,4 +1,4 @@
-package main.model;
+package main.model.holdings;
 
 import javafx.beans.property.SimpleStringProperty;
 import main.model.holdings.Holding;

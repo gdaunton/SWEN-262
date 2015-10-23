@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import main.model.Portfolio;
-import main.model.Transaction;
 import main.model.util.CSVImporter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;

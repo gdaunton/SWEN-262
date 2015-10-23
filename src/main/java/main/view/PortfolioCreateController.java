@@ -17,8 +17,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import main.FPTS;
 import main.model.Portfolio;
-import main.model.User;
-import main.model.UserManager;
+import main.model.user.User;
+import main.model.user.UserManager;
 
 public class PortfolioCreateController implements Initializable {
 
