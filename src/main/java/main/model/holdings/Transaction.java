@@ -36,6 +36,7 @@ public class Transaction implements Serializable {
         switch (type) {
             case ADD:
                 h1 = (Holding) args[0];
+                amount = (Double)args[1];
                 break;
             case REMOVE:
                 h1 = (Holding) args[0];
@@ -60,12 +61,14 @@ public class Transaction implements Serializable {
         }
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy kk:mm");
         date = sdf.format(Calendar.getInstance().getTime());
-        this.type = type.toString();
-        if (amount != 0 && type != Type.EQUITY_BUY_SELL)
+        if (type != Type.EQUITY_BUY_SELL && type != Type.ADD)
+            this.amount = NumberFormat.getCurrencyInstance().format(amount);
+        else if(h1 instanceof Account)
             this.amount = NumberFormat.getCurrencyInstance().format(amount);
         else
             this.amount = Integer.toString((int)amount);
         String hFinal = h1.toString();
+        this.type = type.toString();
         if (h2 != null)
             hFinal += (", " + h2.toString());
         this.holding = hFinal;
