@@ -72,7 +72,10 @@ public class HoldingCommand implements Command {
         switch (type) {
             case ADD:
                 portfolio.addHolding(target);
-                portfolio.history.add(new Transaction(Transaction.Type.ADD, new Object[]{target}));
+                if (target instanceof  Equity)
+                    portfolio.history.add(new Transaction(Transaction.Type.ADD, new Object[]{target, (double)((Equity) target).getShares()}));
+                else if (target instanceof Account)
+                    portfolio.history.add(new Transaction(Transaction.Type.ADD, new Object[]{target, ((Account) target).getBalance()}));
                 break;
             case DELETE:
                 portfolio.removeHolding(target);
