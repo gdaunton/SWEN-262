@@ -82,8 +82,7 @@ public class NoGrowController {
     }
 
     public void do_simulate() {
-        //TODO do simulation
-        //p = s.simulate(steps(), step_size(), p, 0.0);
+        //does nothing
     }
 
     /**

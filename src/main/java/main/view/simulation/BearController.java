@@ -15,7 +15,6 @@ import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
 import main.model.simulation.NoGrowth;
 import main.model.simulation.Simulation;
-import main.model.simulation.Bear;
 import main.view.MainController;
 
 
