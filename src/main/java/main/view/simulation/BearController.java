@@ -38,7 +38,7 @@ public class BearController {
     @FXML
     private TextField step_field;
 	
-    //portfolio summation stuff
+    //TODO: portfolio display stuff
 
 
     //objects

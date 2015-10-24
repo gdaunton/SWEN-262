@@ -124,6 +124,16 @@ public class HoldingManager {
                 equities_list.add(en);
             }
         }
+
+        System.err.println(holding_list.toString());
+		for(Portfolio p : holding_list.keySet()) {
+			for(Holding h : holding_list.get(p)) {
+				if(h instanceof Equity) {
+					Equity e = (Equity) h;
+					e.setPrice_per_share(get_by_ticker(e.getTickerSymbol()).getPrice_per_share());
+				}
+			}
+		}
     }
 
     /**

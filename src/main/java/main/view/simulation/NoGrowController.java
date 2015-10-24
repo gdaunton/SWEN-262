@@ -34,7 +34,7 @@ public class NoGrowController {
     @FXML
     private TextField step_field;
 
-    //portfolio summation stuff
+    //TODO: portfolio display stuff
 
 
     //objects
@@ -110,7 +110,7 @@ public class NoGrowController {
      */
     public void updateView() {
         try {
-			
+			//TODO
         } catch (Exception e) {
             e.printStackTrace();
         }

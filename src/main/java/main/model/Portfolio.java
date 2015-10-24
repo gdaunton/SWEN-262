@@ -1,9 +1,6 @@
 package main.model;
 
-import main.model.holdings.Account;
-import main.model.holdings.Equity;
-import main.model.holdings.Holding;
-import main.model.holdings.Transaction;
+import main.model.holdings.*;
 import main.model.user.User;
 
 import java.io.*;
@@ -30,6 +27,7 @@ public class Portfolio implements Serializable {
         this.users = users;
         this.name = name;
         this.holdings = new ArrayList<Holding>();
+        HoldingManager.link_holdings(this);
     }
 
     /**
@@ -65,6 +63,8 @@ public class Portfolio implements Serializable {
      * @param holding The account to add
      */
     public void addHolding(Holding holding) {
+//		HoldingManager.holding_list.get(this).add(holding);
+        HoldingManager.link_holdings(this);
         this.holdings.add(holding);
     }
 
@@ -203,6 +203,7 @@ public class Portfolio implements Serializable {
                     e.printStackTrace();
                 }
                 holdings.add(a);
+                HoldingManager.link_holdings(this);
             }
         }
     }
@@ -244,6 +245,7 @@ public class Portfolio implements Serializable {
                 Account a = new Account(acName, Double.parseDouble(balnce), Account.typeFromString(acType));
                 a.opened = Account.parseDate(dateSt);
                 holdings.add(a);
+                HoldingManager.link_holdings(this);
             }
         }
     }
