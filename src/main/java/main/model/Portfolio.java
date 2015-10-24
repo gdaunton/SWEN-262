@@ -23,12 +23,14 @@ public class Portfolio implements Serializable {
      *
      * @param users The users to attach to this portfolio
      */
-    public Portfolio(ArrayList<User> users, String name) {
+    public Portfolio(ArrayList<User> users, String name) { this(users, name, true); }
+	
+	public Portfolio(ArrayList<User> users, String name, boolean do_link) {
         this.users = users;
         this.name = name;
         this.holdings = new ArrayList<Holding>();
-        HoldingManager.link_holdings(this);
-    }
+        if(do_link) { HoldingManager.link_holdings(this); }		
+	}
 
     /**
      * Get all of the users attached to this portfolio
@@ -61,8 +63,8 @@ public class Portfolio implements Serializable {
      * @param holding The account to add
      */
     public void addHolding(Holding holding) {
-//		HoldingManager.holding_list.get(this).add(holding);
-        HoldingManager.link_holdings(this);
+		HoldingManager.holding_list.get(this).add(holding);
+//        HoldingManager.link_holdings(this);
         this.holdings.add(holding);
     }
 
