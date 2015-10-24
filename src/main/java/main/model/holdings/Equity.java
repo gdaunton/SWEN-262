@@ -142,7 +142,7 @@ public class Equity extends Holding implements Serializable {
 
     @Override
     public String toString() {
-        return name;
+        return name + " (" + price_per_share + ")";
     }
 
     public boolean match(String query) {

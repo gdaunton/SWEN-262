@@ -94,7 +94,9 @@ public class HoldingManager {
 
                     String s = f.getNodeName();
                     if (s.equals("LastTradePriceOnly")) {
+//                        System.err.print(eqv + ": ");
                         eqv = Double.parseDouble(content);
+//                        System.err.println(eqv);
                     } else if (s.equals("Name")) {
                         name = content;
                     }
@@ -108,7 +110,7 @@ public class HoldingManager {
 
         if (equities_list == null) {
             equities_list = temp_list;
-//			System.err.println("Retrieved List: " + equities_list);
+			System.err.println("Built list");
             return;
         }
 
@@ -125,7 +127,6 @@ public class HoldingManager {
             }
         }
 
-        System.err.println(holding_list.toString());
 		for(Portfolio p : holding_list.keySet()) {
 			for(Holding h : holding_list.get(p)) {
 				if(h instanceof Equity) {

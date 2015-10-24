@@ -107,6 +107,7 @@ public class FPTS extends Application {
             primaryStage.show();
             manager = new PortfolioManager(new File(dataRoot + "portfolios.dat"));
             portfolios = manager.getPortfolios();
+            for(Portfolio p : portfolios) { HoldingManager.link_holdings(p); }
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 public void handle(WindowEvent we) {
                     pollerHandle.cancel(true);
