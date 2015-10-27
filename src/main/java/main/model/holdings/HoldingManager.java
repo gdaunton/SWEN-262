@@ -271,4 +271,14 @@ public class HoldingManager {
             super(message);
         }
     }
+	
+	//returns the DJIA
+	public static double djia() {
+		double sum = 0;
+		double div =  0.16416809180007;
+		for(Equity e : equities_list) {
+			if(djiaTickers.contains(e.getTickerSymbol())) { sum += e.getPrice_per_share(); }
+		}
+		return sum / div;
+	}
 }
