@@ -65,7 +65,7 @@ public class Portfolio implements Serializable {
     public void addHolding(Holding holding) {
 		HoldingManager.holding_list.get(this).add(holding);
 //        HoldingManager.link_holdings(this);
-        this.holdings.add(holding);
+        //this.holdings.add(holding);
     }
 
     /**
