@@ -13,6 +13,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
+import main.model.simulation.Bear;
 import main.model.simulation.NoGrowth;
 import main.model.simulation.Simulation;
 import main.view.MainController;
