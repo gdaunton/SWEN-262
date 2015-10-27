@@ -1,4 +1,4 @@
-package main.view;
+package main.view.startup;
 
 import java.net.URL;
 import java.util.ResourceBundle;

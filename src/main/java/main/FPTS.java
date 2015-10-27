@@ -38,10 +38,10 @@ import main.model.Portfolio;
 import main.model.user.User;
 import main.model.user.UserManager;
 import main.model.holdings.HoldingManager;
-import main.view.LoginController;
+import main.view.startup.LoginController;
 import main.view.MainController;
-import main.view.PortfolioCreateController;
-import main.view.UserCreateController;
+import main.view.startup.PortfolioCreateController;
+import main.view.startup.UserCreateController;
 
 import javax.xml.parsers.ParserConfigurationException;
 
