@@ -24,7 +24,10 @@ public class HoldingManager {
     public static HashMap<Portfolio, ArrayList<Holding>> holding_list = new HashMap<Portfolio, ArrayList<Holding>>();
     public static ArrayList<Equity> equities_list = null;
     public static ArrayList<Transaction> history = new ArrayList<Transaction>();
-
+	public static final ArrayList<String> djiaTickers = new ArrayList<Symbol>(Arrays.asList(
+		["AAPL", "AXP", "BA", "CAT", "CSCO", "CVX", "DD", "DIS", "DE", "GS", "HD", "IBM", "INTC", "JNJ", "JPM", "KO", "MCD", "MMM", "MRK", "MSFT", "NKE", "PFE", "PG", "TRV", "UNH", "UTX", "V", "VZ", "WMT", "XOM"]
+	));
+	
     /**
      * Imports equities from a file.
      *
@@ -44,7 +47,25 @@ public class HoldingManager {
     public static void import_equities_yahoo() throws IOException, ParserConfigurationException {
         String url = "";
         url = "http://query.yahooapis.com/v1/public/yql?q=select symbol, LastTradePriceOnly, Name from yahoo.finance.quotes where symbol in ";
-        url = url + "(\"AAPL\", \"AXP\", \"BA\", \"CAT\", \"CSCO\", \"CVX\", \"DD\", \"DIS\", \"DE\", \"GS\", \"HD\", \"IBM\", \"INTC\", \"JNJ\", \"JPM\", \"KO\", \"MCD\", \"MMM\", \"MRK\", \"MSFT\", \"NKE\", \"PFE\", \"PG\", \"TRV\", \"UNH\", \"UTX\", \"V\", \"VZ\", \"WMT\", \"XOM\")";
+		if (equities_list == null) {
+			File equities = new File(dataRoot + "equities.csv");
+            if (!equities.exists()) {
+                FileChooser.ExtensionFilter csv = new FileChooser.ExtensionFilter("csv", "*.csv");
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.getExtensionFilters().add(csv);
+                fileChooser.setTitle("Select Equities File");
+                File file = fileChooser.showOpenDialog(stage);
+                equities.createNewFile();
+                copyFile(file, equities);
+            }
+            equities_list = CSVImporter.importAllEquity(f);
+		}
+		url = url + "(" + "\"AAPL\"";
+		for(Equity e : equities_list) {
+			if(e.getTickerSymbol().equals("AAPL")) { continue; }
+			url = url + ", \"" + e.getTickerSymbol() + "\"";
+		}
+		url = url + ")";
         url = url + "&env=store://datatables.org/alltableswithkeys";
         url = url.replace(" ", "%20").replace("\"", "%22").replace(",", "%2C");
 
