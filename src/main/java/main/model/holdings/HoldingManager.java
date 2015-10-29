@@ -44,7 +44,7 @@ public class HoldingManager {
     public static void import_equities_yahoo() throws IOException, ParserConfigurationException {
         String dataRoot = "data/";
         String url = "";
-        url = "http://query.yahooapis.com/v1/public/yql?q=select symbol, LastTradePriceOnly, Name from yahoo.finance.quotes where symbol in ";
+        url = "http://query.yahooapis.com/v1/public/yql?q=select symbol, LastTradePriceOnly, Name, StockExchange from yahoo.finance.quotes where symbol in ";
         if (equities_list == null) {
             File equities = new File(dataRoot + "equities.csv");
             if (equities.exists())
@@ -95,6 +95,7 @@ public class HoldingManager {
             if (eq.getNodeName().equals("quote")) {
                 String sym = eq.getAttributes().getNamedItem("symbol").getNodeValue();
                 String name = null;
+				ArrayList<String> sx = new ArrayList<String>();
                 double eqv = -1;
 
                 NodeList fields = eq.getChildNodes();
@@ -109,13 +110,18 @@ public class HoldingManager {
                     }
 
                     String s = f.getNodeName();
-                    if (s.equals("LastTradePriceOnly"))
+                    if (s.equals("LastTradePriceOnly")) {
                         eqv = Double.parseDouble(content);
-                    else if (s.equals("Name"))
+					}
+                    else if (s.equals("Name")) {
                         name = content;
+					}
+					else if (s.equals("StockExchange")) {
+						sx.add(content);
+					}
                 }
-
-                Equity e = new Equity(Equity.Type.STOCK, sym, name, 0, eqv, new ArrayList<String>());
+				
+                Equity e = new Equity(Equity.Type.STOCK, sym, name, 0, eqv, sx);
                 temp_list.add(e);
             }
         }
