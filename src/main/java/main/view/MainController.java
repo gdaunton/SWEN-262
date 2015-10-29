@@ -47,6 +47,12 @@ public class MainController implements Initializable {
     @FXML
     private ListView<Equity> equity_list;
     @FXML
+    private ListView<Equity> watchlist;
+    @FXML
+    private Button watch_remove;
+    @FXML
+    private Button watch_add;
+    @FXML
     private MenuItem inport;
     @FXML
     private MenuItem export;
@@ -96,6 +102,18 @@ public class MainController implements Initializable {
         initMenu();
         if (account_list != null && equity_list != null)
             initLists();
+
+        watch_add.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                showWatchlistAddDialog();
+            }
+        });
+        watch_remove.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                Equity remove = watchlist.getSelectionModel().getSelectedItem();
+                //TODO remove equity from watchlist
+            }
+        });
     }
 
     public void changePortfolio() {
@@ -186,6 +204,11 @@ public class MainController implements Initializable {
         });
     }
 
+    private void showWatchlistAddDialog() {
+        //TODO show dialog of all equities
+
+    }
+
     /**
      * Shows the team export dialog.
      *
@@ -235,6 +258,7 @@ public class MainController implements Initializable {
                         public void run() {
                             if (!equity_list.getSelectionModel().isEmpty()) {
                                 equity_list.getSelectionModel().clearSelection();
+                                watchlist.getSelectionModel().clearSelection();
                             }
                             account_list.getSelectionModel().select(newValue);
                         }
@@ -250,11 +274,27 @@ public class MainController implements Initializable {
                         public void run() {
                             if (!account_list.getSelectionModel().isEmpty()) {
                                 account_list.getSelectionModel().clearSelection();
+                                watchlist.getSelectionModel().clearSelection();
                             }
                             equity_list.getSelectionModel().select(newValue);
                         }
                     });
                     gotoEquity(newValue);
+                }
+            }
+        });
+        watchlist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Equity>() {
+            public void changed(ObservableValue<? extends Equity> observable, Equity oldValue, final Equity newValue) {
+                if (newValue != null) {
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            if (!account_list.getSelectionModel().isEmpty()) {
+                                account_list.getSelectionModel().clearSelection();
+                                equity_list.getSelectionModel().clearSelection();
+                            }
+                            watchlist.getSelectionModel().select(newValue);
+                        }
+                    });
                 }
             }
         });
@@ -351,6 +391,7 @@ public class MainController implements Initializable {
                     equityItems.add((Equity) h);
                 }
             }
+            //TODO set watchlist list items watchlist.setItems(FXCollections.observableArrayList(//arraylist of equities here));
             account_list.setItems(accountItems);
             equity_list.setItems(equityItems);
         }

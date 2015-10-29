@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.LoginController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.startup.LoginController">
     <ButtonBar layoutX="177.0" layoutY="260.0" prefHeight="40.0" prefWidth="230.0">
       <buttons>
           <Button fx:id="createUser" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Register" />

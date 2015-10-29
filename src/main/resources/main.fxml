@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -47,6 +48,32 @@
                                   <ListView fx:id="equity_list" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               </AnchorPane>
                           </TitledPane>
+                     <TitledPane animated="false" text="Watchlist">
+                       <content>
+                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                              <children>
+                                 <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                                          <children>
+                                             <Button fx:id="watch_remove" mnemonicParsing="false" text="Remove" />
+                                             <Button fx:id="watch_add" mnemonicParsing="false" text="Add">
+                                                <HBox.margin>
+                                                   <Insets left="5.0" />
+                                                </HBox.margin>
+                                             </Button>
+                                          </children>
+                                          <VBox.margin>
+                                             <Insets bottom="5.0" />
+                                          </VBox.margin>
+                                       </HBox>
+                                       <ListView fx:id="watchlist" />
+                                    </children>
+                                 </VBox>
+                              </children>
+                           </AnchorPane>
+                       </content>
+                     </TitledPane>
                       </panes>
                   </Accordion>
               </AnchorPane>
