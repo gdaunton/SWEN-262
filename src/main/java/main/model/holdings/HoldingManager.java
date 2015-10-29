@@ -122,7 +122,6 @@ public class HoldingManager {
 
         if (equities_list.isEmpty()) {
             equities_list = temp_list;
-            System.err.println("Built list");
             return;
         }
 
