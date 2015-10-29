@@ -8,8 +8,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import main.FPTS;
 import main.model.Portfolio;
 import main.model.util.CSVImporter;
+import org.apache.commons.lang3.ObjectUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,8 +28,8 @@ public class HoldingManager {
     public static HashMap<Portfolio, ArrayList<Holding>> holding_list = new HashMap<Portfolio, ArrayList<Holding>>();
     public static ArrayList<Equity> equities_list = null;
     public static ArrayList<Transaction> history = new ArrayList<Transaction>();
-	public static final ArrayList<String> djiaTickers = new ArrayList<Symbol>(Arrays.asList(
-		["AAPL", "AXP", "BA", "CAT", "CSCO", "CVX", "DD", "DIS", "DE", "GS", "HD", "IBM", "INTC", "JNJ", "JPM", "KO", "MCD", "MMM", "MRK", "MSFT", "NKE", "PFE", "PG", "TRV", "UNH", "UTX", "V", "VZ", "WMT", "XOM"]
+	public static final ArrayList<String> djiaTickers = new ArrayList<String>(Arrays.asList(
+		"AAPL", "AXP", "BA", "CAT", "CSCO", "CVX", "DD", "DIS", "DE", "GS", "HD", "IBM", "INTC", "JNJ", "JPM", "KO", "MCD", "MMM", "MRK", "MSFT", "NKE", "PFE", "PG", "TRV", "UNH", "UTX", "V", "VZ", "WMT", "XOM"
 	));
 	
     /**
@@ -44,7 +48,8 @@ public class HoldingManager {
      * @throws IOException
      * @throws ParserConfigurationException
      */
-    public static void import_equities_yahoo() throws IOException, ParserConfigurationException {
+    public static void import_equities_yahoo(Stage stage) throws IOException, ParserConfigurationException {
+        String dataRoot = "data/";
         String url = "";
         url = "http://query.yahooapis.com/v1/public/yql?q=select symbol, LastTradePriceOnly, Name from yahoo.finance.quotes where symbol in ";
 		if (equities_list == null) {
@@ -56,9 +61,9 @@ public class HoldingManager {
                 fileChooser.setTitle("Select Equities File");
                 File file = fileChooser.showOpenDialog(stage);
                 equities.createNewFile();
-                copyFile(file, equities);
+                FPTS.copyFile(file, equities);
             }
-            equities_list = CSVImporter.importAllEquity(f);
+            equities_list = CSVImporter.importAllEquity(equities);
 		}
 		url = url + "(" + "\"AAPL\"";
 		for(Equity e : equities_list) {
@@ -111,7 +116,10 @@ public class HoldingManager {
                 for (int j = 0; j < fields.getLength(); j++) {
                     Node f = fields.item(j);
 
-                    String content = f.getLastChild().getTextContent().trim();
+                    String content = "";
+                    try {
+                        content = f.getLastChild().getTextContent().trim();
+                    } catch(NullPointerException npe) { continue; }
 
                     String s = f.getNodeName();
                     if (s.equals("LastTradePriceOnly")) {

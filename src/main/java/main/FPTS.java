@@ -82,14 +82,14 @@ public class FPTS extends Application {
             }
             HoldingManager.import_equities(equities);
         } else { //import the equities from Yahoo
-            HoldingManager.import_equities_yahoo();
+            HoldingManager.import_equities_yahoo(stage);
 
             //TODO: ask user for market poll cooldown
 
             final Runnable poller = new Runnable() {
                 public void run() {
                     try {
-                        HoldingManager.import_equities_yahoo();
+                        HoldingManager.import_equities_yahoo(stage);
                         //TODO: update the display - will need to figure out how to propagate the update as well
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -129,7 +129,7 @@ public class FPTS extends Application {
      * @param dest   The destination file.
      * @throws IOException If an I/O error occurs.
      */
-    private static void copyFile(File source, File dest) throws IOException {
+    public static void copyFile(File source, File dest) throws IOException {
         FileChannel inputChannel = null;
         FileChannel outputChannel = null;
         try {
@@ -356,7 +356,6 @@ public class FPTS extends Application {
          * @return All of the portfolio objects
          */
         public ArrayList<Portfolio> getPortfolios() {
-            //TODO: fix the second exception error
             ArrayList<Portfolio> out = new ArrayList<Portfolio>();
             try {
                 Portfolio current;

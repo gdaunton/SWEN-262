@@ -106,6 +106,7 @@ public class BullController {
     private void initValues() {
         try {
 			sim_len.setValue(Simulation.STEP_SIZE.DAY);
+            //TODO: initialize the portfolio view stuff
         } catch (Exception e) {
             e.printStackTrace();
         }
