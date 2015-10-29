@@ -69,13 +69,16 @@ public class HoldingCommand implements Command {
      * Executes the command.
      */
     public void execute() {
+		//TODO: correct the "value" field
         switch (type) {
             case ADD:
                 portfolio.addHolding(target);
-                if (target instanceof  Equity)
+                if (target instanceof  Equity) {
                     portfolio.history.add(new Transaction(Transaction.Type.ADD, new Object[]{target, (double)((Equity) target).getShares()}));
-                else if (target instanceof Account)
-                    portfolio.history.add(new Transaction(Transaction.Type.ADD, new Object[]{target, ((Account) target).getBalance()}));
+				}
+                else if (target instanceof Account) {
+                    portfolio.history.add(new Transaction(Transaction.Type.ADD, new Object[]{target, modifier}));
+				}
                 break;
             case DELETE:
                 portfolio.removeHolding(target);
@@ -85,8 +88,9 @@ public class HoldingCommand implements Command {
                 switch (mod) {
                     case SHARES:
                         try {
+                            double change = (double) (Math.round(modifier) - ((Equity) target).getShares());
                             ((Equity) target).setShares((int) Math.round(modifier));
-                            portfolio.history.add(new Transaction(Transaction.Type.EQUITY_BUY_SELL, new Object[]{target, (double)Math.round(modifier)}));
+                            portfolio.history.add(new Transaction(Transaction.Type.EQUITY_BUY_SELL, new Object[]{target, change}));
                         } catch (ClassCastException e) {
                             System.err.println("Please only give equity objects while using the SHARES modifier");
                             e.printStackTrace();
