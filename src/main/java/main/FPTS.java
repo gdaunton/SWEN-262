@@ -48,7 +48,7 @@ import javax.xml.parsers.ParserConfigurationException;
 public class FPTS extends Application {
 
     private static boolean file_basis = false;
-    public static int poll_cooldown_sec = 10;
+    public static int poll_cooldown_sec = 120;
 
     private ArrayList<Portfolio> portfolios;
     private PortfolioManager manager;
@@ -82,14 +82,14 @@ public class FPTS extends Application {
             }
             HoldingManager.import_equities(equities);
         } else { //import the equities from Yahoo
-            HoldingManager.import_equities_yahoo(stage);
+            HoldingManager.import_equities_yahoo();
 
             //TODO: ask user for market poll cooldown
 
             final Runnable poller = new Runnable() {
                 public void run() {
                     try {
-                        HoldingManager.import_equities_yahoo(stage);
+                        HoldingManager.import_equities_yahoo();
                         //TODO: update the display - will need to figure out how to propagate the update as well
                     } catch (IOException e) {
                         e.printStackTrace();

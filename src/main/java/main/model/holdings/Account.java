@@ -195,6 +195,6 @@ public class Account extends Holding implements Serializable {
 
     @Override
     public String toString() {
-        return name + " (" + type.toString() + " account)";
+        return name;
     }
 }

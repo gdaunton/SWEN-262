@@ -143,13 +143,13 @@ public class Equity extends Holding implements Serializable {
 
     @Override
     public String toString() {
-        String price_string = NumberFormat.getCurrencyInstance().format(price_per_share);
-        return name + " (" + price_string + ")";
+        return name;
     }
 
     public boolean match(String query) {
         for (String s : marketSectors)
-            return s.contains(query);
+            if(s.contains(query))
+                return true;
         return tickerSymbol.toLowerCase().contains(query.toLowerCase()) || name.toLowerCase().contains(query.toLowerCase());
     }
 }

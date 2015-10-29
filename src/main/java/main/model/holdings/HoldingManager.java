@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import javafx.stage.FileChooser;
 import main.model.Portfolio;
 import main.model.util.CSVImporter;
 import org.w3c.dom.Document;
@@ -24,9 +23,8 @@ import javax.xml.parsers.ParserConfigurationException;
 public class HoldingManager {
     public static HashMap<Portfolio, ArrayList<Holding>> holding_list = new HashMap<Portfolio, ArrayList<Holding>>();
     public static ArrayList<Equity> equities_list = null;
-    public static ArrayList<Transaction> history = new ArrayList<Transaction>();
-	public static final ArrayList<String> djiaTickers = new ArrayList<String>(Arrays.asList("AAPL", "AXP", "BA", "CAT", "CSCO", "CVX", "DD", "DIS", "DE", "GS", "HD", "IBM", "INTC", "JNJ", "JPM", "KO", "MCD", "MMM", "MRK", "MSFT", "NKE", "PFE", "PG", "TRV", "UNH", "UTX", "V", "VZ", "WMT", "XOM"));
-	
+    public static final ArrayList<String> djiaTickers = new ArrayList<>(Arrays.asList("AAPL", "AXP", "BA", "CAT", "CSCO", "CVX", "DD", "DIS", "DE", "GS", "HD", "IBM", "INTC", "JNJ", "JPM", "KO", "MCD", "MMM", "MRK", "MSFT", "NKE", "PFE", "PG", "TRV", "UNH", "UTX", "V", "VZ", "WMT", "XOM"));
+
     /**
      * Imports equities from a file.
      *
@@ -47,26 +45,19 @@ public class HoldingManager {
         String dataRoot = "data/";
         String url = "";
         url = "http://query.yahooapis.com/v1/public/yql?q=select symbol, LastTradePriceOnly, Name from yahoo.finance.quotes where symbol in ";
-        //TODO figure out if we need this. If we do it needs to be done in the FPTS class.
-//		if (equities_list == null) {
-//			File equities = new File(dataRoot + "equities.csv");
-//            if (!equities.exists()) {
-//                FileChooser.ExtensionFilter csv = new FileChooser.ExtensionFilter("csv", "*.csv");
-//                FileChooser fileChooser = new FileChooser();
-//                fileChooser.getExtensionFilters().add(csv);
-//                fileChooser.setTitle("Select Equities File");
-//                File file = fileChooser.showOpenDialog(stage);
-//                equities.createNewFile();
-//                copyFile(file, equities);
-//            }
-//            equities_list = CSVImporter.importAllEquity(f);
-//		}
-		url = url + "(" + "\"AAPL\"";
-		for(Equity e : equities_list) {
-			if(e.getTickerSymbol().equals("AAPL")) { continue; }
-			url = url + ", \"" + e.getTickerSymbol() + "\"";
-		}
-		url = url + ")";
+        if (equities_list == null) {
+            File equities = new File(dataRoot + "equities.csv");
+            if (equities.exists())
+                equities_list = CSVImporter.importAllEquity(equities);
+        }
+        url = url + "(" + "\"AAPL\"";
+        for (Equity e : equities_list) {
+            if (e.getTickerSymbol().equals("AAPL")) {
+                continue;
+            }
+            url = url + ", \"" + e.getTickerSymbol() + "\"";
+        }
+        url = url + ")";
         url = url + "&env=store://datatables.org/alltableswithkeys";
         url = url.replace(" ", "%20").replace("\"", "%22").replace(",", "%2C");
 
@@ -89,7 +80,6 @@ public class HoldingManager {
         }
 
         in.close();
-//		System.err.println("XML: " + response.toString());
 
         //Load and Parse the XML document
         //document contains the complete XML as a Tree.
@@ -101,7 +91,6 @@ public class HoldingManager {
 
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node eq = nodeList.item(i);
-//			System.err.println("Node: " + eq.getNodeName() + " " + eq.getClass().toString());
 
             if (eq.getNodeName().equals("quote")) {
                 String sym = eq.getAttributes().getNamedItem("symbol").getNodeValue();
@@ -115,27 +104,25 @@ public class HoldingManager {
                     String content = "";
                     try {
                         content = f.getLastChild().getTextContent().trim();
-                    } catch(NullPointerException npe) { continue; }
+                    } catch (NullPointerException npe) {
+                        continue;
+                    }
 
                     String s = f.getNodeName();
-                    if (s.equals("LastTradePriceOnly")) {
-//                        System.err.print(eqv + ": ");
+                    if (s.equals("LastTradePriceOnly"))
                         eqv = Double.parseDouble(content);
-//                        System.err.println(eqv);
-                    } else if (s.equals("Name")) {
+                    else if (s.equals("Name"))
                         name = content;
-                    }
                 }
 
-//				System.err.println("\t" + sym + " " + name + " " + eqv);
                 Equity e = new Equity(Equity.Type.STOCK, sym, name, 0, eqv, new ArrayList<String>());
                 temp_list.add(e);
             }
         }
 
-        if (equities_list == null) {
+        if (equities_list.isEmpty()) {
             equities_list = temp_list;
-			System.err.println("Built list");
+            System.err.println("Built list");
             return;
         }
 
@@ -152,14 +139,14 @@ public class HoldingManager {
             }
         }
 
-		for(Portfolio p : holding_list.keySet()) {
-			for(Holding h : holding_list.get(p)) {
-				if(h instanceof Equity) {
-					Equity e = (Equity) h;
-					e.setPrice_per_share(get_by_ticker(e.getTickerSymbol()).getPrice_per_share());
-				}
-			}
-		}
+        for (Portfolio p : holding_list.keySet()) {
+            for (Holding h : holding_list.get(p)) {
+                if (h instanceof Equity) {
+                    Equity e = (Equity) h;
+                    e.setPrice_per_share(get_by_ticker(e.getTickerSymbol()).getPrice_per_share());
+                }
+            }
+        }
     }
 
     /**
@@ -264,8 +251,9 @@ public class HoldingManager {
         }
         ArrayList<Equity> out = new ArrayList<Equity>();
         for (Holding h : equities_list) {
-            if (h instanceof Equity && h.match(input))
+            if (h instanceof Equity && h.match(input)) {
                 out.add((Equity) h);
+            }
         }
         return out;
     }
@@ -275,14 +263,16 @@ public class HoldingManager {
             super(message);
         }
     }
-	
-	//returns the DJIA
-	public static double djia() {
-		double sum = 0;
-		double div =  0.16416809180007;
-		for(Equity e : equities_list) {
-			if(djiaTickers.contains(e.getTickerSymbol())) { sum += e.getPrice_per_share(); }
-		}
-		return sum / div;
-	}
+
+    //returns the DJIA
+    public static double djia() {
+        double sum = 0;
+        double div = 0.16416809180007;
+        for (Equity e : equities_list) {
+            if (djiaTickers.contains(e.getTickerSymbol())) {
+                sum += e.getPrice_per_share();
+            }
+        }
+        return sum / div;
+    }
 }
