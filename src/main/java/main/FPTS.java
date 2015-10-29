@@ -91,6 +91,7 @@ public class FPTS extends Application {
                     try {
                         HoldingManager.import_equities_yahoo();
                         //TODO: update the display - will need to figure out how to propagate the update as well
+						//TODO: loop thru the WatchedEquity items and update them via their trigger() function
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ParserConfigurationException e) {
