@@ -1,6 +1,7 @@
 package main.model.holdings;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class Equity extends Holding implements Serializable {
@@ -142,7 +143,8 @@ public class Equity extends Holding implements Serializable {
 
     @Override
     public String toString() {
-        return name + " (" + price_per_share + ")";
+        String price_string = NumberFormat.getCurrencyInstance().format(price_per_share);
+        return name + " (" + price_string + ")";
     }
 
     public boolean match(String query) {

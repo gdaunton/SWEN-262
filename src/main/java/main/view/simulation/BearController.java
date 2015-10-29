@@ -106,10 +106,19 @@ public class BearController {
      */
     private void initValues() {
         try {
-
+            sim_len.setValue(Simulation.STEP_SIZE.DAY);
+            //TODO: initialize the portfolio view stuff
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Reset the values of the components to match their original state - stored in "op"
+     */
+    public void resetView() {
+        p = op.clone();
+        updateView();
     }
 
     /**

@@ -44,6 +44,7 @@ public class HoldingManager {
      * @throws ParserConfigurationException
      */
     public static void import_equities_yahoo() throws IOException, ParserConfigurationException {
+        String dataRoot = "data/";
         String url = "";
         url = "http://query.yahooapis.com/v1/public/yql?q=select symbol, LastTradePriceOnly, Name from yahoo.finance.quotes where symbol in ";
         //TODO figure out if we need this. If we do it needs to be done in the FPTS class.
@@ -111,7 +112,10 @@ public class HoldingManager {
                 for (int j = 0; j < fields.getLength(); j++) {
                     Node f = fields.item(j);
 
-                    String content = f.getLastChild().getTextContent().trim();
+                    String content = "";
+                    try {
+                        content = f.getLastChild().getTextContent().trim();
+                    } catch(NullPointerException npe) { continue; }
 
                     String s = f.getNodeName();
                     if (s.equals("LastTradePriceOnly")) {

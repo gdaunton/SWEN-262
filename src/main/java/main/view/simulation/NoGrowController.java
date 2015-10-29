@@ -90,7 +90,7 @@ public class NoGrowController {
      */
     private void initValues() {
         try {
-
+            //TODO: initialize the portfolio view stuff
         } catch (Exception e) {
             e.printStackTrace();
         }
