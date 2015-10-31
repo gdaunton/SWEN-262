@@ -178,4 +178,9 @@ public class HoldingCommand implements Command {
         }
         portfolio.history.remove(portfolio.history.size() - 1);
     }
+
+    @Override
+    public String toString() {
+        return target.toString();
+    }
 }

@@ -1,6 +1,8 @@
 package main.model.holdings;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.*;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -8,69 +10,66 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableArray;
 
-public class WatchedEquity {
+public class WatchedEquity implements Serializable, Observer {
 
-	private final StringProperty symbol = new SimpleStringProperty();
-	private final ObjectProperty<BigDecimal> lowTrigger = new SimpleObjectProperty<BigDecimal>();
-	private final ObjectProperty<BigDecimal> highTrigger = new SimpleObjectProperty<BigDecimal>();
+	private String symbol;
+	public double lowTrigger = -1;
+	public double highTrigger = -1;
+	public List<TriggerNode> triggerNodes = new ArrayList<>();
 
-	private final BooleanProperty triggered = new SimpleBooleanProperty();
+	public WatchedEquity(String symbol) {
+		this.symbol = symbol;
+		HoldingManager.get_by_ticker(symbol).addObserver(this);
+	}
 
 	public String getSymbol() {
-		return this.symbol.get();
-	}
-
-	public void setSymbol(String symbol) {
-		this.symbol.set(symbol);
-	}
-
-	public StringProperty symbolProperty() {
 		return this.symbol;
 	}
 
-	public BigDecimal getLowTrigger() {
-		return this.lowTrigger.get();
+	public boolean isTriggered() {
+		double ppshare = HoldingManager.get_by_ticker(symbol).getPrice_per_share();
+		return ppshare < lowTrigger || ppshare > highTrigger;
 	}
 
-	public void setLowTrigger(BigDecimal lowTrigger) {
-		this.lowTrigger.set(lowTrigger);
+	public void update(Observable observable, Object object) {
+		if(observable instanceof Equity) {
+			double ppshare = (double) object;
+			TriggerNode current = triggerNodes.get(0);
+			if (lowTrigger != -1 && ppshare < lowTrigger) {
+				if(current.type == TriggerNode.Type.HIGH)
+					current.endStamp = Calendar.getInstance().getTime();
+				if(current.endStamp != null)
+					triggerNodes.add(new TriggerNode(TriggerNode.Type.LOW));
+			}
+			else if (highTrigger != -1 && ppshare > highTrigger) {
+				if(current.type == TriggerNode.Type.LOW)
+					current.endStamp = Calendar.getInstance().getTime();
+				if(current.endStamp != null)
+					triggerNodes.add(new TriggerNode(TriggerNode.Type.HIGH));
+			}
+			else {
+				if(triggerNodes.get(0).endStamp == null)
+					current.endStamp = Calendar.getInstance().getTime();
+			}
+		}
+	}
+}
+
+class TriggerNode {
+
+	public enum Type {
+		HIGH,
+		LOW
 	}
 
-	public ObjectProperty<BigDecimal> lowTriggerProperty() {
-		return this.lowTrigger;
-	}
+	public Type type;
+	public Date timeStamp;
+	public Date endStamp;
 
-	public BigDecimal getHighTrigger() {
-		return this.highTrigger.get();
-	}
-
-	public void setHighTrigger(BigDecimal highTrigger) {
-		this.highTrigger.set(highTrigger);
-	}
-
-	public ObjectProperty<BigDecimal> highTriggerProperty() {
-		return this.highTrigger;
-	}
-
-	public boolean getTriggered() {
-		return this.triggered.get();
-	}
-
-	public void setTriggered(boolean triggered) {
-		this.triggered.set(triggered);
-	}
-
-	public BooleanProperty triggeredProperty() {
-		return this.triggered;
-	}
-
-	public void trigger(String price) {
-		BigDecimal actual = new BigDecimal(price);
-
-		if (actual.compareTo(lowTrigger.get()) == -1 || actual.compareTo(highTrigger.get()) == 1)
-			setTriggered(true);
-		else
-			setTriggered(false);
+	public TriggerNode(Type type) {
+		this.type = type;
+		this.timeStamp = Calendar.getInstance().getTime();
 	}
 }

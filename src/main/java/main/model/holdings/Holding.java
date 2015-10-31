@@ -1,8 +1,9 @@
 package main.model.holdings;
 
 import java.io.Serializable;
+import java.util.Observable;
 
-public abstract class Holding implements Serializable {
+public abstract class Holding extends Observable implements Serializable {
     public abstract double getValue();
 
     public abstract String toString();

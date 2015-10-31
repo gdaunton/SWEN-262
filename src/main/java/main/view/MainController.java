@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.FPTS;
 import main.controller.Controller;
+import main.controller.command.Command;
 import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
 import main.model.holdings.Account;
@@ -335,6 +336,19 @@ public class MainController implements Initializable {
     public void sendCommand(HoldingCommand.Action type, Account origin, Account destination,
                             HoldingCommand.Modification modification, double modifier) {
         app.executeCommand(new HoldingCommand(type, app.currentPortfolio, origin, destination, modification, modifier));
+    }
+
+    /**
+     * Sends a command.
+     *
+     * @param command the command to send
+     */
+    public void sendCommand(Command command) {
+        app.executeCommand(command);
+    }
+
+    public Portfolio getPortfolio() {
+        return app.currentPortfolio;
     }
 
     /**

@@ -79,6 +79,7 @@ public class Controller {
         command.execute();
         commandBackStack.add(command);
         view.update();
+        System.out.println(commandBackStack.toString());
     }
 
     /**

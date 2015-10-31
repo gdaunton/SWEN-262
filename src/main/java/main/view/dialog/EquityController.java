@@ -18,7 +18,9 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import main.controller.command.Command;
 import main.controller.command.HoldingCommand;
+import main.controller.command.TransactionCommand;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.HoldingManager;
@@ -106,17 +108,18 @@ public class EquityController implements Initializable, DialogController {
                     Equity equity = equity_list.getSelectionModel().getSelectedItem();
                     Equity temp = new Equity(equity.type, equity.getTickerSymbol(), equity.getName(),
                             shares.getInteger(), equity.getPrice_per_share(), equity.getMarketSectors());
-                    controller.sendCommand(HoldingCommand.Action.ADD, temp);
+                    Command holdingCommand = new HoldingCommand(HoldingCommand.Action.ADD, controller.getPortfolio(), temp);
+                    Command accountCommand = null;
                     if (!outside.isSelected()) {
                         double transaction = equity.getValue()
                                 - (equity.getPrice_per_share() * Integer.parseInt(shares.getText()));
                         if (transaction < 0)
-                            controller.sendCommand(HoldingCommand.Action.MODIFY, getSelectedAccount(),
-                                    HoldingCommand.Modification.WITHDRAW, Math.abs(transaction));
+                            accountCommand = new HoldingCommand(HoldingCommand.Action.MODIFY, controller.getPortfolio(), getSelectedAccount(), HoldingCommand.Modification.WITHDRAW, Math.abs(transaction));
                         else
-                            controller.sendCommand(HoldingCommand.Action.MODIFY, getSelectedAccount(),
-                                    HoldingCommand.Modification.DEPOSIT, transaction);
+                            accountCommand = new HoldingCommand(HoldingCommand.Action.MODIFY, controller.getPortfolio(), getSelectedAccount(), HoldingCommand.Modification.DEPOSIT, transaction);
                     }
+                    if(accountCommand != null)
+                        controller.sendCommand(new TransactionCommand(holdingCommand, accountCommand));
                 }
                 stage.close();
             }

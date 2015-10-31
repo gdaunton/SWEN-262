@@ -3,6 +3,7 @@ package main.model.holdings;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Observable;
 
 public class Equity extends Holding implements Serializable {
 
@@ -121,6 +122,8 @@ public class Equity extends Holding implements Serializable {
      */
     public void setPrice_per_share(double price_per_share) {
         this.price_per_share = price_per_share;
+        this.setChanged();
+        this.notifyObservers(price_per_share);
     }
 
     /**
