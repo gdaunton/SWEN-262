@@ -2,6 +2,7 @@ package main.controller;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import javafx.stage.Stage;
@@ -11,8 +12,8 @@ import main.model.user.User;
 import main.view.MainController;
 
 public class Controller {
-    private Queue<Command> commandUndoStack = new LinkedList<Command>();
-    private Queue<Command> commandBackStack = new LinkedList<Command>();
+    private List<Command> commandUndoStack = new LinkedList<Command>();
+    private List<Command> commandBackStack = new LinkedList<Command>();
     private MainController view;
     private User user;
     private OnLogout logoutListener;
@@ -70,6 +71,10 @@ public class Controller {
         view.changePortfolio();
     }
 
+    public User getUser() {
+        return user;
+    }
+
     /**
      * Executes a command.
      *
@@ -86,24 +91,26 @@ public class Controller {
      * Undoes a command.
      */
     public void undo() {
-        Command undo = commandBackStack.poll();
+        Command undo = commandBackStack.remove(0);
         if (undo != null) {
             undo.undo();
             commandUndoStack.add(undo);
             view.update();
         }
+        System.out.println("undo: " + commandUndoStack.toString());
     }
 
     /**
      * Redoes a command.
      */
     public void redo() {
-        Command redo = commandUndoStack.poll();
+        Command redo = commandUndoStack.remove(0);
         if (redo != null) {
             redo.execute();
             commandBackStack.add(redo);
             view.update();
         }
+        System.out.println("redo: " + commandBackStack.toString());
     }
 
     public boolean canUndo() {

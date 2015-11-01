@@ -90,8 +90,6 @@ public class FPTS extends Application {
                 public void run() {
                     try {
                         HoldingManager.import_equities_yahoo();
-						//TODO: loop thru the WatchedEquity items and update them via their trigger() function
-                        //TODO: update the display - will need to figure out how to propagate the update as well
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ParserConfigurationException e) {
@@ -112,6 +110,7 @@ public class FPTS extends Application {
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 public void handle(WindowEvent we) {
                     pollerHandle.cancel(true);
+                    um.logoout(loggedUser);
                     if (!checkDataChanged())
                         we.consume();
                     else
@@ -202,6 +201,7 @@ public class FPTS extends Application {
             public void Logout() {
                 if (checkDataChanged())
                     System.exit(0);
+                um.logoout(loggedUser);
             }
         });
     }

@@ -32,6 +32,8 @@ import main.model.Portfolio;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
+import main.model.holdings.WatchedEquity;
+import main.model.user.User;
 import main.view.dialog.DialogController;
 import main.view.sub.AccountController;
 import main.view.sub.EquityController;
@@ -48,7 +50,7 @@ public class MainController implements Initializable {
     @FXML
     private ListView<Equity> equity_list;
     @FXML
-    private ListView<Equity> watchlist;
+    private ListView<WatchedEquity> watchlist;
     @FXML
     private Button watch_remove;
     @FXML
@@ -106,13 +108,20 @@ public class MainController implements Initializable {
 
         watch_add.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                showWatchlistAddDialog();
+                try {
+                    ((main.view.dialog.WatchEquityController) createDialogScene("watched.fxml"))
+                            .setController(MainController.this);
+                } catch(Exception e) {
+                    System.err.println("Error inflating watchlist dialog");
+                    e.printStackTrace();
+                }
             }
         });
         watch_remove.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                Equity remove = watchlist.getSelectionModel().getSelectedItem();
-                //TODO remove equity from watchlist
+                WatchedEquity remove = watchlist.getSelectionModel().getSelectedItem();
+                getUser().watchedEquities.remove(remove);
+                update();
             }
         });
     }
@@ -205,11 +214,6 @@ public class MainController implements Initializable {
         });
     }
 
-    private void showWatchlistAddDialog() {
-        //TODO show dialog of all equities
-
-    }
-
     /**
      * Shows the team export dialog.
      *
@@ -284,8 +288,8 @@ public class MainController implements Initializable {
                 }
             }
         });
-        watchlist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Equity>() {
-            public void changed(ObservableValue<? extends Equity> observable, Equity oldValue, final Equity newValue) {
+        watchlist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<WatchedEquity>() {
+            public void changed(ObservableValue<? extends WatchedEquity> observable, WatchedEquity oldValue, final WatchedEquity newValue) {
                 if (newValue != null) {
                     Platform.runLater(new Runnable() {
                         public void run() {
@@ -374,6 +378,14 @@ public class MainController implements Initializable {
     }
 
     /**
+     * Get the user that is currently logged in.
+     * @return The user that is currently logged in.
+     */
+    public User getUser() {
+        return app.getUser();
+    }
+
+    /**
      * Updates the displayed information.
      */
     public void update() {
@@ -405,7 +417,7 @@ public class MainController implements Initializable {
                     equityItems.add((Equity) h);
                 }
             }
-            //TODO set watchlist list items watchlist.setItems(FXCollections.observableArrayList(//arraylist of equities here));
+            watchlist.setItems(FXCollections.observableArrayList(getUser().watchedEquities));
             account_list.setItems(accountItems);
             equity_list.setItems(equityItems);
         }

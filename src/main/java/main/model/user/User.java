@@ -1,10 +1,14 @@
 package main.model.user;
 
+import main.model.holdings.WatchedEquity;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable {
     public String username;
     public String passwordHash;
+    public ArrayList<WatchedEquity> watchedEquities;
     private int id;
 
     /**
@@ -17,6 +21,7 @@ public class User implements Serializable {
     public User(String username, String hash, int id) {
         this.username = username;
         this.passwordHash = hash;
+        watchedEquities = new ArrayList<>();
     }
 
     /**

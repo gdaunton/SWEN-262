@@ -14,7 +14,7 @@ import javafx.collections.ObservableArray;
 
 public class WatchedEquity implements Serializable, Observer {
 
-	private String symbol;
+	private String symbol = "";
 	public double lowTrigger = -1;
 	public double highTrigger = -1;
 	public List<TriggerNode> triggerNodes = new ArrayList<>();
@@ -54,6 +54,16 @@ public class WatchedEquity implements Serializable, Observer {
 					current.endStamp = Calendar.getInstance().getTime();
 			}
 		}
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return o != null && this.symbol.equals(((WatchedEquity)o).symbol);
+	}
+
+	@Override
+	public String toString() {
+		return symbol + "  " + HoldingManager.get_by_ticker(symbol).getName();
 	}
 }
 

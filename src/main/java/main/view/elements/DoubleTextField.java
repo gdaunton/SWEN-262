@@ -68,7 +68,7 @@ public class DoubleTextField extends TextField {
         try {
             return Double.parseDouble(getText());
         } catch (NumberFormatException e) {
-            return 0;
+            return -1;
         }
     }
 }
