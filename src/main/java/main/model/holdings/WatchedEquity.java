@@ -1,5 +1,6 @@
 package main.model.holdings;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
@@ -14,14 +15,22 @@ import javafx.collections.ObservableArray;
 
 public class WatchedEquity implements Serializable, Observer {
 
+	public enum Type {
+		HIGH,
+		LOW,
+		NONE
+	}
+
 	private String symbol = "";
 	public double lowTrigger = -1;
 	public double highTrigger = -1;
-	public List<TriggerNode> triggerNodes = new ArrayList<>();
+	public transient List<TriggerNode> triggerNodes;
 
 	public WatchedEquity(String symbol) {
 		this.symbol = symbol;
+		triggerNodes = new ArrayList<>();
 		HoldingManager.get_by_ticker(symbol).addObserver(this);
+		update();
 	}
 
 	public String getSymbol() {
@@ -33,27 +42,32 @@ public class WatchedEquity implements Serializable, Observer {
 		return ppshare < lowTrigger || ppshare > highTrigger;
 	}
 
-	public void update(Observable observable, Object object) {
-		if(observable instanceof Equity) {
-			double ppshare = (double) object;
-			TriggerNode current = triggerNodes.get(0);
-			if (lowTrigger != -1 && ppshare < lowTrigger) {
-				if(current.type == TriggerNode.Type.HIGH)
-					current.endStamp = Calendar.getInstance().getTime();
-				if(current.endStamp != null)
-					triggerNodes.add(new TriggerNode(TriggerNode.Type.LOW));
-			}
-			else if (highTrigger != -1 && ppshare > highTrigger) {
-				if(current.type == TriggerNode.Type.LOW)
-					current.endStamp = Calendar.getInstance().getTime();
-				if(current.endStamp != null)
-					triggerNodes.add(new TriggerNode(TriggerNode.Type.HIGH));
-			}
-			else {
-				if(triggerNodes.get(0).endStamp == null)
-					current.endStamp = Calendar.getInstance().getTime();
-			}
-		}
+	@Override
+	public void update(Observable o, Object arg) {
+		double ppshare = (double) arg;
+		if (lowTrigger != -1 && ppshare < lowTrigger)
+			triggerNodes.add(new TriggerNode(Type.LOW, ppshare));
+		else if (highTrigger != -1 && ppshare > highTrigger)
+			triggerNodes.add(new TriggerNode(Type.HIGH, ppshare));
+		else
+			triggerNodes.add(new TriggerNode(Type.NONE, ppshare));
+	}
+
+	private void update() {
+		double ppshare = HoldingManager.get_by_ticker(symbol).getPrice_per_share();
+		if (lowTrigger != -1 && ppshare < lowTrigger)
+			triggerNodes.add(new TriggerNode(Type.LOW, ppshare));
+		else if (highTrigger != -1 && ppshare > highTrigger)
+			triggerNodes.add(new TriggerNode(Type.HIGH, ppshare));
+		else
+			triggerNodes.add(new TriggerNode(Type.NONE, ppshare));
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
+		HoldingManager.get_by_ticker(symbol).addObserver(this);
+		triggerNodes = new ArrayList<>();
+		update();
 	}
 
 	@Override
@@ -65,21 +79,22 @@ public class WatchedEquity implements Serializable, Observer {
 	public String toString() {
 		return symbol + "  " + HoldingManager.get_by_ticker(symbol).getName();
 	}
-}
 
-class TriggerNode {
+	public class TriggerNode {
 
-	public enum Type {
-		HIGH,
-		LOW
-	}
+		public Type type;
+		public Date timeStamp;
+		public double ppshare;
 
-	public Type type;
-	public Date timeStamp;
-	public Date endStamp;
+		public TriggerNode(Type type, double ppshare) {
+			this.type = type;
+			this.timeStamp = Calendar.getInstance().getTime();
+			this.ppshare = ppshare;
+		}
 
-	public TriggerNode(Type type) {
-		this.type = type;
-		this.timeStamp = Calendar.getInstance().getTime();
+		@Override
+		public String toString() {
+			return timeStamp.toString() + "   " +  ppshare;
+		}
 	}
 }

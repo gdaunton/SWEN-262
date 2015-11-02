@@ -14,11 +14,6 @@ import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-
-import static java.util.concurrent.TimeUnit.*;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -43,12 +38,9 @@ import main.view.MainController;
 import main.view.startup.PortfolioCreateController;
 import main.view.startup.UserCreateController;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 public class FPTS extends Application {
 
     private static boolean file_basis = false;
-    public static int poll_cooldown_sec = 120;
 
     private ArrayList<Portfolio> portfolios;
     private PortfolioManager manager;
@@ -56,10 +48,6 @@ public class FPTS extends Application {
     private UserManager um;
     private User loggedUser;
     private String dataRoot = "data/";
-
-    private ScheduledFuture<?> pollerHandle = null;
-
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     /**
      * Starts the stage.
@@ -81,24 +69,8 @@ public class FPTS extends Application {
                 copyFile(file, equities);
             }
             HoldingManager.import_equities(equities);
-        } else { //import the equities from Yahoo
+        } else
             HoldingManager.import_equities_yahoo();
-
-            //TODO: ask user for market poll cooldown
-
-            final Runnable poller = new Runnable() {
-                public void run() {
-                    try {
-                        HoldingManager.import_equities_yahoo();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (ParserConfigurationException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            pollerHandle = scheduler.scheduleAtFixedRate(poller, FPTS.poll_cooldown_sec, FPTS.poll_cooldown_sec, SECONDS);
-        }
 
         try {
             stage = primaryStage;
@@ -109,7 +81,6 @@ public class FPTS extends Application {
             for(Portfolio p : portfolios) { HoldingManager.link_holdings(p); }
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 public void handle(WindowEvent we) {
-                    pollerHandle.cancel(true);
                     um.logoout(loggedUser);
                     if (!checkDataChanged())
                         we.consume();

@@ -38,6 +38,7 @@ import main.view.dialog.DialogController;
 import main.view.sub.AccountController;
 import main.view.sub.EquityController;
 import main.view.sub.TransactionController;
+import main.view.sub.WatchedEquityController;
 
 public class MainController implements Initializable {
 
@@ -300,6 +301,7 @@ public class MainController implements Initializable {
                             watchlist.getSelectionModel().select(newValue);
                         }
                     });
+                    gotoWatchedEquity(newValue);
                 }
             }
         });
@@ -394,6 +396,8 @@ public class MainController implements Initializable {
             gotoAccount(account_list.getSelectionModel().getSelectedItem());
         } else if (!equity_list.getSelectionModel().isEmpty()) {
             gotoEquity(equity_list.getSelectionModel().getSelectedItem());
+        } else if (!watchlist.getSelectionModel().isEmpty()) {
+            gotoWatchedEquity(watchlist.getSelectionModel().getSelectedItem());
         } else {
             gotoTransaction();
         }
@@ -438,6 +442,16 @@ public class MainController implements Initializable {
         }
     }
 
+    private void gotoWatchedEquity(WatchedEquity watchedEquity) {
+        try {
+            WatchedEquityController e = (WatchedEquityController) changeScene("sub/watched.fxml");
+            e.setWatchedEquity(this, watchedEquity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error inflating watched equity view");
+        }
+    }
+
     /**
      * Go to an account.
      *
@@ -462,6 +476,7 @@ public class MainController implements Initializable {
             t.setTransaction(this, app.currentPortfolio.history);
             account_list.getSelectionModel().clearSelection();
             equity_list.getSelectionModel().clearSelection();
+            watchlist.getSelectionModel().clearSelection();
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error inflating transaction view");

@@ -70,7 +70,7 @@ public class WatchEquityController implements Initializable, DialogController {
                 WatchedEquity temp = new WatchedEquity(equity_list.getSelectionModel().getSelectedItem().getTickerSymbol());
                 if(!controller.getUser().watchedEquities.contains(temp)) {
                     temp.lowTrigger = low_bound.getDouble();
-                    temp.lowTrigger = high_bound.getDouble();
+                    temp.highTrigger = high_bound.getDouble();
                     controller.getUser().watchedEquities.add(temp);
                     controller.update();
                 }

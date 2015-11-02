@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<?import main.view.elements.DoubleTextField?>
+<?import main.view.elements.DateAxis?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.sub.WatchedEquityController">
+   <children>
+      <VBox alignment="BOTTOM_RIGHT" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <FlowPane>
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label text="High Trigger" />
+                        <DoubleTextField fx:id="high_bound">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </DoubleTextField>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0">
+                     <children>
+                        <Label text="Low Trigger" />
+                        <DoubleTextField fx:id="low_bound">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </DoubleTextField>
+                     </children>
+                     <FlowPane.margin>
+                        <Insets left="10.0" />
+                     </FlowPane.margin>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </FlowPane>
+            <AnchorPane fx:id="chart_pane">
+               <children>
+                  <LineChart fx:id="chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <xAxis>
+                      <DateAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+               </children>
+            </AnchorPane>
+            <HBox alignment="BOTTOM_RIGHT">
+               <children>
+                  <Button fx:id="cancel" cancelButton="true" mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="apply" defaultButton="true" disable="true" mnemonicParsing="false" text="Apply">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" right="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</Pane>

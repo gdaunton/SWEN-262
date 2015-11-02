@@ -103,23 +103,25 @@ public class UserManager {
     }
 
     public void logoout(User user) {
-        ArrayList<User> current = getAllUsers();
-        for(User u : current) {
-            if(u.getId() == user.getId()) {
-                current.set(current.indexOf(u), user);
-                break;
+        if(user != null) {
+            ArrayList<User> current = getAllUsers();
+            for (User u : current) {
+                if (u.getId() == user.getId()) {
+                    current.set(current.indexOf(u), user);
+                    break;
+                }
             }
-        }
-        try {
-            OutputStream buffer = new BufferedOutputStream(new FileOutputStream(userFile, false));
-            ObjectOutputStream stream = new ObjectOutputStream(buffer);
-            for (User u : current)
-                stream.writeObject(u);
-            buffer.close();
-            stream.close();
-        } catch (Exception e) {
-            System.err.println("Error saving users to file");
-            e.printStackTrace();
+            try {
+                OutputStream buffer = new BufferedOutputStream(new FileOutputStream(userFile, false));
+                ObjectOutputStream stream = new ObjectOutputStream(buffer);
+                for (User u : current)
+                    stream.writeObject(u);
+                buffer.close();
+                stream.close();
+            } catch (Exception e) {
+                System.err.println("Error saving users to file");
+                e.printStackTrace();
+            }
         }
     }
 

@@ -1,15 +1,23 @@
 package main.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import static java.util.concurrent.TimeUnit.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import main.controller.command.Command;
 import main.model.Portfolio;
+import main.model.holdings.HoldingManager;
 import main.model.user.User;
 import main.view.MainController;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 public class Controller {
     private List<Command> commandUndoStack = new LinkedList<Command>();
@@ -20,6 +28,9 @@ public class Controller {
     private ArrayList<Portfolio> portfolios;
     public Portfolio currentPortfolio;
     public Stage stage;
+    private ScheduledFuture<?> pollerHandle = null;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    public static int poll_cooldown_sec = 60;
 
     /**
      * Initializes the controller.
@@ -40,6 +51,29 @@ public class Controller {
             }
         }
         view.setApp(this);
+        startUpdateLoop();
+    }
+
+    private void startUpdateLoop() {
+
+        final Runnable poller = new Runnable() {
+            public void run() {
+                try {
+                    HoldingManager.import_equities_yahoo();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            view.update();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ParserConfigurationException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        pollerHandle = scheduler.scheduleAtFixedRate(poller, poll_cooldown_sec, poll_cooldown_sec, SECONDS);
     }
 
     /**
@@ -84,7 +118,6 @@ public class Controller {
         command.execute();
         commandBackStack.add(command);
         view.update();
-        System.out.println(commandBackStack.toString());
     }
 
     /**
@@ -97,7 +130,6 @@ public class Controller {
             commandUndoStack.add(undo);
             view.update();
         }
-        System.out.println("undo: " + commandUndoStack.toString());
     }
 
     /**
