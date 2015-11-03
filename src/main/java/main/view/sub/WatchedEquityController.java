@@ -48,21 +48,20 @@ public class WatchedEquityController implements Initializable {
      */
     public void setWatchedEquity(WatchedEquity equity) {
         this.equity = equity;
-        if(equity.highTrigger != -1)
+        if (equity.highTrigger != -1)
             high_bound.setText(Double.toString(equity.highTrigger));
-        if(equity.lowTrigger != -1)
+        if (equity.lowTrigger != -1)
             low_bound.setText(Double.toString(equity.lowTrigger));
 
         ObservableList<XYChart.Series<Date, Number>> series = FXCollections.observableArrayList();
         ObservableList<XYChart.Data<Date, Number>> series1 = FXCollections.observableArrayList();
-        for(WatchedEquity.TriggerNode t : equity.triggerNodes)
+        for (WatchedEquity.TriggerNode t : equity.triggerNodes)
             series1.add(new XYChart.Data<>(t.timeStamp, t.ppshare));
         series.add(new XYChart.Series<>("Equity", series1));
-        chart.setData(series);
-        updateLines(equity.highTrigger, equity.lowTrigger);
         highMarker.setStroke(Color.GREEN);
         lowMarker.setStroke(Color.RED);
         chart.getData().addListener((ListChangeListener<XYChart.Series<Date, Number>>) c -> updateLines(equity.highTrigger, equity.lowTrigger));
+        chart.setData(series);
     }
 
     private void updateLines(double highTrigger, double lowTrigger) {
@@ -84,12 +83,21 @@ public class WatchedEquityController implements Initializable {
         lowMarker.setStartY(yShift + lowPosition);
         lowMarker.setEndY(yShift + lowPosition);
 
+        if(chart_pane.getChildren().contains(highMarker)) {
+            if (highPosition < 0)
+                chart_pane.getChildren().remove(highMarker);
+        } else {
+            if (highPosition > 0)
+                chart_pane.getChildren().add(highMarker);
+        }
 
-        chart_pane.getChildren().removeAll(highMarker, lowMarker);
-        if(highPosition > 0)
-            chart_pane.getChildren().add(highMarker);
-        if(lowPosition > 0)
-            chart_pane.getChildren().add(lowMarker);
+        if(chart_pane.getChildren().contains(lowMarker)) {
+            if (lowPosition < 0)
+                chart_pane.getChildren().remove(lowMarker);
+        } else {
+            if (lowPosition > 0)
+                chart_pane.getChildren().add(lowMarker);
+        }
     }
 
     /**
@@ -126,5 +134,6 @@ public class WatchedEquityController implements Initializable {
         chart.boundsInParentProperty().addListener((ov, old, newBounds) -> {
             updateLines(equity.highTrigger, equity.lowTrigger);
         });
+        chart.setAnimated(false);
     }
 }
