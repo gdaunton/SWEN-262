@@ -48,41 +48,31 @@ public class LoginController implements Initializable {
      */
     public void initialize(URL location, ResourceBundle resources) {
         assert loginButton != null : "fx:id=\"loginButton\" was not injected: check your FXML file.";
-        loginButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                if (app == null) {
+        loginButton.setOnAction(event -> {
+            if (app == null) {
+                errorText.setVisible(true);
+                errorText.setText("Hello " + username.getText());
+            } else {
+                try {
+                    if (!app.handleLogin(username.getText(), password.getText()))
+                        errorText.setText("User does not exist");
                     errorText.setVisible(true);
-                    errorText.setText("Hello " + username.getText());
-                } else {
-                    try {
-                        if (!app.handleLogin(username.getText(), password.getText()))
-                            errorText.setText("User does not exist");
-                        errorText.setVisible(true);
-                    } catch (UserManager.InvalidPasswordException e) {
-                        errorText.setText(e.getMessage());
-                        errorText.setVisible(true);
-                    } catch (FPTS.UnassociatedUserException e1) {
-                        errorText.setText(e1.getMessage());
-                        errorText.setVisible(true);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                } catch (UserManager.InvalidPasswordException e) {
+                    errorText.setText(e.getMessage());
+                    errorText.setVisible(true);
+                } catch (FPTS.UnassociatedUserException e1) {
+                    errorText.setText(e1.getMessage());
+                    errorText.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
 
         assert createUser != null : "fx:id=\"createUser\" was not injected: check your FXML file.";
-        createUser.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                app.gotoCreateUser();
-            }
-        });
+        createUser.setOnAction(event -> app.gotoCreateUser());
 
         assert createPortfolio != null : "fx:id=\"createPortfolio\" was not injected: check your FXML file.";
-        createPortfolio.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                app.gotoCreatePortfolio();
-            }
-        });
+        createPortfolio.setOnAction(event -> app.gotoCreatePortfolio());
     }
 }

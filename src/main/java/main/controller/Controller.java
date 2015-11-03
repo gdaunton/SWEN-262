@@ -142,6 +142,10 @@ public class Controller {
         System.out.println("redo: " + commandBackStack.toString());
     }
 
+    public void logout() {
+        logoutListener.logout();
+    }
+
     public boolean canUndo() {
         return commandBackStack.size() != 0;
     }
@@ -160,7 +164,7 @@ public class Controller {
     }
 
     public interface OnLogout {
-        void Logout();
+        void logout();
     }
 
     public void update() {

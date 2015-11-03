@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -66,6 +67,8 @@
                   <MenuItem fx:id="export" mnemonicParsing="false" text="Export" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                <MenuItem fx:id="interval" mnemonicParsing="false" text="Set Update Interval" />
+               <SeparatorMenuItem mnemonicParsing="false" />
+               <MenuItem fx:id="logout" mnemonicParsing="false" text="Logout" />
               </Menu>
               <Menu mnemonicParsing="false" text="Edit">
                <Menu mnemonicParsing="false" text="Add...">

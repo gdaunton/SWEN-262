@@ -96,7 +96,9 @@ public class UserManager {
             }
             buffer.close();
             s.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            return null;
+        } catch(ClassNotFoundException e1) {
             return null;
         }
         return null;
@@ -155,8 +157,13 @@ public class UserManager {
      * @return Whether the password matches this user's hash
      * @throws Exception
      */
-    public boolean compareHash(String password, String hash) throws Exception {
-        return HashSlingingSlasher.check(password, hash);
+    public boolean compareHash(String password, String hash) {
+        try {
+            return HashSlingingSlasher.check(password, hash);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public class InvalidPasswordException extends Exception {

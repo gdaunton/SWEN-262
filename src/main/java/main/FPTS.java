@@ -183,13 +183,11 @@ public class FPTS extends Application {
 	 */
 	private void initPortfolio(User user) {
 		Controller c = new Controller(portfolios, user, gotoMain(), stage);
-		c.setOnLogout(new Controller.OnLogout() {
-			public void Logout() {
-				if (checkDataChanged())
-					System.exit(0);
-				um.logoout(loggedUser);
-			}
-		});
+		c.setOnLogout(() -> {
+            if (checkDataChanged())
+                gotoLogin();
+            um.logoout(loggedUser);
+        });
 	}
 
 	/**

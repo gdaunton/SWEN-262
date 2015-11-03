@@ -80,6 +80,8 @@ public class MainController implements Initializable {
     private MenuItem redo;
     @FXML
     private MenuItem interval;
+    @FXML
+    private MenuItem logout;
 
     private Scene currentScene;
 
@@ -180,6 +182,7 @@ public class MainController implements Initializable {
         undo.setOnAction(event -> app.undo());
         redo.setOnAction(event -> app.redo());
         interval.setOnAction(event -> showIntervalDialog());
+        logout.setOnAction(event -> app.logout());
     }
 
     /**
