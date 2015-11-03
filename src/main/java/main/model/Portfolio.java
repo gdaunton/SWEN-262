@@ -16,7 +16,7 @@ public class Portfolio implements Serializable {
     private ArrayList<Holding> holdings;
     public String name;
     public ArrayList<Transaction> history = new ArrayList<Transaction>();
-
+    public int cooldown = 60;
 
     /**
      * Creates a new Portfolio Object
@@ -29,8 +29,9 @@ public class Portfolio implements Serializable {
         this.users = users;
         this.name = name;
         this.holdings = new ArrayList<Holding>();
-        if(do_link) { HoldingManager.link_holdings(this); }		
+        if(do_link) { HoldingManager.link_holdings(this); }
 	}
+
 
     /**
      * Get all of the users attached to this portfolio
@@ -83,6 +84,8 @@ public class Portfolio implements Serializable {
             return false;
         Portfolio port = (Portfolio) p;
         if (!port.name.equals(this.name))
+            return false;
+        else if (cooldown != port.cooldown)
             return false;
         else if (holdings.size() != port.holdings.size())
             return false;

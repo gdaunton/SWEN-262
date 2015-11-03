@@ -50,8 +50,8 @@ public class Controller {
                 break;
             }
         }
-        view.setApp(this);
         setPollerRefreashRate(poll_cooldown_sec);
+        view.setApp(this);
     }
 
     public void setPollerRefreashRate(int rate) {

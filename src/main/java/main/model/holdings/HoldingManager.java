@@ -278,6 +278,6 @@ public class HoldingManager {
                 sum += e.getPrice_per_share();
             }
         }
-        return sum / div;
+        return Math.round((sum / div) * 100.0) / 100.0;
     }
 }

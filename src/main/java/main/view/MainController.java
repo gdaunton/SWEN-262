@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -82,6 +83,8 @@ public class MainController implements Initializable {
     private MenuItem interval;
     @FXML
     private MenuItem logout;
+    @FXML
+    private Text dow;
 
     private Scene currentScene;
 
@@ -392,6 +395,7 @@ public class MainController implements Initializable {
         }
         undo.setDisable(!app.canUndo());
         redo.setDisable(!app.canRedo());
+        dow.setText(Double.toString(HoldingManager.djia()));
     }
 
     /**

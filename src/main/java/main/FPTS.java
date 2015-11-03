@@ -391,13 +391,11 @@ public class FPTS extends Application {
 
 	private boolean deleteUser(String loginId) {
 		List<User> users = UserManager.getAllUsers();
-
 		for (int i = 0; i < users.size(); i++)
 			if (users.get(i).username.equals(loginId)) {
 				users.remove(i);
 				return true;
 			}
-
 		return false;
 	}
 

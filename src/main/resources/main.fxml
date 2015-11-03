@@ -1,93 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.MainController">
-   <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <center>
-          <SplitPane dividerPositions="0.3" BorderPane.alignment="CENTER">
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                  <Accordion prefHeight="373.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                      <panes>
-                          <TitledPane animated="false" text="Accounts">
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                  <ListView fx:id="account_list" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              </AnchorPane>
-                          </TitledPane>
-                          <TitledPane animated="false" text="Equities">
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                  <ListView fx:id="equity_list" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              </AnchorPane>
-                          </TitledPane>
-                          <TitledPane animated="false" text="Watchlist">
-                              <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                      <children>
-                                 <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <top>
-                                                  <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
-                                                      <children>
-                                                          <Button fx:id="watch_remove" mnemonicParsing="false" text="Remove" />
-                                                          <Button fx:id="watch_add" mnemonicParsing="false" text="Add">
-                                                              <HBox.margin>
-                                                                  <Insets left="5.0" />
-                                                              </HBox.margin>
-                                                          </Button>
-                                                      </children>
-                                          <padding>
-                                             <Insets bottom="10.0" />
-                                          </padding>
-                                                  </HBox>
-                                    </top>
-                                    <center>
-                                                  <ListView fx:id="watchlist" BorderPane.alignment="CENTER" />
-                                    </center>
-                                 </BorderPane>
-                                      </children>
-                                  </AnchorPane>
-                              </content>
-                          </TitledPane>
-                      </panes>
-                  </Accordion>
-              </AnchorPane>
-              <AnchorPane fx:id="content" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="750.0" />
-          </SplitPane>
-      </center>
-      <top>
-          <MenuBar prefHeight="25.0" prefWidth="858.0" BorderPane.alignment="CENTER">
-              <Menu mnemonicParsing="false" text="File">
-               <MenuItem fx:id="open" mnemonicParsing="false" text="Open Portfolio..." />
-               <SeparatorMenuItem mnemonicParsing="false" />
-               <MenuItem fx:id="transactions" mnemonicParsing="false" text="Show Transactions" />
-               <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="inport" mnemonicParsing="false" text="Import" />
-                  <MenuItem fx:id="export" mnemonicParsing="false" text="Export" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-               <MenuItem fx:id="interval" mnemonicParsing="false" text="Set Update Interval" />
-               <SeparatorMenuItem mnemonicParsing="false" />
-               <MenuItem fx:id="logout" mnemonicParsing="false" text="Logout" />
-              </Menu>
-              <Menu mnemonicParsing="false" text="Edit">
-               <Menu mnemonicParsing="false" text="Add...">
-                 <items>
-                   <MenuItem fx:id="equity" mnemonicParsing="false" text="Equity" />
-                     <MenuItem fx:id="account" mnemonicParsing="false" text="Account" />
-                 </items>
-               </Menu>
-               <MenuItem fx:id="undo" mnemonicParsing="false" text="Undo" />
-               <MenuItem fx:id="redo" mnemonicParsing="false" text="Redo" />
-              </Menu>
-            <Menu mnemonicParsing="false" text="Simulate">
-              <items>
-                      <MenuItem fx:id="bull" mnemonicParsing="false" text="Bull" />
-                      <MenuItem fx:id="bear" mnemonicParsing="false" text="Bear" />
-                      <MenuItem fx:id="no_grow" mnemonicParsing="false" text="No-Grow" />
-              </items>
-            </Menu>
-          </MenuBar>
-      </top>
-   </BorderPane>
+    <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <center>
+            <SplitPane dividerPositions="0.3" BorderPane.alignment="CENTER">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <Accordion prefHeight="373.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <panes>
+                            <TitledPane animated="false" text="Accounts">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <ListView fx:id="account_list" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                </AnchorPane>
+                            </TitledPane>
+                            <TitledPane animated="false" text="Equities">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <ListView fx:id="equity_list" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                </AnchorPane>
+                            </TitledPane>
+                            <TitledPane animated="false" text="Watchlist">
+                                <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                        <children>
+                                            <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <top>
+                                                    <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+                                                        <children>
+                                                            <Button fx:id="watch_remove" mnemonicParsing="false" text="Remove" />
+                                                            <Button fx:id="watch_add" mnemonicParsing="false" text="Add">
+                                                                <HBox.margin>
+                                                                    <Insets left="5.0" />
+                                                                </HBox.margin>
+                                                            </Button>
+                                                        </children>
+                                                        <padding>
+                                                            <Insets bottom="10.0" />
+                                                        </padding>
+                                                    </HBox>
+                                                </top>
+                                                <center>
+                                                    <ListView fx:id="watchlist" BorderPane.alignment="CENTER" />
+                                                </center>
+                                            </BorderPane>
+                                        </children>
+                                    </AnchorPane>
+                                </content>
+                            </TitledPane>
+                        </panes>
+                    </Accordion>
+                </AnchorPane>
+                <AnchorPane fx:id="content" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="750.0" />
+            </SplitPane>
+        </center>
+        <top>
+            <MenuBar prefHeight="25.0" prefWidth="858.0" BorderPane.alignment="CENTER">
+                <Menu mnemonicParsing="false" text="File">
+                    <MenuItem fx:id="open" mnemonicParsing="false" text="Open Portfolio..." />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem fx:id="transactions" mnemonicParsing="false" text="Show Transactions" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem fx:id="inport" mnemonicParsing="false" text="Import" />
+                    <MenuItem fx:id="export" mnemonicParsing="false" text="Export" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem fx:id="interval" mnemonicParsing="false" text="Set Update Interval" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem fx:id="logout" mnemonicParsing="false" text="Logout" />
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <Menu mnemonicParsing="false" text="Add...">
+                        <items>
+                            <MenuItem fx:id="equity" mnemonicParsing="false" text="Equity" />
+                            <MenuItem fx:id="account" mnemonicParsing="false" text="Account" />
+                        </items>
+                    </Menu>
+                    <MenuItem fx:id="undo" mnemonicParsing="false" text="Undo" />
+                    <MenuItem fx:id="redo" mnemonicParsing="false" text="Redo" />
+                </Menu>
+                <Menu mnemonicParsing="false" text="Simulate">
+                    <items>
+                        <MenuItem fx:id="bull" mnemonicParsing="false" text="Bull" />
+                        <MenuItem fx:id="bear" mnemonicParsing="false" text="Bear" />
+                        <MenuItem fx:id="no_grow" mnemonicParsing="false" text="No-Grow" />
+                    </items>
+                </Menu>
+            </MenuBar>
+        </top>
+      <bottom>
+         <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+            <children>
+               <Label text="Dow Jones Industrial Average:" />
+                    <Text fx:id="dow" strokeType="OUTSIDE" strokeWidth="0.0" text=":'(" textAlignment="RIGHT">
+                  <font>
+                     <Font name="Segoe UI Semilight Italic" size="16.0" />
+                  </font>
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                  </HBox.margin>
+               </Text>
+            </children>
+         </HBox>
+      </bottom>
+    </BorderPane>
 </AnchorPane>
