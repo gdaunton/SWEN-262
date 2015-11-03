@@ -20,8 +20,8 @@ import main.view.MainController;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class Controller {
-    private List<Command> commandUndoStack = new LinkedList<Command>();
-    private List<Command> commandBackStack = new LinkedList<Command>();
+    private List<Command> commandUndoStack = new LinkedList<>();
+    private List<Command> commandBackStack = new LinkedList<>();
     private MainController view;
     private User user;
     private OnLogout logoutListener;
@@ -30,7 +30,7 @@ public class Controller {
     public Stage stage;
     private ScheduledFuture<?> pollerHandle = null;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    public static int poll_cooldown_sec = 60;
+    private int poll_cooldown_sec = 60;
 
     /**
      * Initializes the controller.
@@ -51,29 +51,26 @@ public class Controller {
             }
         }
         view.setApp(this);
-        startUpdateLoop();
+        setPollerRefreashRate(poll_cooldown_sec);
     }
 
-    private void startUpdateLoop() {
-
-        final Runnable poller = new Runnable() {
-            public void run() {
-                try {
-                    HoldingManager.import_equities_yahoo();
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.update();
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ParserConfigurationException e) {
-                    e.printStackTrace();
-                }
+    public void setPollerRefreashRate(int rate) {
+        if(pollerHandle != null)
+            pollerHandle.cancel(false);
+        poll_cooldown_sec = rate;
+        Runnable poller = () -> {
+            try {
+                HoldingManager.import_equities_yahoo();
+                Platform.runLater(view::update);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         };
         pollerHandle = scheduler.scheduleAtFixedRate(poller, poll_cooldown_sec, poll_cooldown_sec, SECONDS);
+    }
+
+    public int getPollerRefreashRate() {
+        return poll_cooldown_sec;
     }
 
     /**
@@ -83,7 +80,7 @@ public class Controller {
      * @return The list of portfolios.
      */
     public ArrayList<Portfolio> getUserPortfolios(User user) {
-        ArrayList<Portfolio> temp = new ArrayList<Portfolio>();
+        ArrayList<Portfolio> temp = new ArrayList<>();
         for (Portfolio p : this.portfolios) {
             if (p.getUsers().contains(user))
                 temp.add(p);
@@ -92,7 +89,7 @@ public class Controller {
     }
 
     public ArrayList<Portfolio> getOtherPortfolios() {
-        ArrayList<Portfolio> temp = new ArrayList<Portfolio>();
+        ArrayList<Portfolio> temp = new ArrayList<>();
         for (Portfolio p : this.portfolios) {
             if (p != currentPortfolio && p.getUsers().contains(user))
                 temp.add(p);

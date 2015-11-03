@@ -16,21 +16,21 @@ public class DoubleTextField extends TextField {
     public DoubleTextField() {
         super();
 
-        addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent event) {
-                if (!isValid(getText())) {
-                    event.consume();
-                }
+        addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!isValid(getText())) {
+                event.consume();
             }
         });
 
-        textProperty().addListener(new ChangeListener<String>() {
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                if (!isValid(newValue)) {
-                    setText(oldValue);
-                }
+        textProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (!isValid(newValue)) {
+                setText(oldValue);
             }
         });
+    }
+
+    public void setValue(double value) {
+        setText(Double.toString(value));
     }
 
     /**

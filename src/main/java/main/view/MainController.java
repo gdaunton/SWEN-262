@@ -12,29 +12,29 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Pair;
 import main.FPTS;
 import main.controller.Controller;
 import main.controller.command.Command;
 import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
-import main.model.holdings.Account;
-import main.model.holdings.Equity;
-import main.model.holdings.Holding;
-import main.model.holdings.WatchedEquity;
+import main.model.holdings.*;
 import main.model.user.User;
 import main.view.dialog.DialogController;
+import main.view.elements.IntegerTextField;
 import main.view.sub.AccountController;
 import main.view.sub.EquityController;
 import main.view.sub.TransactionController;
@@ -78,6 +78,8 @@ public class MainController implements Initializable {
     private MenuItem undo;
     @FXML
     private MenuItem redo;
+    @FXML
+    private MenuItem interval;
 
     private Scene currentScene;
 
@@ -107,23 +109,19 @@ public class MainController implements Initializable {
         if (account_list != null && equity_list != null)
             initLists();
 
-        watch_add.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                try {
-                    ((main.view.dialog.WatchEquityController) createDialogScene("watched.fxml"))
-                            .setController(MainController.this);
-                } catch(Exception e) {
-                    System.err.println("Error inflating watchlist dialog");
-                    e.printStackTrace();
-                }
+        watch_add.setOnAction(event -> {
+            try {
+                ((main.view.dialog.WatchEquityController) createDialogScene("watched.fxml"))
+                        .setController(MainController.this);
+            } catch (Exception e) {
+                System.err.println("Error inflating watchlist dialog");
+                e.printStackTrace();
             }
         });
-        watch_remove.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                WatchedEquity remove = watchlist.getSelectionModel().getSelectedItem();
-                getUser().watchedEquities.remove(remove);
-                update();
-            }
+        watch_remove.setOnAction(event -> {
+            WatchedEquity remove = watchlist.getSelectionModel().getSelectedItem();
+            getUser().watchedEquities.remove(remove);
+            update();
         });
     }
 
@@ -135,84 +133,53 @@ public class MainController implements Initializable {
      * Initializes the menu.
      */
     private void initMenu() {
-        open.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                ArrayList<Portfolio> temp = app.getOtherPortfolios();
-                if (temp.size() != 0) {
-                    ChoiceDialog<Portfolio> dialog = new ChoiceDialog<Portfolio>(temp.get(0), temp);
-                    dialog.setTitle("Open Portfolio");
-                    dialog.setHeaderText("Open a different portfolio...");
-                    Optional<Portfolio> result = dialog.showAndWait();
-                    if (result.isPresent()) {
-                        app.setPortfolio(result.get());
-                    }
+        open.setOnAction(event -> {
+            ArrayList<Portfolio> temp = app.getOtherPortfolios();
+            if (temp.size() != 0) {
+                ChoiceDialog<Portfolio> dialog = new ChoiceDialog<>(temp.get(0), temp);
+                dialog.setTitle("Open Portfolio");
+                dialog.setHeaderText("Open a different portfolio...");
+                Optional<Portfolio> result = dialog.showAndWait();
+                if (result.isPresent()) {
+                    app.setPortfolio(result.get());
                 }
-                app.update();
             }
+            app.update();
         });
-        transactions.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                gotoTransaction();
+        transactions.setOnAction(event -> gotoTransaction());
+        inport.setOnAction(event -> showTeamEDialog(false));
+        export.setOnAction(event -> showTeamEDialog(true));
+        bear.setOnAction(event -> {
+            //TODO Implement Simulations
+        });
+        bull.setOnAction(event -> {
+            //TODO Implement Simulations
+        });
+        no_grow.setOnAction(event -> {
+            //TODO Implement Simulations
+        });
+        account.setOnAction(event -> {
+            try {
+                ((main.view.dialog.AccountController) createDialogScene("account.fxml"))
+                        .setController(MainController.this);
+            } catch (Exception e) {
+                System.err.println("Error inflating new account dialog");
             }
+            app.update();
         });
-        inport.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                showTeamEDialog(false);
+        equity.setOnAction(event -> {
+            try {
+                ((main.view.dialog.EquityController) createDialogScene("equity.fxml"))
+                        .setController(MainController.this);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("Error inflating new equity dialog");
             }
+            app.update();
         });
-        export.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                showTeamEDialog(true);
-            }
-        });
-        bear.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                //TODO Implement Simulations
-            }
-        });
-        bull.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                //TODO Implement Simulations
-            }
-        });
-        no_grow.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                //TODO Implement Simulations
-            }
-        });
-        account.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                try {
-                    ((main.view.dialog.AccountController) createDialogScene("account.fxml"))
-                            .setController(MainController.this);
-                } catch (Exception e) {
-                    System.err.println("Error inflating new account dialog");
-                }
-                app.update();
-            }
-        });
-        equity.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                try {
-                    ((main.view.dialog.EquityController) createDialogScene("equity.fxml"))
-                            .setController(MainController.this);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.err.println("Error inflating new equity dialog");
-                }
-                app.update();
-            }
-        });
-        undo.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                app.undo();
-            }
-        });
-        redo.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                app.redo();
-            }
-        });
+        undo.setOnAction(event -> app.undo());
+        redo.setOnAction(event -> app.redo());
+        interval.setOnAction(event -> showIntervalDialog());
     }
 
     /**
@@ -253,56 +220,76 @@ public class MainController implements Initializable {
         }
     }
 
+    private void showIntervalDialog() {
+        Dialog<Integer> dialog = new Dialog<>();
+        ButtonType setButtonType = new ButtonType("Set", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(setButtonType, ButtonType.CANCEL);
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+        IntegerTextField interval = new IntegerTextField();
+        interval.setText(Integer.toString(app.getPollerRefreashRate()));
+        grid.add(new Label("Interval (Sec):"), 0, 0);
+        grid.add(interval, 1, 0);
+
+        Node setButton = dialog.getDialogPane().lookupButton(setButtonType);
+        setButton.setDisable(true);
+
+        interval.textProperty().addListener((observable, oldValue, newValue) -> {
+            setButton.setDisable(newValue.trim().isEmpty());
+        });
+        dialog.getDialogPane().setContent(grid);
+        Platform.runLater(interval::requestFocus);
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == setButtonType)
+                return interval.getInteger();
+            return null;
+        });
+
+        Optional<Integer> result = dialog.showAndWait();
+        if(result.isPresent())
+            app.setPollerRefreashRate(result.get());
+    }
+
     /**
      * Initialize the list view.
      */
     private void initLists() {
-        account_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Account>() {
-            public void changed(ObservableValue observable, Account oldValue, final Account newValue) {
-                if (newValue != null) {
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            if (!equity_list.getSelectionModel().isEmpty()) {
-                                equity_list.getSelectionModel().clearSelection();
-                                watchlist.getSelectionModel().clearSelection();
-                            }
-                            account_list.getSelectionModel().select(newValue);
-                        }
-                    });
-                    gotoAccount(newValue);
-                }
+        account_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Platform.runLater(() -> {
+                    if (!equity_list.getSelectionModel().isEmpty())
+                        equity_list.getSelectionModel().clearSelection();
+                    if(!watchlist.getSelectionModel().isEmpty())
+                        watchlist.getSelectionModel().clearSelection();
+                    account_list.getSelectionModel().select(newValue);
+                });
+                gotoAccount(newValue);
             }
         });
-        equity_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Equity>() {
-            public void changed(ObservableValue observable, Equity oldValue, final Equity newValue) {
-                if (newValue != null) {
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            if (!account_list.getSelectionModel().isEmpty()) {
-                                account_list.getSelectionModel().clearSelection();
-                                watchlist.getSelectionModel().clearSelection();
-                            }
-                            equity_list.getSelectionModel().select(newValue);
-                        }
-                    });
-                    gotoEquity(newValue);
-                }
+        equity_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Platform.runLater(() -> {
+                    if (!account_list.getSelectionModel().isEmpty())
+                        account_list.getSelectionModel().clearSelection();
+                    if(!watchlist.getSelectionModel().isEmpty())
+                        watchlist.getSelectionModel().clearSelection();
+                    equity_list.getSelectionModel().select(newValue);
+                });
+                gotoEquity(newValue);
             }
         });
-        watchlist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<WatchedEquity>() {
-            public void changed(ObservableValue<? extends WatchedEquity> observable, WatchedEquity oldValue, final WatchedEquity newValue) {
-                if (newValue != null) {
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            if (!account_list.getSelectionModel().isEmpty()) {
-                                account_list.getSelectionModel().clearSelection();
-                                equity_list.getSelectionModel().clearSelection();
-                            }
-                            watchlist.getSelectionModel().select(newValue);
-                        }
-                    });
-                    gotoWatchedEquity(newValue);
-                }
+        watchlist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Platform.runLater(() -> {
+                    if (!account_list.getSelectionModel().isEmpty())
+                        account_list.getSelectionModel().clearSelection();
+                    if (!equity_list.getSelectionModel().isEmpty())
+                        equity_list.getSelectionModel().clearSelection();
+                    watchlist.getSelectionModel().select(newValue);
+                });
+                gotoWatchedEquity(newValue);
             }
         });
     }
@@ -325,8 +312,7 @@ public class MainController implements Initializable {
      * @param modification The action to take.
      * @param modifier     The type of holding.
      */
-    public void sendCommand(HoldingCommand.Action type, Holding holding, HoldingCommand.Modification modification,
-                            double modifier) {
+    public void sendCommand(HoldingCommand.Action type, Holding holding, HoldingCommand.Modification modification, double modifier) {
         app.executeCommand(new HoldingCommand(type, app.currentPortfolio, holding, modification, modifier));
     }
 
@@ -339,8 +325,7 @@ public class MainController implements Initializable {
      * @param modification The action to take on the holding.
      * @param modifier     The type of holding.
      */
-    public void sendCommand(HoldingCommand.Action type, Account origin, Account destination,
-                            HoldingCommand.Modification modification, double modifier) {
+    public void sendCommand(HoldingCommand.Action type, Account origin, Account destination, HoldingCommand.Modification modification, double modifier) {
         app.executeCommand(new HoldingCommand(type, app.currentPortfolio, origin, destination, modification, modifier));
     }
 
@@ -376,11 +361,12 @@ public class MainController implements Initializable {
      * @return The list of accounts.
      */
     public ArrayList<Account> getAccounts() {
-        return new ArrayList<Account>(this.account_list.getItems());
+        return new ArrayList<>(this.account_list.getItems());
     }
 
     /**
      * Get the user that is currently logged in.
+     *
      * @return The user that is currently logged in.
      */
     public User getUser() {
@@ -445,7 +431,7 @@ public class MainController implements Initializable {
     private void gotoWatchedEquity(WatchedEquity watchedEquity) {
         try {
             WatchedEquityController e = (WatchedEquityController) changeScene("sub/watched.fxml");
-            e.setWatchedEquity(this, watchedEquity);
+            e.setWatchedEquity(watchedEquity);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error inflating watched equity view");
@@ -495,14 +481,11 @@ public class MainController implements Initializable {
         Stage s = new Stage();
         s.initStyle(StageStyle.UTILITY);
         FXMLLoader loader = new FXMLLoader();
-        InputStream in = getClass().getResourceAsStream(fxml);
         loader.setBuilderFactory(new JavaFXBuilderFactory());
         loader.setLocation(FPTS.class.getResource(fxml));
         Pane page;
-        try {
-            page = (Pane) loader.load(in);
-        } finally {
-            in.close();
+        try (InputStream in = getClass().getResourceAsStream(fxml)) {
+            page = loader.load(in);
         }
         Scene newScene = new Scene(page);
         s.setScene(newScene);
@@ -521,19 +504,11 @@ public class MainController implements Initializable {
     private Initializable changeScene(String fxml) throws Exception {
         fxml = "/" + fxml;
         FXMLLoader loader = new FXMLLoader();
-        InputStream in = getClass().getResourceAsStream(fxml);
         loader.setBuilderFactory(new JavaFXBuilderFactory());
         loader.setLocation(FPTS.class.getResource(fxml));
         Pane page;
-        try {
-            page = (Pane) loader.load(in);
-        } finally {
-            try {
-                in.close();
-            } catch (NullPointerException npe) {
-                System.err.println(fxml);
-                throw npe;
-            }
+        try (InputStream in = getClass().getResourceAsStream(fxml)) {
+            page = loader.load(in);
         }
         Scene newScene = new Scene(page);
         if (currentScene != null)
