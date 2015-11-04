@@ -8,6 +8,8 @@
 
 <?import main.view.elements.DateAxis?>
 <?import main.view.elements.DoubleTextField?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 <AnchorPane minHeight="600.0" minWidth="750.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.simulation.SimulationController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -86,6 +88,21 @@
                </center>
             </BorderPane>
          </top>
+          <bottom>
+              <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+                  <children>
+                      <Label text="Total Value:" />
+                      <Text fx:id="total" strokeType="OUTSIDE" strokeWidth="0.0" text=":'(" textAlignment="RIGHT">
+                          <font>
+                              <Font name="Segoe UI Semilight Italic" size="16.0" />
+                          </font>
+                          <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                          </HBox.margin>
+                      </Text>
+                  </children>
+              </HBox>
+          </bottom>
       </BorderPane>
    </children>
 </AnchorPane>

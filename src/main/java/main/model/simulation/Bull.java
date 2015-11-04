@@ -8,11 +8,11 @@ public class Bull extends Simulation {
     public double simulate(int nSteps, STEP_SIZE step_size, double start_val, double change) {
         switch (step_size) {
             case DAY:
-                return start_val + (start_val * (change/100) * (1 / 365));
+                return Math.round((start_val + (start_val * (change/100.0) * (1.0 / 365.0))) * 100.0) / 100.0;
             case MONTH:
-                return start_val + (start_val * (change/100) * (1 / 12));
+                return Math.round((start_val + (start_val * (change/100.0) * (1.0 / 12.0))) * 100.0) / 100.0;
             case YEAR:
-                return start_val + (start_val * (change/100));
+                return Math.round((start_val + (start_val * (change/100.0))) * 100.0) / 100.0;
         }
         return start_val;
     }

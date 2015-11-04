@@ -1,27 +1,29 @@
 package main.view.simulation;
 
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.*;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 import main.model.Portfolio;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
-import main.model.simulation.Bear;
-import main.model.simulation.Bull;
 import main.model.simulation.NoGrowth;
 import main.model.simulation.Simulation;
 import main.view.MainController;
@@ -42,6 +44,8 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
     private LineChart<Date, Number> chart;
     @FXML
     private TableView<Holding> port_table;
+    @FXML
+    private Text total;
 
     private ClickablePortfolioNode selected;
     private Portfolio op;
@@ -56,12 +60,14 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
     public void setSimulation(MainController controller, Simulation sim) {
         this.s = sim;
         this.op = controller.getPortfolio();
+        controller.addObserver(this);
         data = FXCollections.observableArrayList();
         initValues();
         if(sim instanceof NoGrowth)
             rate.setDisable(true);
-        else
+        else {
             rate.setValue(Simulation.DEFAULT_RATE);
+        }
     }
 
     /**
@@ -93,10 +99,10 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
                 c.add(Calendar.DATE, 1);
                 break;
             case MONTH:
-                c.add(Calendar.DATE, 12);
+                c.add(Calendar.MONTH, 1);
                 break;
             case YEAR:
-                c.add(Calendar.DATE, 365);
+                c.add(Calendar.YEAR, 1);
                 break;
         }
         return c.getTime();
@@ -120,6 +126,14 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
     private void initValues() {
         step_size.setValue(Simulation.STEP_SIZE.DAY);
         data.add(new XYChart.Data<>(Calendar.getInstance().getTime(), op.clone()));
+
+        data.addListener((ListChangeListener<XYChart.Data<Date, Portfolio>>) c -> {
+            if(selected != null) {
+                Node n = chart.getData().get(0).getData().get(selected.getIndex()).getNode();
+                ((ClickablePortfolioNode)n).select();
+            }
+        });
+
         TableColumn name = new TableColumn("Holding Name");
         name.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Holding, String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Holding, String> t) {
@@ -147,13 +161,9 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
         TableColumn value = new TableColumn("Value");
         value.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Holding, String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Holding, String> t) {
-                return new SimpleStringProperty(Double.toString(t.getValue().getValue()));
+                return new SimpleStringProperty(NumberFormat.getCurrencyInstance().format(t.getValue().getValue()));
             }
         });
-        if (selected != null)
-            showPortfolioData(selected.getPortfolio());
-        else
-            showPortfolioData(data.get(0).getYValue());
         port_table.getColumns().addAll(name, shares, ppshare, value);
         updateView();
     }
@@ -171,9 +181,10 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
     public void updateData() {
         ObservableList<XYChart.Data<Date, Portfolio>> temp = FXCollections.observableArrayList();
         temp.addAll(data);
-        data.set(0, new XYChart.Data<>(temp.get(0).getXValue(), op.clone()));
+        data.clear();
+        data.add(new XYChart.Data<>(temp.get(0).getXValue(), op.clone()));
         for(int i = 1; i < temp.size(); i++)
-            data.set(i, new XYChart.Data<>(temp.get(i).getXValue(), s.simulate(steps(), step_size(), data.get(i-1).getYValue().clone(), rate())));
+            data.add(new XYChart.Data<>(temp.get(i).getXValue(), s.simulate(steps(), step_size(), temp.get(i-1).getYValue().clone(), rate())));
         updateView();
     }
 
@@ -185,18 +196,22 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
         ObservableList<XYChart.Data<Date, Number>> series1 = FXCollections.observableArrayList();
         for (XYChart.Data<Date, Portfolio> d : data) {
             XYChart.Data<Date, Number> node = new XYChart.Data<>(d.getXValue(), d.getYValue().eval());
-            ClickablePortfolioNode point = new ClickablePortfolioNode(d.getYValue());
+            ClickablePortfolioNode point = new ClickablePortfolioNode(d.getYValue(), data.indexOf(d));
             point.setOnSelectedListener(this);
             node.setNode(point);
             series1.add(node);
         }
         series.add(new XYChart.Series<>("Portfolio Value", series1));
         chart.setData(series);
+        if(selected != null)
+            showPortfolioData(selected.getPortfolio());
     }
 
     private void showPortfolioData(Portfolio portfolio) {
-        if (portfolio != null)
+        if (portfolio != null) {
             port_table.setItems(FXCollections.observableArrayList(portfolio.getHoldings()));
+            total.setText(NumberFormat.getCurrencyInstance().format(portfolio.eval()));
+        }
     }
 
     @Override
@@ -209,28 +224,38 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
 
     @Override
     public void update(Observable o, Object arg) {
-        updateView();
+        if(o instanceof MainController) {
+            this.op = ((MainController) o).getPortfolio();
+            updateData();
+        }
     }
 }
 
 class ClickablePortfolioNode extends StackPane {
     private OnNodeSelectedListener listener;
     private Portfolio port;
+    private Circle label;
+    private int index;
 
-    public ClickablePortfolioNode(Portfolio portfolio) {
-        final Circle label = new Circle();
+    public ClickablePortfolioNode(Portfolio portfolio, int index) {
+        label = new Circle();
         label.setStroke(Color.GREEN);
         label.setFill(Color.LIGHTGREEN);
         label.setRadius(5f);
+        this.index = index;
         this.port = portfolio;
 
         setOnMouseEntered(mouseEvent -> setCursor(Cursor.HAND));
         setOnMouseExited(mouseEvent -> setCursor(Cursor.CROSSHAIR));
         setOnMouseClicked(mouseEvent -> {
-            if(getChildren().size() == 0)
+            if(label != null && !getChildren().contains(label))
                 getChildren().add(label);
             listener.handle(this);
         });
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     public Portfolio getPortfolio() {
@@ -239,6 +264,13 @@ class ClickablePortfolioNode extends StackPane {
 
     public void setOnSelectedListener(OnNodeSelectedListener listener) {
         this.listener = listener;
+    }
+
+    public void select() {
+        if(label != null && !getChildren().contains(label))
+            getChildren().add(label);
+        listener.handle(this);
+        System.out.println(getChildren());
     }
 
     public void deselect() {
