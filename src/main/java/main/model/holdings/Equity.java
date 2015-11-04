@@ -155,4 +155,8 @@ public class Equity extends Holding implements Serializable {
                 return true;
         return tickerSymbol.toLowerCase().contains(query.toLowerCase()) || name.toLowerCase().contains(query.toLowerCase());
     }
+
+    public Equity clone() {
+        return new Equity(type, tickerSymbol, name, shares, price_per_share, marketSectors);
+    }
 }

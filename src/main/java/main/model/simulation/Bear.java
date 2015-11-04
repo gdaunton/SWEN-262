@@ -9,12 +9,12 @@ public class Bear extends Simulation {
     public double simulate(int nSteps, STEP_SIZE step_size, double start_val, double change) {
         switch (step_size) {
             case DAY:
-                return start_val * (1.0 - change) * (1 / 365);
+                return start_val - (start_val * (change/100) * (1 / 365));
             case MONTH:
-                return start_val * (1.0 - change) * (1 / 12);
+                return start_val - (start_val * (change/100) * (1 / 12));
             case YEAR:
-                return start_val * (1.0 - change);
+                return start_val - (start_val * (change/100));
         }
-        return 0;
+        return start_val;
     }
 }

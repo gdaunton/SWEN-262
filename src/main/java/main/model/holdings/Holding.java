@@ -25,4 +25,6 @@ public abstract class Holding extends Observable implements Serializable {
      * @return Whether or not this holding matches the given query.
      */
     public abstract boolean match(String query);
+
+    public abstract Holding clone();
 }

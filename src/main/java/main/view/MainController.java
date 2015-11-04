@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -33,15 +34,20 @@ import main.controller.command.Command;
 import main.controller.command.HoldingCommand;
 import main.model.Portfolio;
 import main.model.holdings.*;
+import main.model.simulation.Bear;
+import main.model.simulation.Bull;
+import main.model.simulation.NoGrowth;
+import main.model.simulation.Simulation;
 import main.model.user.User;
 import main.view.dialog.DialogController;
 import main.view.elements.IntegerTextField;
+import main.view.simulation.SimulationController;
 import main.view.sub.AccountController;
 import main.view.sub.EquityController;
 import main.view.sub.TransactionController;
 import main.view.sub.WatchedEquityController;
 
-public class MainController implements Initializable {
+public class MainController extends Observable implements Initializable{
 
     private Controller app;
 
@@ -155,13 +161,13 @@ public class MainController implements Initializable {
         inport.setOnAction(event -> showTeamEDialog(false));
         export.setOnAction(event -> showTeamEDialog(true));
         bear.setOnAction(event -> {
-            //TODO Implement Simulations
+            openSimulation(new Bear());
         });
         bull.setOnAction(event -> {
-            //TODO Implement Simulations
+            openSimulation(new Bull());
         });
         no_grow.setOnAction(event -> {
-            //TODO Implement Simulations
+            openSimulation(new NoGrowth());
         });
         account.setOnAction(event -> {
             try {
@@ -396,6 +402,8 @@ public class MainController implements Initializable {
         undo.setDisable(!app.canUndo());
         redo.setDisable(!app.canRedo());
         dow.setText(Double.toString(HoldingManager.djia()));
+        notifyObservers();
+        setChanged();
     }
 
     /**
@@ -420,6 +428,22 @@ public class MainController implements Initializable {
         }
     }
 
+    public void openSimulation(Simulation simulation) {
+        if(app.currentPortfolio.getHoldings().size() == 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("UtOh!");
+            alert.setHeaderText(null);
+            alert.setContentText("I can't simulate a portfolio without any holdings!!");
+            alert.showAndWait();
+        }else {
+            try {
+                createSimulationScene("simulation.fxml").setSimulation(this, simulation);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("Error inflating simulation view");
+            }
+        }
+    }
     /**
      * Go to an equity.
      *
@@ -498,6 +522,30 @@ public class MainController implements Initializable {
         s.setScene(newScene);
         s.show();
         ((DialogController) loader.getController()).setStage(s);
+        return loader.getController();
+    }
+
+    /**
+     * Initializes a Simulation Window.
+     *
+     * @param fxml The FXML string.
+     * @return An Initializable object.
+     * @throws Exception If an error occurs.
+     */
+    private SimulationController createSimulationScene(String fxml) throws Exception {
+        fxml = "/simulation/" + fxml;
+        Stage s = new Stage();
+        s.initStyle(StageStyle.UTILITY);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setBuilderFactory(new JavaFXBuilderFactory());
+        loader.setLocation(FPTS.class.getResource(fxml));
+        Pane page;
+        try (InputStream in = getClass().getResourceAsStream(fxml)) {
+            page = loader.load(in);
+        }
+        Scene newScene = new Scene(page);
+        s.setScene(newScene);
+        s.show();
         return loader.getController();
     }
 

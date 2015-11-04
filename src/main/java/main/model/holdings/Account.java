@@ -194,6 +194,11 @@ public class Account extends Holding implements Serializable {
     }
 
     @Override
+    public Holding clone() {
+        return new Account(name, balance, type);
+    }
+
+    @Override
     public String toString() {
         return name;
     }

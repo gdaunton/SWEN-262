@@ -1,5 +1,6 @@
 package main.view.elements;
 
+import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
 
 import javafx.beans.value.ChangeListener;
@@ -8,7 +9,11 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
+import java.util.ArrayList;
+
 public class DoubleTextField extends TextField {
+
+    private OnEnterPressed enter;
 
     /**
      * Sets up a double text field.
@@ -16,17 +21,21 @@ public class DoubleTextField extends TextField {
     public DoubleTextField() {
         super();
 
-        addEventFilter(KeyEvent.KEY_TYPED, event -> {
-            if (!isValid(getText())) {
-                event.consume();
-            }
+        textProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (!isValid(newValue))
+                setText(oldValue);
         });
 
-        textProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (!isValid(newValue)) {
-                setText(oldValue);
-            }
+        addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!isValid(getText()))
+                event.consume();
+            else if(event.getCharacter().charAt(0) == 13 && enter != null)
+                enter.handle();
         });
+    }
+
+    public void setOnEnterPressedListener(OnEnterPressed listener) {
+        enter = listener;
     }
 
     public void setValue(double value) {
@@ -53,10 +62,10 @@ public class DoubleTextField extends TextField {
 
         try {
             Double.parseDouble(value);
-            return true;
         } catch (NumberFormatException ex) {
             return false;
         }
+        return true;
     }
 
     /**
@@ -70,5 +79,9 @@ public class DoubleTextField extends TextField {
         } catch (NumberFormatException e) {
             return -1;
         }
+    }
+
+    public interface OnEnterPressed {
+        void handle();
     }
 }

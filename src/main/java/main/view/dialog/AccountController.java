@@ -51,27 +51,21 @@ public class AccountController implements Initializable, DialogController {
      */
     public void initialize(URL location, ResourceBundle resources) {
         type.getItems().setAll(Account.Type.values());
-        cancel.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                stage.close();
-            }
-        });
-        apply.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                if (!name.getText().isEmpty() && !balance.getText().isEmpty() && !type.getSelectionModel().isEmpty()) {
-                    for (Account a : controller.getAccounts()) {
-                        if (a.getName().equals(name.getText())) {
-                            error.setVisible(true);
-                            error.setText("An account with that name already exists");
-                            return;
-                        }
+        cancel.setOnAction(event -> stage.close());
+        apply.setOnAction(event -> {
+            if (!name.getText().isEmpty() && !balance.getText().isEmpty() && !type.getSelectionModel().isEmpty()) {
+                for (Account a : controller.getAccounts()) {
+                    if (a.getName().equals(name.getText())) {
+                        error.setVisible(true);
+                        error.setText("An account with that name already exists");
+                        return;
                     }
-                    Account account = new Account(name.getText(), Double.parseDouble(balance.getText()),
-                            type.getValue());
-                    controller.sendCommand(HoldingCommand.Action.ADD, account);
                 }
-                stage.close();
+                Account account = new Account(name.getText(), Double.parseDouble(balance.getText()),
+                        type.getValue());
+                controller.sendCommand(HoldingCommand.Action.ADD, account);
             }
+            stage.close();
         });
     }
 

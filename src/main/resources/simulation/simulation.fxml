@@ -75,8 +75,8 @@
                <center>
                   <HBox alignment="CENTER" BorderPane.alignment="CENTER">
                      <children>
-                        <Label text="Rate:" />
-                        <DoubleTextField fx:id="rate" promptText="Rate of Growth/Decline">
+                        <Label text="Rate (%):" />
+                        <DoubleTextField fx:id="rate">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

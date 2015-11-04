@@ -10,6 +10,8 @@ public abstract class Simulation {
         DAY, MONTH, YEAR
     }
 
+    public static double DEFAULT_RATE = 15;
+
     /**
      * Simulates a market.
      *

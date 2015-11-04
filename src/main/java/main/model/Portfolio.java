@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 
 public class Portfolio implements Serializable {
     static final long serialVersionUID = 42L;
@@ -16,7 +17,6 @@ public class Portfolio implements Serializable {
     private ArrayList<Holding> holdings;
     public String name;
     public ArrayList<Transaction> history = new ArrayList<Transaction>();
-    public int cooldown = 60;
 
     /**
      * Creates a new Portfolio Object
@@ -28,7 +28,7 @@ public class Portfolio implements Serializable {
 	public Portfolio(ArrayList<User> users, String name, boolean do_link) {
         this.users = users;
         this.name = name;
-        this.holdings = new ArrayList<Holding>();
+        this.holdings = new ArrayList<>();
         if(do_link) { HoldingManager.link_holdings(this); }
 	}
 
@@ -65,8 +65,16 @@ public class Portfolio implements Serializable {
      */
     public void addHolding(Holding holding) {
 		HoldingManager.holding_list.get(this).add(holding);
-//        HoldingManager.link_holdings(this);
-        //this.holdings.add(holding);
+    }
+
+    /**
+     * Add a detached holding to this portfolio
+     * ONLY USE FOR SIMULATIONS!!!!!
+     *
+     * @param holding The account to add
+     */
+    public void addDetachedHolding(Holding holding) {
+        holdings.add(holding);
     }
 
     /**
@@ -84,8 +92,6 @@ public class Portfolio implements Serializable {
             return false;
         Portfolio port = (Portfolio) p;
         if (!port.name.equals(this.name))
-            return false;
-        else if (cooldown != port.cooldown)
             return false;
         else if (holdings.size() != port.holdings.size())
             return false;
@@ -373,7 +379,9 @@ public class Portfolio implements Serializable {
      * @return the clone of this portfolio
      */
     public Portfolio clone() {
-        //TODO: return a *DEEP* copy of this Portfolio
-        return null;
+        Portfolio clone = new Portfolio(users, name, false);
+        for(Holding h : getHoldings())
+            clone.addDetachedHolding(h.clone());
+        return clone;
     }
 }
