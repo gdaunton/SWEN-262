@@ -90,33 +90,33 @@ public class Account extends Holding implements Serializable {
     }
 
     /**
-     * Deposits the given ammount from the account and returns the new balance
+     * Deposits the given amount from the account and returns the new balance
      *
-     * @param ammount The ammount to deposit
+     * @param amount The amount to deposit
      * @return The new account balance
      */
-    public double deposit(double ammount) {
-        if (ammount < 0)
+    public double deposit(double amount) {
+        if (amount < 0)
             return this.balance;
-        return this.balance += ammount;
+        return this.balance += amount;
     }
 
     /**
      * Transfers the given ammount to the new account
      *
-     * @param ammount The ammount to transfer
-     * @param account The account to transfer the ammount to
+     * @param amount The ammount to transfer
+     * @param account The account to transfer the amount to
      * @return The remaining account balance
      */
-    public double transfer(double ammount, Account account) {
+    public double transfer(double amount, Account account) {
         if (account == null)
             return this.getBalance();
-        if (ammount < 0)
+        if (amount < 0)
             return this.getBalance();
-        if (balance - ammount < 0)
+        if (balance - amount < 0)
             return this.getBalance();
-        this.withdraw(ammount);
-        account.deposit(ammount);
+        this.withdraw(amount);
+        account.deposit(amount);
         return this.getBalance();
     }
 
@@ -171,24 +171,9 @@ public class Account extends Holding implements Serializable {
         return getBalance();
     }
 
-    public class OverDrawException extends Exception {
-        public OverDrawException(String message) {
-            super(message);
-        }
-    }
-
-    public class NegativeValueException extends Exception {
-        public NegativeValueException(String message) {
-            super(message);
-        }
-    }
-
-    public class NullAccountException extends Exception {
-        public NullAccountException(String message) {
-            super(message);
-        }
-    }
-
+    /**
+     * If the string matches this given account
+     */
     public boolean match(String query) {
         return name.toLowerCase().contains(query.toLowerCase());
     }

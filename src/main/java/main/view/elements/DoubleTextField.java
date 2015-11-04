@@ -35,10 +35,18 @@ public class DoubleTextField extends TextField {
         });
     }
 
+    /**
+     * Set the enter pressed listener
+     * @param listener the listener
+     */
     public void setOnEnterPressedListener(OnEnterPressed listener) {
         enter = listener;
     }
 
+    /**
+     * The value of the field
+     * @param value the value
+     */
     public void setValue(double value) {
         setText(Double.toString(value));
     }

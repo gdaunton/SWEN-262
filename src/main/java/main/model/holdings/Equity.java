@@ -149,6 +149,11 @@ public class Equity extends Holding implements Serializable {
         return name;
     }
 
+    /**
+     * If the query matches this equity
+     * @param query The query to search for
+     * @return
+     */
     public boolean match(String query) {
         for (String s : marketSectors)
             if(s.contains(query))
@@ -156,6 +161,10 @@ public class Equity extends Holding implements Serializable {
         return tickerSymbol.toLowerCase().contains(query.toLowerCase()) || name.toLowerCase().contains(query.toLowerCase());
     }
 
+    /**
+     * Get a clone of this equity
+     * @return a clone of this equity
+     */
     public Equity clone() {
         return new Equity(type, tickerSymbol, name, shares, price_per_share, marketSectors);
     }

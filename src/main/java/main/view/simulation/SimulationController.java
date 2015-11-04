@@ -86,11 +86,19 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
         });
     }
 
+    /**
+     * Do the simulation
+     */
     public void do_simulate() {
         data.add(new XYChart.Data<>(getNextDate(data.get(data.size() - 1).getXValue()), s.simulate(steps(), step_size(), data.get(data.size() - 1).getYValue().clone(), rate())));
         updateView();
     }
 
+    /**
+     * Get the next data from the given date
+     * @param date the previous date
+     * @return the next date
+     */
     private Date getNextDate(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
@@ -108,14 +116,26 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
         return c.getTime();
     }
 
+    /**
+     * Get the step size
+     * @return the size of the step
+     */
     private Simulation.STEP_SIZE step_size() {
         return step_size.getValue();
     }
 
+    /**
+     * Get the current number of steps
+     * @return the number of steps
+     */
     private int steps() {
         return data.size();
     }
 
+    /**
+     * Get the rate of change
+     * @return the rate of change
+     */
     private double rate() {
         return rate.getDouble();
     }
@@ -178,6 +198,9 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
         updateView();
     }
 
+    /**
+     * Update the chart data
+     */
     public void updateData() {
         ObservableList<XYChart.Data<Date, Portfolio>> temp = FXCollections.observableArrayList();
         temp.addAll(data);
@@ -207,6 +230,10 @@ public class SimulationController implements Initializable, OnNodeSelectedListen
             showPortfolioData(selected.getPortfolio());
     }
 
+    /**
+     * Set the table data
+     * @param portfolio the portfolio data to grab
+     */
     private void showPortfolioData(Portfolio portfolio) {
         if (portfolio != null) {
             port_table.setItems(FXCollections.observableArrayList(portfolio.getHoldings()));
@@ -237,6 +264,11 @@ class ClickablePortfolioNode extends StackPane {
     private Circle label;
     private int index;
 
+    /**
+     * Creates a new clickable node
+     * @param portfolio the portfolio for the node
+     * @param index the index of the node
+     */
     public ClickablePortfolioNode(Portfolio portfolio, int index) {
         label = new Circle();
         label.setStroke(Color.GREEN);
@@ -254,24 +286,42 @@ class ClickablePortfolioNode extends StackPane {
         });
     }
 
+    /**
+     * Get the index
+     * @return the index
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     * Get the portfolio
+     * @return the portfolio
+     */
     public Portfolio getPortfolio() {
         return port;
     }
 
+    /**
+     * Set the listener for this node
+     * @param listener the listener
+     */
     public void setOnSelectedListener(OnNodeSelectedListener listener) {
         this.listener = listener;
     }
 
+    /**
+     * Select this node
+     */
     public void select() {
         if(label != null && !getChildren().contains(label))
             getChildren().add(label);
         listener.handle(this);
     }
 
+    /**
+     * deselect this node
+     */
     public void deselect() {
         getChildren().clear();
     }

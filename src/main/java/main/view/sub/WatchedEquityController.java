@@ -64,6 +64,11 @@ public class WatchedEquityController implements Initializable {
         chart.setData(series);
     }
 
+    /**
+     * Update the min/max lines
+     * @param highTrigger the max line value
+     * @param lowTrigger the min line value
+     */
     private void updateLines(double highTrigger, double lowTrigger) {
         Node chartArea = chart.lookup(".chart-plot-background");
         Bounds chartAreaBounds = chartArea.getBoundsInLocal();

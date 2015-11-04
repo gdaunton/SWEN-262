@@ -24,7 +24,13 @@ public class Portfolio implements Serializable {
      * @param users The users to attach to this portfolio
      */
     public Portfolio(ArrayList<User> users, String name) { this(users, name, true); }
-	
+
+    /**
+     * Creates a new portfolio and links the equities to the holding manager
+     * @param users The users to attach to this portfolio
+     * @param name the name of the portfolio
+     * @param do_link link
+     */
 	public Portfolio(ArrayList<User> users, String name, boolean do_link) {
         this.users = users;
         this.name = name;
@@ -109,6 +115,10 @@ public class Portfolio implements Serializable {
         return this.name;
     }
 
+    /**
+     * Evaluate the value of all of the equities
+     * @return the value
+     */
     public double eval_equities() {
         double total = 0;
         for (Holding h : holdings) {
@@ -119,6 +129,10 @@ public class Portfolio implements Serializable {
         return total;
     }
 
+    /**
+     * Evaluate the value of all of the accounts
+     * @return the value
+     */
     public double eval_accounts() {
         double total = 0;
         for (Holding h : holdings) {

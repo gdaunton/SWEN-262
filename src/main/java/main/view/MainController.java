@@ -232,6 +232,9 @@ public class MainController extends Observable implements Initializable{
         }
     }
 
+    /**
+     * Show the dialog to change the update interval
+     */
     private void showIntervalDialog() {
         Dialog<Integer> dialog = new Dialog<>();
         ButtonType setButtonType = new ButtonType("Set", ButtonBar.ButtonData.OK_DONE);
@@ -241,7 +244,7 @@ public class MainController extends Observable implements Initializable{
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
         IntegerTextField interval = new IntegerTextField();
-        interval.setText(Integer.toString(app.getPollerRefreashRate()));
+        interval.setText(Integer.toString(app.getPollerRefreshRate()));
         grid.add(new Label("Interval (Sec):"), 0, 0);
         grid.add(interval, 1, 0);
 
@@ -261,7 +264,7 @@ public class MainController extends Observable implements Initializable{
 
         Optional<Integer> result = dialog.showAndWait();
         if(result.isPresent())
-            app.setPollerRefreashRate(result.get());
+            app.setPollerRefreshRate(result.get());
     }
 
     /**
@@ -428,6 +431,10 @@ public class MainController extends Observable implements Initializable{
         }
     }
 
+    /**
+     * Open the simulation dialog
+     * @param simulation the simulation to attach to the dialog
+     */
     public void openSimulation(Simulation simulation) {
         if(app.currentPortfolio.getHoldings().size() == 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -459,6 +466,10 @@ public class MainController extends Observable implements Initializable{
         }
     }
 
+    /**
+     * Goto the watched equity
+     * @param watchedEquity show the watched equity
+     */
     private void gotoWatchedEquity(WatchedEquity watchedEquity) {
         try {
             WatchedEquityController e = (WatchedEquityController) changeScene("sub/watched.fxml");

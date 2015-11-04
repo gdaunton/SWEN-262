@@ -50,11 +50,15 @@ public class Controller {
                 break;
             }
         }
-        setPollerRefreashRate(poll_cooldown_sec);
+        setPollerRefreshRate(poll_cooldown_sec);
         view.setApp(this);
     }
 
-    public void setPollerRefreashRate(int rate) {
+    /**
+     * Set the refresh rate
+     * @param rate the rate to refresh at
+     */
+    public void setPollerRefreshRate(int rate) {
         if(pollerHandle != null)
             pollerHandle.cancel(false);
         poll_cooldown_sec = rate;
@@ -69,7 +73,11 @@ public class Controller {
         pollerHandle = scheduler.scheduleAtFixedRate(poller, poll_cooldown_sec, poll_cooldown_sec, SECONDS);
     }
 
-    public int getPollerRefreashRate() {
+    /**
+     * Get the current refresh rate
+     * @return the current refresh rate
+     */
+    public int getPollerRefreshRate() {
         return poll_cooldown_sec;
     }
 
@@ -88,6 +96,10 @@ public class Controller {
         return temp;
     }
 
+    /**
+     * Get all but the current portfolios
+     * @return all the other portfolios
+     */
     public ArrayList<Portfolio> getOtherPortfolios() {
         ArrayList<Portfolio> temp = new ArrayList<>();
         for (Portfolio p : this.portfolios) {
@@ -97,6 +109,10 @@ public class Controller {
         return temp;
     }
 
+    /**
+     * Set the current portfolio
+     * @param portfolio
+     */
     public void setPortfolio(Portfolio portfolio) {
         this.currentPortfolio = portfolio;
         view.changePortfolio();
@@ -142,14 +158,25 @@ public class Controller {
         System.out.println("redo: " + commandBackStack.toString());
     }
 
+    /**
+     * Logout the current user
+     */
     public void logout() {
         logoutListener.logout();
     }
 
+    /**
+     * If it can undo
+     * @return If it can undo
+     */
     public boolean canUndo() {
         return commandBackStack.size() != 0;
     }
 
+    /**
+     * If it can redo
+     * @return If it can redo
+     */
     public boolean canRedo() {
         return commandUndoStack.size() != 0;
     }
@@ -167,6 +194,9 @@ public class Controller {
         void logout();
     }
 
+    /**
+     * Update the view
+     */
     public void update() {
         view.update();
     }

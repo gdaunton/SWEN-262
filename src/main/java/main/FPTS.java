@@ -389,6 +389,11 @@ public class FPTS extends Application {
 		}
 	}
 
+	/**
+	 * Delete the given user by ID
+	 * @param loginId the id of the user
+	 * @return if the operation was sucsessful
+	 */
 	private boolean deleteUser(String loginId) {
 		List<User> users = UserManager.getAllUsers();
 		for (int i = 0; i < users.size(); i++)

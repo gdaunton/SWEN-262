@@ -93,6 +93,9 @@ public class WatchEquityController implements Initializable, DialogController {
         });
     }
 
+    /**
+     * Initialize the values
+     */
     private void initValues() {
         apply.setDisable(true);
         TableColumn ticker = new TableColumn("Ticker");
@@ -124,6 +127,11 @@ public class WatchEquityController implements Initializable, DialogController {
         });
     }
 
+    /**
+     * All of the equities that unwatched
+     * @param list the list of equities
+     * @return the list of unwatched equities
+     */
     private ArrayList<Equity> getUnwatchedEquities(ArrayList<Equity> list) {
         ArrayList<Equity> temp = new ArrayList<>();
         temp.addAll(list);
