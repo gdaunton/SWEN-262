@@ -27,9 +27,10 @@ public class DoubleTextField extends TextField {
         });
 
         addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            char[] temp = event.getCharacter().toCharArray();
             if (!isValid(getText()))
                 event.consume();
-            else if(event.getCharacter().charAt(0) == 13 && enter != null)
+            else if(temp.length > 0 &&  temp[0]== 13 && enter != null)
                 enter.handle();
         });
     }

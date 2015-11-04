@@ -270,7 +270,6 @@ class ClickablePortfolioNode extends StackPane {
         if(label != null && !getChildren().contains(label))
             getChildren().add(label);
         listener.handle(this);
-        System.out.println(getChildren());
     }
 
     public void deselect() {
