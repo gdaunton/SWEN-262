@@ -18,7 +18,7 @@ public abstract class Simulation {
      * @param start_val Start value.
      * @return The resulting value.
      */
-    public abstract double simulate(int nSteps, STEP_SIZE step_size, double start_val, double change);
+    protected abstract double simulate(int nSteps, STEP_SIZE step_size, double start_val, double change);
 
     /**
      * Performs a simulation on a portfolio.
@@ -30,20 +30,13 @@ public abstract class Simulation {
      */
     public Portfolio simulate(int nSteps, STEP_SIZE step_size, Portfolio p, double decimal_change) {
         Portfolio out = new Portfolio(p.getUsers(), p.name);
-        for (Holding h : p.getHoldings()) {
-            out.addHolding(h);
-        }
-
-        double ne = p.eval_equities();
-        ne = simulate(nSteps, step_size, ne, decimal_change);
-        double ac = p.eval_accounts();
+        p.getHoldings().forEach(out::addHolding);
 
         for (Holding h : out.getHoldings()) {
             if (h instanceof Equity) {
                 ((Equity) h).setPrice_per_share(simulate(nSteps, step_size, ((Equity) h).getPrice_per_share(), decimal_change));
             }
         }
-
         return out;
     }
 }
