@@ -55,20 +55,18 @@ public class FPTS extends Application {
         } catch (IndexOutOfBoundsException e) {
         }
 
-        if (file_basis) { // import the equities from the file
-            File equities = new File(dataRoot + "equities.csv");
-            if (!equities.exists()) {
-                FileChooser.ExtensionFilter csv = new FileChooser.ExtensionFilter("csv", "*.csv");
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.getExtensionFilters().add(csv);
-                fileChooser.setTitle("Select Equities File");
-                File file = fileChooser.showOpenDialog(stage);
-                equities.createNewFile();
-                copyFile(file, equities);
-            }
-            HoldingManager.import_equities(equities);
-        } else
-            HoldingManager.import_equities_yahoo();
+        File equities = new File(dataRoot + "equities.csv");
+        if (!equities.exists()) {
+            FileChooser.ExtensionFilter csv = new FileChooser.ExtensionFilter("csv", "*.csv");
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(csv);
+            fileChooser.setTitle("Select Equities File");
+            File file = fileChooser.showOpenDialog(stage);
+            equities.createNewFile();
+            copyFile(file, equities);
+        }
+        HoldingManager.import_equities(equities);
+        HoldingManager.import_equities_yahoo();
 
         try {
             stage = primaryStage;

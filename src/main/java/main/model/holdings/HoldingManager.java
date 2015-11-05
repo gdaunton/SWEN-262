@@ -44,11 +44,6 @@ public class HoldingManager {
         String dataRoot = "data/";
         String url = "";
         url = "http://query.yahooapis.com/v1/public/yql?q=select symbol, LastTradePriceOnly, Name, StockExchange from yahoo.finance.quotes where symbol in ";
-        if (equities_list == null) {
-            File equities = new File(dataRoot + "equities.csv");
-            if (equities.exists())
-                equities_list = CSVImporter.importAllEquity(equities);
-        }
         url = url + "(" + "\"AAPL\"";
         for (Equity e : equities_list) {
             if (e.getTickerSymbol().equals("AAPL")) {

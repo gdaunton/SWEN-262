@@ -157,7 +157,6 @@ public class Controller {
             commandBackStack.add(redo);
             view.update();
         }
-        System.out.println("redo: " + commandBackStack.toString());
     }
 
     /**
