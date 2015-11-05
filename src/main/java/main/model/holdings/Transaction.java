@@ -1,13 +1,9 @@
 package main.model.holdings;
 
-import javafx.beans.property.SimpleStringProperty;
-import main.model.holdings.Holding;
-
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Transaction implements Serializable {
     public String date;
@@ -22,19 +18,25 @@ public class Transaction implements Serializable {
         ACCOUNT_DEPOSIT,
         ACCOUNT_WITHDRAW,
         EQUITY_BUY_SELL;
-		
-		public String toString() {
-			String name = name();
-			switch(name) {
-				case "ADD":					return "Add Holding";
-				case "REMOVE":				return "Remove Holding";
-				case "ACCOUNT_TRANSFER":	return "Transfer Between Accounts";
-				case "ACCOUNT_DEPOSIT":		return "Deposit to Account";
-				case "ACCOUNT_WITHDRAW":	return "Withdraw from Account";
-				case "EQUITY_BUY_SELL":		return "Buy or Sell Equity";
-			}
+
+        public String toString() {
+            String name = name();
+            switch (name) {
+                case "ADD":
+                    return "Add Holding";
+                case "REMOVE":
+                    return "Remove Holding";
+                case "ACCOUNT_TRANSFER":
+                    return "Transfer Between Accounts";
+                case "ACCOUNT_DEPOSIT":
+                    return "Deposit to Account";
+                case "ACCOUNT_WITHDRAW":
+                    return "Withdraw from Account";
+                case "EQUITY_BUY_SELL":
+                    return "Buy or Sell Equity";
+            }
             return name;
-		}
+        }
     }
 
     /**
@@ -49,12 +51,11 @@ public class Transaction implements Serializable {
         switch (type) {
             case ADD:
                 h1 = (Holding) args[0];
-                amount = (Double)args[1];
-                if(h1 instanceof Account) {
+                amount = (Double) args[1];
+                if (h1 instanceof Account) {
                     this.amount = NumberFormat.getCurrencyInstance().format(amount);
-                }
-                else {
-                    double total = ((Equity)h1).getPrice_per_share() * amount;
+                } else {
+                    double total = ((Equity) h1).getPrice_per_share() * amount;
                     this.amount = Integer.toString((int) amount) + " Share(s) totalling " + NumberFormat.getCurrencyInstance().format(total);
                 }
                 break;
@@ -80,10 +81,14 @@ public class Transaction implements Serializable {
                 break;
             case EQUITY_BUY_SELL:
                 h1 = (Holding) args[0];
-                amount = (Double)args[1];
-				if(amount >= 0)	{ this.amount = "Bought "; }
-				else			{ this.amount = "Sold "; amount = -1 * amount; }
-                double total = ((Equity)h1).getPrice_per_share() * amount;
+                amount = (Double) args[1];
+                if (amount >= 0) {
+                    this.amount = "Bought ";
+                } else {
+                    this.amount = "Sold ";
+                    amount = -1 * amount;
+                }
+                double total = ((Equity) h1).getPrice_per_share() * amount;
                 this.amount += Integer.toString((int) amount) + " share(s) totalling " + NumberFormat.getCurrencyInstance().format(total);
                 break;
         }

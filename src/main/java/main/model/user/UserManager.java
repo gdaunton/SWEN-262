@@ -98,14 +98,14 @@ public class UserManager {
             s.close();
         } catch (IOException e) {
             return null;
-        } catch(ClassNotFoundException e1) {
+        } catch (ClassNotFoundException e1) {
             return null;
         }
         return null;
     }
 
     public void logoout(User user) {
-        if(user != null) {
+        if (user != null) {
             ArrayList<User> current = getAllUsers();
             for (User u : current) {
                 if (u.getId() == user.getId()) {
@@ -160,7 +160,7 @@ public class UserManager {
     public boolean compareHash(String password, String hash) {
         try {
             return HashSlingingSlasher.check(password, hash);
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

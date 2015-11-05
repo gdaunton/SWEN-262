@@ -10,8 +10,10 @@ public class Account extends Holding implements Serializable {
 
     public enum Type {
         BANK, MONEY_MARKET;
-		
-		public String toString() { return name().toLowerCase().replace('_', ' '); }
+
+        public String toString() {
+            return name().toLowerCase().replace('_', ' ');
+        }
     }
 
     /**
@@ -104,7 +106,7 @@ public class Account extends Holding implements Serializable {
     /**
      * Transfers the given ammount to the new account
      *
-     * @param amount The ammount to transfer
+     * @param amount  The ammount to transfer
      * @param account The account to transfer the amount to
      * @return The remaining account balance
      */

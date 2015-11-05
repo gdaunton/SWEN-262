@@ -1,10 +1,10 @@
 package main.controller.command;
 
 import main.model.Portfolio;
-import main.model.holdings.Transaction;
 import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.Holding;
+import main.model.holdings.Transaction;
 
 public class HoldingCommand implements Command {
 
@@ -69,16 +69,15 @@ public class HoldingCommand implements Command {
      * Executes the command.
      */
     public void execute() {
-		//TODO: correct the "value" field
+        //TODO: correct the "value" field
         switch (type) {
             case ADD:
                 portfolio.addHolding(target);
-                if (target instanceof  Equity) {
-                    portfolio.history.add(new Transaction(Transaction.Type.ADD, new Object[]{target, (double)((Equity) target).getShares()}));
-				}
-                else if (target instanceof Account) {
+                if (target instanceof Equity) {
+                    portfolio.history.add(new Transaction(Transaction.Type.ADD, new Object[]{target, (double) ((Equity) target).getShares()}));
+                } else if (target instanceof Account) {
                     portfolio.history.add(new Transaction(Transaction.Type.ADD, new Object[]{target, modifier}));
-				}
+                }
                 break;
             case DELETE:
                 portfolio.removeHolding(target);

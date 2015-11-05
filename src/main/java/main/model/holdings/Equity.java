@@ -1,16 +1,16 @@
 package main.model.holdings;
 
 import java.io.Serializable;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Observable;
 
 public class Equity extends Holding implements Serializable {
 
     public enum Type {
         STOCK, BOND, MUTUAL_FUND;
-		
-		public String toString() { return name().toLowerCase().replace('_', ' '); }
+
+        public String toString() {
+            return name().toLowerCase().replace('_', ' ');
+        }
     }
 
     /**
@@ -121,6 +121,7 @@ public class Equity extends Holding implements Serializable {
      * @param price_per_share The new price per share of the Equity
      */
     public void setPrice_per_share(double price_per_share) {
+        old_price = this.price_per_share;
         this.price_per_share = price_per_share;
         this.notifyObservers(price_per_share);
         this.setChanged();
@@ -151,18 +152,20 @@ public class Equity extends Holding implements Serializable {
 
     /**
      * If the query matches this equity
+     *
      * @param query The query to search for
      * @return
      */
     public boolean match(String query) {
         for (String s : marketSectors)
-            if(s.contains(query))
+            if (s.contains(query))
                 return true;
         return tickerSymbol.toLowerCase().contains(query.toLowerCase()) || name.toLowerCase().contains(query.toLowerCase());
     }
 
     /**
      * Get a clone of this equity
+     *
      * @return a clone of this equity
      */
     public Equity clone() {

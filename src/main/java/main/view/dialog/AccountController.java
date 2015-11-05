@@ -1,10 +1,5 @@
 package main.view.dialog;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,6 +10,9 @@ import javafx.stage.Stage;
 import main.controller.command.HoldingCommand;
 import main.model.holdings.Account;
 import main.view.MainController;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class AccountController implements Initializable, DialogController {
 

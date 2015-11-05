@@ -1,99 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <?import main.view.elements.DoubleTextField?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.dialog.AccountController">
-   <children>
-      <BorderPane prefHeight="400.0" prefWidth="600.0">
-         <bottom>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="main.view.dialog.AccountController">
+    <BorderPane prefHeight="400.0" prefWidth="600.0">
+        <bottom>
             <HBox alignment="BOTTOM_RIGHT" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="cancel" cancelButton="true" mnemonicParsing="false" text="Cancel" />
-                  <Button fx:id="apply" defaultButton="true" mnemonicParsing="false" text="Create">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-               <BorderPane.margin>
-                  <Insets bottom="10.0" right="10.0" />
-               </BorderPane.margin>
+                <BorderPane.margin>
+                    <Insets bottom="10.0" right="10.0"/>
+                </BorderPane.margin>
+                <Button fx:id="cancel" cancelButton="true" mnemonicParsing="false" text="Cancel"/>
+                <Button fx:id="apply" defaultButton="true" mnemonicParsing="false" text="Create">
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </Button>
             </HBox>
-         </bottom>
-         <center>
+        </bottom>
+        <center>
             <VBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create Account">
-                     <font>
-                        <Font name="Segoe UI Light" size="36.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="50.0" />
-                     </VBox.margin>
-                  </Text>
-                  <FlowPane alignment="CENTER" columnHalignment="CENTER">
-                     <children>
-                        <VBox alignment="CENTER">
-                           <children>
-                              <HBox alignment="CENTER_RIGHT">
-                                 <children>
-                                    <Label text="Name" />
-                                    <TextField fx:id="name">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_RIGHT">
-                                 <children>
-                                    <Label text="Type" />
-                                    <ChoiceBox fx:id="type" prefWidth="167.0">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </ChoiceBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="262.0">
-                                 <children>
-                                    <Label text="Balance" />
-                                    <DoubleTextField fx:id="balance">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </DoubleTextField>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_RIGHT">
-                                 <children>
-                                    <Text fx:id="error" fill="#cd0000" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </FlowPane>
-               </children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create Account">
+                    <font>
+                        <Font name="Segoe UI Light" size="36.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets left="50.0"/>
+                    </VBox.margin>
+                </Text>
+                <FlowPane alignment="CENTER" columnHalignment="CENTER">
+                    <VBox.margin>
+                        <Insets top="20.0"/>
+                    </VBox.margin>
+                    <VBox alignment="CENTER">
+                        <HBox alignment="CENTER_RIGHT">
+                            <VBox.margin>
+                                <Insets bottom="10.0"/>
+                            </VBox.margin>
+                            <Label text="Name"/>
+                            <TextField fx:id="name">
+                                <HBox.margin>
+                                    <Insets left="10.0"/>
+                                </HBox.margin>
+                            </TextField>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT">
+                            <VBox.margin>
+                                <Insets bottom="10.0"/>
+                            </VBox.margin>
+                            <Label text="Type"/>
+                            <ChoiceBox fx:id="type" prefWidth="167.0">
+                                <HBox.margin>
+                                    <Insets left="10.0"/>
+                                </HBox.margin>
+                            </ChoiceBox>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="262.0">
+                            <VBox.margin>
+                                <Insets bottom="10.0"/>
+                            </VBox.margin>
+                            <Label text="Balance"/>
+                            <DoubleTextField fx:id="balance">
+                                <HBox.margin>
+                                    <Insets left="10.0"/>
+                                </HBox.margin>
+                            </DoubleTextField>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT">
+                            <Text fx:id="error" fill="#cd0000" strokeType="OUTSIDE"
+                                  strokeWidth="0.0" text="Text" visible="false"/>
+                        </HBox>
+                    </VBox>
+                </FlowPane>
             </VBox>
-         </center>
-      </BorderPane>
-   </children>
+        </center>
+    </BorderPane>
 </Pane>

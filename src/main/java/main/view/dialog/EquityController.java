@@ -1,10 +1,5 @@
 package main.view.dialog;
 
-import java.net.URL;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -26,6 +21,11 @@ import main.model.holdings.Equity;
 import main.model.holdings.HoldingManager;
 import main.view.MainController;
 import main.view.elements.IntegerTextField;
+
+import java.net.URL;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class EquityController implements Initializable, DialogController {
 
@@ -118,7 +118,7 @@ public class EquityController implements Initializable, DialogController {
                         else
                             accountCommand = new HoldingCommand(HoldingCommand.Action.MODIFY, controller.getPortfolio(), getSelectedAccount(), HoldingCommand.Modification.DEPOSIT, transaction);
                     }
-                    if(accountCommand != null)
+                    if (accountCommand != null)
                         controller.sendCommand(new TransactionCommand(holdingCommand, accountCommand));
                 }
                 stage.close();

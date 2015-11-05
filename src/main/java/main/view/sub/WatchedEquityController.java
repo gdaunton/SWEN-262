@@ -66,8 +66,9 @@ public class WatchedEquityController implements Initializable {
 
     /**
      * Update the min/max lines
+     *
      * @param highTrigger the max line value
-     * @param lowTrigger the min line value
+     * @param lowTrigger  the min line value
      */
     private void updateLines(double highTrigger, double lowTrigger) {
         Node chartArea = chart.lookup(".chart-plot-background");
@@ -88,7 +89,7 @@ public class WatchedEquityController implements Initializable {
         lowMarker.setStartY(yShift + lowPosition);
         lowMarker.setEndY(yShift + lowPosition);
 
-        if(chart_pane.getChildren().contains(highMarker)) {
+        if (chart_pane.getChildren().contains(highMarker)) {
             if (highPosition < 0)
                 chart_pane.getChildren().remove(highMarker);
         } else {
@@ -96,7 +97,7 @@ public class WatchedEquityController implements Initializable {
                 chart_pane.getChildren().add(highMarker);
         }
 
-        if(chart_pane.getChildren().contains(lowMarker)) {
+        if (chart_pane.getChildren().contains(lowMarker)) {
             if (lowPosition < 0)
                 chart_pane.getChildren().remove(lowMarker);
         } else {
@@ -116,16 +117,16 @@ public class WatchedEquityController implements Initializable {
             equity.highTrigger = high_bound.getDouble();
             equity.lowTrigger = low_bound.getDouble();
             updateLines(equity.highTrigger, equity.lowTrigger);
-            if(equity.highTrigger != -1)
+            if (equity.highTrigger != -1)
                 high_bound.setValue(equity.highTrigger);
-            if(equity.highTrigger != -1)
+            if (equity.highTrigger != -1)
                 low_bound.setValue(equity.lowTrigger);
         });
         cancel.setOnAction(event -> {
             updateLines(equity.highTrigger, equity.lowTrigger);
-            if(equity.highTrigger != -1)
+            if (equity.highTrigger != -1)
                 high_bound.setValue(equity.highTrigger);
-            if(equity.highTrigger != -1)
+            if (equity.highTrigger != -1)
                 low_bound.setValue(equity.lowTrigger);
         });
 

@@ -1,13 +1,5 @@
 package main.model.holdings;
 
-import java.io.*;
-import java.lang.reflect.Field;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-
 import main.model.Portfolio;
 import main.model.util.CSVImporter;
 import org.w3c.dom.Document;
@@ -19,6 +11,13 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class HoldingManager {
     public static HashMap<Portfolio, ArrayList<Holding>> holding_list = new HashMap<Portfolio, ArrayList<Holding>>();
@@ -95,7 +94,7 @@ public class HoldingManager {
             if (eq.getNodeName().equals("quote")) {
                 String sym = eq.getAttributes().getNamedItem("symbol").getNodeValue();
                 String name = null;
-				ArrayList<String> sx = new ArrayList<String>();
+                ArrayList<String> sx = new ArrayList<String>();
                 double eqv = -1;
 
                 NodeList fields = eq.getChildNodes();
@@ -112,15 +111,13 @@ public class HoldingManager {
                     String s = f.getNodeName();
                     if (s.equals("LastTradePriceOnly")) {
                         eqv = Double.parseDouble(content);
-					}
-                    else if (s.equals("Name")) {
+                    } else if (s.equals("Name")) {
                         name = content;
-					}
-					else if (s.equals("StockExchange")) {
-						sx.add(content);
-					}
+                    } else if (s.equals("StockExchange")) {
+                        sx.add(content);
+                    }
                 }
-				
+
                 Equity e = new Equity(Equity.Type.STOCK, sym, name, 0, eqv, sx);
                 temp_list.add(e);
             }

@@ -1,89 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <?import main.view.elements.DoubleTextField?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view.dialog.WatchEquityController">
-   <children>
-      <VBox prefHeight="400.0" prefWidth="700.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add Watched Equity">
-               <font>
-                  <Font name="Segoe UI Light" size="36.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="20.0" top="20.0" />
-               </VBox.margin>
-            </Text>
-            <HBox prefHeight="503.0" prefWidth="700.0">
-               <children>
-                  <VBox prefHeight="321.0" prefWidth="344.0">
-                     <children>
-                        <Label text="Select Equity to Watch">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextField fx:id="search" promptText="Search" />
-                        <TableView fx:id="equity_list" prefHeight="229.0" prefWidth="406.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets left="20.0" right="10.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="290.0" prefWidth="280.0">
-                     <children>
-                        <HBox alignment="CENTER_RIGHT">
-                           <children>
-                              <Label text="High Trigger" />
-                              <DoubleTextField fx:id="high_bound">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </DoubleTextField>
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_RIGHT">
-                           <children>
-                              <Label fx:id="total" text="Low Trigger" />
-                              <DoubleTextField fx:id="low_bound">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </DoubleTextField>
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="214.0" prefWidth="299.0">
-               <children>
-                  <Button fx:id="cancel" cancelButton="true" mnemonicParsing="false" text="Cancel" />
-                  <Button fx:id="apply" defaultButton="true" disable="true" mnemonicParsing="false" text="Confirm">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" right="10.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-      </VBox>
-   </children>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="main.view.dialog.WatchEquityController">
+    <VBox prefHeight="400.0" prefWidth="700.0">
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add Watched Equity">
+            <font>
+                <Font name="Segoe UI Light" size="36.0"/>
+            </font>
+            <VBox.margin>
+                <Insets left="20.0" top="20.0"/>
+            </VBox.margin>
+        </Text>
+        <HBox prefHeight="503.0" prefWidth="700.0">
+            <VBox.margin>
+                <Insets top="5.0"/>
+            </VBox.margin>
+            <VBox prefHeight="321.0" prefWidth="344.0">
+                <HBox.margin>
+                    <Insets left="20.0" right="10.0"/>
+                </HBox.margin>
+                <Label text="Select Equity to Watch">
+                    <VBox.margin>
+                        <Insets bottom="10.0"/>
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="search" promptText="Search"/>
+                <TableView fx:id="equity_list" prefHeight="229.0" prefWidth="406.0"/>
+            </VBox>
+            <VBox prefHeight="290.0" prefWidth="280.0">
+                <HBox alignment="CENTER_RIGHT">
+                    <VBox.margin>
+                        <Insets bottom="10.0"/>
+                    </VBox.margin>
+                    <Label text="High Trigger"/>
+                    <DoubleTextField fx:id="high_bound">
+                        <HBox.margin>
+                            <Insets left="10.0"/>
+                        </HBox.margin>
+                    </DoubleTextField>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT">
+                    <VBox.margin>
+                        <Insets bottom="10.0"/>
+                    </VBox.margin>
+                    <Label text="Low Trigger"/>
+                    <DoubleTextField fx:id="low_bound">
+                        <HBox.margin>
+                            <Insets left="10.0"/>
+                        </HBox.margin>
+                    </DoubleTextField>
+                </HBox>
+            </VBox>
+        </HBox>
+        <HBox alignment="CENTER_RIGHT" prefHeight="214.0" prefWidth="299.0">
+            <VBox.margin>
+                <Insets bottom="10.0" right="10.0"/>
+            </VBox.margin>
+            <Button fx:id="cancel" cancelButton="true" mnemonicParsing="false" text="Cancel"/>
+            <Button fx:id="apply" defaultButton="true" disable="true" mnemonicParsing="false"
+                    text="Confirm">
+                <HBox.margin>
+                    <Insets left="10.0"/>
+                </HBox.margin>
+            </Button>
+        </HBox>
+    </VBox>
 </Pane>

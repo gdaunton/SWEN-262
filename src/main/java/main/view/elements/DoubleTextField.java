@@ -1,15 +1,8 @@
 package main.view.elements;
 
-import javafx.scene.input.KeyCode;
-import org.apache.commons.lang3.StringUtils;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-
-import java.util.ArrayList;
+import org.apache.commons.lang3.StringUtils;
 
 public class DoubleTextField extends TextField {
 
@@ -30,13 +23,14 @@ public class DoubleTextField extends TextField {
             char[] temp = event.getCharacter().toCharArray();
             if (!isValid(getText()))
                 event.consume();
-            else if(temp.length > 0 &&  temp[0]== 13 && enter != null)
+            else if (temp.length > 0 && temp[0] == 13 && enter != null)
                 enter.handle();
         });
     }
 
     /**
      * Set the enter pressed listener
+     *
      * @param listener the listener
      */
     public void setOnEnterPressedListener(OnEnterPressed listener) {
@@ -45,6 +39,7 @@ public class DoubleTextField extends TextField {
 
     /**
      * The value of the field
+     *
      * @param value the value
      */
     public void setValue(double value) {

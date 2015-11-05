@@ -1,9 +1,5 @@
 package main.view.dialog;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -13,17 +9,21 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.text.Text;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import main.controller.command.HoldingCommand;
-import main.model.holdings.Account;
 import main.model.holdings.Equity;
 import main.model.holdings.HoldingManager;
 import main.model.holdings.WatchedEquity;
 import main.view.MainController;
 import main.view.elements.DoubleTextField;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class WatchEquityController implements Initializable, DialogController {
 
@@ -68,7 +68,7 @@ public class WatchEquityController implements Initializable, DialogController {
         apply.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 WatchedEquity temp = new WatchedEquity(equity_list.getSelectionModel().getSelectedItem().getTickerSymbol());
-                if(!controller.getUser().watchedEquities.contains(temp)) {
+                if (!controller.getUser().watchedEquities.contains(temp)) {
                     temp.lowTrigger = low_bound.getDouble();
                     temp.highTrigger = high_bound.getDouble();
                     controller.getUser().watchedEquities.add(temp);
@@ -129,6 +129,7 @@ public class WatchEquityController implements Initializable, DialogController {
 
     /**
      * All of the equities that unwatched
+     *
      * @param list the list of equities
      * @return the list of unwatched equities
      */
@@ -136,8 +137,8 @@ public class WatchEquityController implements Initializable, DialogController {
         ArrayList<Equity> temp = new ArrayList<>();
         temp.addAll(list);
         ArrayList<WatchedEquity> watched = controller.getUser().watchedEquities;
-        for(Equity e : list) {
-            for(WatchedEquity we : watched) {
+        for (Equity e : list) {
+            for (WatchedEquity we : watched) {
                 if (e.getTickerSymbol().equals(we.getSymbol())) {
                     temp.remove(e);
                     break;

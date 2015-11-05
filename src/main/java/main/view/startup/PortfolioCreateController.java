@@ -1,9 +1,5 @@
 package main.view.startup;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +15,10 @@ import main.FPTS;
 import main.model.Portfolio;
 import main.model.user.User;
 import main.model.user.UserManager;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class PortfolioCreateController implements Initializable {
 

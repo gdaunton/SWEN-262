@@ -1,14 +1,5 @@
 package main.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import static java.util.concurrent.TimeUnit.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import main.controller.command.Command;
@@ -17,7 +8,14 @@ import main.model.holdings.HoldingManager;
 import main.model.user.User;
 import main.view.MainController;
 
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Controller {
     private List<Command> commandUndoStack = new LinkedList<>();
@@ -56,10 +54,11 @@ public class Controller {
 
     /**
      * Set the refresh rate
+     *
      * @param rate the rate to refresh at
      */
     public void setPollerRefreshRate(int rate) {
-        if(pollerHandle != null)
+        if (pollerHandle != null)
             pollerHandle.cancel(false);
         poll_cooldown_sec = rate;
         Runnable poller = () -> {
@@ -75,6 +74,7 @@ public class Controller {
 
     /**
      * Get the current refresh rate
+     *
      * @return the current refresh rate
      */
     public int getPollerRefreshRate() {
@@ -98,6 +98,7 @@ public class Controller {
 
     /**
      * Get all but the current portfolios
+     *
      * @return all the other portfolios
      */
     public ArrayList<Portfolio> getOtherPortfolios() {
@@ -111,6 +112,7 @@ public class Controller {
 
     /**
      * Set the current portfolio
+     *
      * @param portfolio
      */
     public void setPortfolio(Portfolio portfolio) {
@@ -167,6 +169,7 @@ public class Controller {
 
     /**
      * If it can undo
+     *
      * @return If it can undo
      */
     public boolean canUndo() {
@@ -175,6 +178,7 @@ public class Controller {
 
     /**
      * If it can redo
+     *
      * @return If it can redo
      */
     public boolean canRedo() {

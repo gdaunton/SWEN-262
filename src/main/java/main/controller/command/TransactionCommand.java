@@ -1,12 +1,13 @@
 package main.controller.command;
 
-public class TransactionCommand implements Command{
+public class TransactionCommand implements Command {
 
-    private  Command command1;
+    private Command command1;
     private Command command2;
 
     /**
      * Create a new joint command
+     *
      * @param command1 the first command
      * @param command2 the second command
      */

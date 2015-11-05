@@ -1,16 +1,6 @@
 package main.view;
 
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Optional;
-import java.util.ResourceBundle;
-
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,7 +17,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Pair;
 import main.FPTS;
 import main.controller.Controller;
 import main.controller.command.Command;
@@ -47,7 +36,15 @@ import main.view.sub.EquityController;
 import main.view.sub.TransactionController;
 import main.view.sub.WatchedEquityController;
 
-public class MainController extends Observable implements Initializable{
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
+public class MainController extends Observable implements Initializable {
 
     private Controller app;
 
@@ -161,13 +158,13 @@ public class MainController extends Observable implements Initializable{
         inport.setOnAction(event -> showTeamEDialog(false));
         export.setOnAction(event -> showTeamEDialog(true));
         bear.setOnAction(event -> {
-            openSimulation(new Bear());
+            openSimulation(new Bear(), null);
         });
         bull.setOnAction(event -> {
-            openSimulation(new Bull());
+            openSimulation(new Bull(), null);
         });
         no_grow.setOnAction(event -> {
-            openSimulation(new NoGrowth());
+            openSimulation(new NoGrowth(), null);
         });
         account.setOnAction(event -> {
             try {
@@ -263,7 +260,7 @@ public class MainController extends Observable implements Initializable{
         });
 
         Optional<Integer> result = dialog.showAndWait();
-        if(result.isPresent())
+        if (result.isPresent())
             app.setPollerRefreshRate(result.get());
     }
 
@@ -276,7 +273,7 @@ public class MainController extends Observable implements Initializable{
                 Platform.runLater(() -> {
                     if (!equity_list.getSelectionModel().isEmpty())
                         equity_list.getSelectionModel().clearSelection();
-                    if(!watchlist.getSelectionModel().isEmpty())
+                    if (!watchlist.getSelectionModel().isEmpty())
                         watchlist.getSelectionModel().clearSelection();
                     account_list.getSelectionModel().select(newValue);
                 });
@@ -288,7 +285,7 @@ public class MainController extends Observable implements Initializable{
                 Platform.runLater(() -> {
                     if (!account_list.getSelectionModel().isEmpty())
                         account_list.getSelectionModel().clearSelection();
-                    if(!watchlist.getSelectionModel().isEmpty())
+                    if (!watchlist.getSelectionModel().isEmpty())
                         watchlist.getSelectionModel().clearSelection();
                     equity_list.getSelectionModel().select(newValue);
                 });
@@ -433,24 +430,31 @@ public class MainController extends Observable implements Initializable{
 
     /**
      * Open the simulation dialog
+     *
      * @param simulation the simulation to attach to the dialog
      */
-    public void openSimulation(Simulation simulation) {
-        if(app.currentPortfolio.getHoldings().size() == 0) {
+    public void openSimulation(Simulation simulation, Portfolio portfolio) {
+        if (app.currentPortfolio.getHoldings().size() == 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("UtOh!");
             alert.setHeaderText(null);
             alert.setContentText("I can't simulate a portfolio without any holdings!!");
             alert.showAndWait();
-        }else {
+        } else {
+            String title = "No Growth Simulation";
+            if (simulation instanceof Bull)
+                title = "Bull Simulation";
+            else if (simulation instanceof Bear)
+                title = "Bear Simulation";
             try {
-                createSimulationScene("simulation.fxml").setSimulation(this, simulation);
+                createSimulationScene("simulation.fxml", title).setSimulation(this, simulation, portfolio);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.err.println("Error inflating simulation view");
             }
         }
     }
+
     /**
      * Go to an equity.
      *
@@ -468,6 +472,7 @@ public class MainController extends Observable implements Initializable{
 
     /**
      * Goto the watched equity
+     *
      * @param watchedEquity show the watched equity
      */
     private void gotoWatchedEquity(WatchedEquity watchedEquity) {
@@ -543,7 +548,7 @@ public class MainController extends Observable implements Initializable{
      * @return An Initializable object.
      * @throws Exception If an error occurs.
      */
-    private SimulationController createSimulationScene(String fxml) throws Exception {
+    private SimulationController createSimulationScene(String fxml, String title) throws Exception {
         fxml = "/simulation/" + fxml;
         Stage s = new Stage();
         s.initStyle(StageStyle.UTILITY);
@@ -555,6 +560,7 @@ public class MainController extends Observable implements Initializable{
             page = loader.load(in);
         }
         Scene newScene = new Scene(page);
+        s.setTitle(title);
         s.setScene(newScene);
         s.show();
         return loader.getController();

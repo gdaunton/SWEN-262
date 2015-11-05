@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 
 public class Portfolio implements Serializable {
     static final long serialVersionUID = 42L;
@@ -23,20 +22,25 @@ public class Portfolio implements Serializable {
      *
      * @param users The users to attach to this portfolio
      */
-    public Portfolio(ArrayList<User> users, String name) { this(users, name, true); }
+    public Portfolio(ArrayList<User> users, String name) {
+        this(users, name, true);
+    }
 
     /**
      * Creates a new portfolio and links the equities to the holding manager
-     * @param users The users to attach to this portfolio
-     * @param name the name of the portfolio
+     *
+     * @param users   The users to attach to this portfolio
+     * @param name    the name of the portfolio
      * @param do_link link
      */
-	public Portfolio(ArrayList<User> users, String name, boolean do_link) {
+    public Portfolio(ArrayList<User> users, String name, boolean do_link) {
         this.users = users;
         this.name = name;
         this.holdings = new ArrayList<>();
-        if(do_link) { HoldingManager.link_holdings(this); }
-	}
+        if (do_link) {
+            HoldingManager.link_holdings(this);
+        }
+    }
 
 
     /**
@@ -53,7 +57,9 @@ public class Portfolio implements Serializable {
      *
      * @return All of the accounts attached to this portfolio
      */
-    public ArrayList<Holding> getHoldings() { return holdings; }
+    public ArrayList<Holding> getHoldings() {
+        return holdings;
+    }
 
     /**
      * Add a user to this portfolio
@@ -70,7 +76,7 @@ public class Portfolio implements Serializable {
      * @param holding The account to add
      */
     public void addHolding(Holding holding) {
-		HoldingManager.holding_list.get(this).add(holding);
+        HoldingManager.holding_list.get(this).add(holding);
     }
 
     /**
@@ -117,6 +123,7 @@ public class Portfolio implements Serializable {
 
     /**
      * Evaluate the value of all of the equities
+     *
      * @return the value
      */
     public double eval_equities() {
@@ -131,6 +138,7 @@ public class Portfolio implements Serializable {
 
     /**
      * Evaluate the value of all of the accounts
+     *
      * @return the value
      */
     public double eval_accounts() {
@@ -394,7 +402,7 @@ public class Portfolio implements Serializable {
      */
     public Portfolio clone() {
         Portfolio clone = new Portfolio(users, name, false);
-        for(Holding h : getHoldings())
+        for (Holding h : getHoldings())
             clone.addDetachedHolding(h.clone());
         return clone;
     }
