@@ -62,6 +62,8 @@ public class FPTS extends Application {
             fileChooser.getExtensionFilters().add(csv);
             fileChooser.setTitle("Select Equities File");
             File file = fileChooser.showOpenDialog(stage);
+            if(!file.exists())
+                System.exit(-1);
             equities.createNewFile();
             copyFile(file, equities);
         }
